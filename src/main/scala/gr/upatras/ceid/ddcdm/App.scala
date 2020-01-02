@@ -1,35 +1,18 @@
-package gr.upatras.ceid.ddcdm
-
-import gr.upatras.ceid.ddcdm.config
-import scala.io.Source;
-
-import org.apache.spark.SparkContext;
-import org.apache.spark.SparkContext._;
+package gr.upatras.ceid.ddcdm;
 import org.apache.spark.SparkConf;
+import org.apache.spark.SparkContext;
 
-/**
-  * @author ${Christopoulos Alexandros}
-  *
-  */
-object App {
 
-  def main(args: Array[String]) {
-    val sparkConf = new SparkConf()
-      .setMaster(config.default.sparkMasterConf)
-      .setAppName(config.default.appName)
+object app {
 
-    val sparkContext = new SparkContext(sparkConf)
-    parseExampleInput()
-    parseExampleInput()
-  }
+    def main(args: Array[String]): Unit = {
+        
+        var sparkConf = new SparkConf()
+            .setMaster("[*]")
+            .setAppName("AIR FLIGHT STATUS PREDICTOR");
 
-  def parseExampleInput(): Unit = {
-    println("Reading File....")
-    for (line <- Source.fromFile(config.default.exampleInputFile).getLines) {
-      for (col <- line.split(",")) {
-        print(col, " || ")
-      }
-      println("\n")
+        var sparkContext = new SparkContext(sparkConf);
+
+        println("hello world");
     }
-  }
 }

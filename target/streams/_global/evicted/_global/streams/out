@@ -1,0 +1,218 @@
+[0m[[0m[0mdebug[0m] [0m[0m"not up to date. inChanged = true, force = true[0m
+[0m[[0m[0mdebug[0m] [0m[0mUpdating ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone updating [0m
+[0m[[0m[33mwarn[0m] [0m[0mFound version conflict(s) in library dependencies; some are suspected to be binary incompatible:[0m
+[0m[[0m[33mwarn[0m] [0m[0m	* io.netty:netty:3.9.9.Final is selected over {3.6.2.Final, 3.6.2.Final, 3.7.0.Final}[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 3.9.9.Final)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.zookeeper:zookeeper:3.4.6               (depends on 3.7.0.Final)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-core:2.6.5 (depends on 3.6.2.Final)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-hdfs:2.6.5                (depends on 3.6.2.Final)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	* com.google.code.findbugs:jsr305:3.0.2 is selected over {1.3.9, 1.3.9, 1.3.9, 1.3.9, 1.3.9, 1.3.9, 1.3.9, 1.3.9, 1.3.9, 1.3.9}[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.arrow:arrow-memory:0.8.0                (depends on 3.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.arrow:arrow-vector:0.8.0                (depends on 3.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-unsafe_2.11:2.3.0           (depends on 1.3.9)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-network-common_2.11:2.3.0   (depends on 1.3.9)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 1.3.9)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 1.3.9)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.3.9)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	* commons-net:commons-net:3.1 is selected over 2.2[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 3.1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 2.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	* com.google.guava:guava:16.0.1 is selected over {11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 12.0.1, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 12.0.1, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 12.0.1, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 12.0.1, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 11.0.2, 12.0.1}[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.curator:curator-framework:2.6.0         (depends on 16.0.1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.curator:curator-recipes:2.6.0           (depends on 16.0.1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.curator:curator-client:2.6.0            (depends on 16.0.1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.htrace:htrace-core:3.0.4                       (depends on 12.0.1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-server-nodemanager:2.6.5 (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-server-common:2.6.5  (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-client:2.6.5         (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-api:2.6.5            (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-hdfs:2.6.5                (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 11.0.2)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	* commons-codec:commons-codec:1.10 is selected over {1.2, [1.8,2.0), 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.5, 1.5}[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 1.10)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.spark:spark-catalyst_2.11:2.3.0         (depends on 1.10)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.arrow:arrow-vector:0.8.0                (depends on 1.10)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.httpcomponents:httpclient:4.5.4         (depends on 1.10)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.parquet:parquet-encoding:1.8.2          (depends on 1.5)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.parquet:parquet-column:1.8.2            (depends on 1.5)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.orc:orc-mapreduce:1.4.1                 (depends on 1.4)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-server-nodemanager:2.6.5 (depends on 1.4)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.4)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-hdfs:2.6.5                (depends on 1.4)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.4)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- org.apache.hadoop:hadoop-auth:2.6.5                (depends on 1.4)[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- net.java.dev.jets3t:jets3t:0.9.4                   (depends on [1.8,2.0))[0m
+[0m[[0m[33mwarn[0m] [0m[0m	    +- commons-httpclient:commons-httpclient:3.1          (depends on 1.2)[0m
+[0m[[0m[0minfo[0m] [0m[0mHere are other dependency conflicts that were resolved:[0m
+[0m[[0m[0minfo[0m] [0m[0m	* joda-time:joda-time:2.9.9 is selected over {2.9.3, 2.9.3}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.arrow:arrow-vector:0.8.0                (depends on 2.9.9)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 2.9.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.httpcomponents:httpclient:4.5.4 is selected over {4.5, 4.2.5, 4.4.1}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 4.5.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.thrift:libthrift:0.9.3                  (depends on 4.4.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-auth:2.6.5                (depends on 4.2.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- net.java.dev.jets3t:jets3t:0.9.4                   (depends on 4.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* log4j:log4j:1.2.17 is selected over 1.2.16[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-auth:2.6.5                (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-hdfs:2.6.5                (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-client:2.6.5         (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.slf4j:slf4j-log4j12:1.7.16                     (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 1.2.17)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.zookeeper:zookeeper:3.4.6               (depends on 1.2.16)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* com.fasterxml.jackson.core:jackson-annotations:2.6.7 is selected over 2.6.0[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.7.1 (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-kvstore_2.11:2.3.0          (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-network-common_2.11:2.3.0   (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.fasterxml.jackson.core:jackson-databind:2.6.7.1 (depends on 2.6.0)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* javax.activation:activation:1.1.1 is selected over {1.1, 1.1}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- net.java.dev.jets3t:jets3t:0.9.4                   (depends on 1.1.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- javax.xml.bind:jaxb-api:2.2.2                      (depends on 1.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.slf4j:slf4j-log4j12:1.7.16 is selected over {1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.6.1}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 1.7.16)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.zookeeper:zookeeper:3.4.6               (depends on 1.6.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-shuffle:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-core:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-common:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-app:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-auth:2.6.5                (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* com.fasterxml.jackson.core:jackson-core:2.7.9 is selected over {2.6.7, 2.6.7, 2.6.7}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.arrow:arrow-vector:0.8.0                (depends on 2.7.9)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-kvstore_2.11:2.3.0          (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.7.1 (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.fasterxml.jackson.core:jackson-databind:2.6.7.1 (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.derby:derby:10.12.1.1 is selected over 10.10.2.0[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 10.12.1.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-metastore:1.2.1.spark2 (depends on 10.10.2.0)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.commons:commons-lang3:3.5 is selected over 3.1[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 3.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-network-common_2.11:2.3.0   (depends on 3.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-exec:1.2.1.spark2      (depends on 3.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.xerial.snappy:snappy-java:1.1.2.6 is selected over {1.0.5, 1.1.1.6, 1.0.5, 1.1.1.6}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 1.1.2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.parquet:parquet-hadoop:1.8.2            (depends on 1.1.1.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro:1.7.7                         (depends on 1.0.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* commons-collections:commons-collections:3.2.2 is selected over 3.2.1[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 3.2.2)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- commons-configuration:commons-configuration:1.6    (depends on 3.2.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.avro:avro:1.7.7 is selected over {1.7.4, 1.7.5}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-ipc:1.7.7                     (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-exec:1.2.1.spark2      (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.7.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* com.fasterxml.jackson.core:jackson-databind:2.6.7.1 is selected over {2.6.7, 2.4.2, 2.3.1}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-sql_2.11:2.3.0              (depends on 2.6.7.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-kvstore_2.11:2.3.0          (depends on 2.6.7.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 2.6.7.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-network-common_2.11:2.3.0   (depends on 2.6.7.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.json4s:json4s-jackson_2.11:3.2.11              (depends on 2.3.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- io.dropwizard.metrics:metrics-json:3.1.5           (depends on 2.4.2)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.7.1 (depends on 2.6.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.codehaus.jackson:jackson-xc:1.9.13 is selected over {1.8.3, 1.8.3, 1.8.3}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.sun.jersey:jersey-json:1.9                     (depends on 1.8.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.hadoop:hadoop-mapreduce-client-core:2.6.5 is selected over {2.6.4, 2.6.4, 2.6.4}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-common:2.6.5 (depends on 2.6.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-client:2.6.5              (depends on 2.6.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.orc:orc-mapreduce:1.4.1                 (depends on 2.6.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.httpcomponents:httpcore:4.4.7 is selected over {4.4.1, 4.4.1, 4.4.1, 4.4.1, 4.4.1, 4.4.1}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.httpcomponents:httpclient:4.5.4         (depends on 4.4.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.thrift:libthrift:0.9.3                  (depends on 4.4.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- net.java.dev.jets3t:jets3t:0.9.4                   (depends on 4.4.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* commons-logging:commons-logging:1.2 is selected over {1.0.4, 1.1.3, 1.1.3, 1.1.3, 1.0.4, 1.1.3, 1.1.3, 1.1.3}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.httpcomponents:httpclient:4.5.4         (depends on 1.2)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-metastore:1.2.1.spark2 (depends on 1.1.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.1.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-api:2.6.5            (depends on 1.1.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- commons-httpclient:commons-httpclient:3.1          (depends on 1.0.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* com.thoughtworks.paranamer:paranamer:2.8 is selected over {2.3, 2.6}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.fasterxml.jackson.module:jackson-module-paranamer:2.7.9 (depends on 2.8)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.json4s:json4s-core_2.11:3.2.11                 (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro:1.7.7                         (depends on 2.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.codehaus.jackson:jackson-mapper-asl:1.9.13 is selected over {1.8.3, 1.9.11, 1.9.2}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-ipc:1.7.7                     (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-mapred:1.7.7                  (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.codehaus.jackson:jackson-xc:1.9.13             (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.codehaus.jackson:jackson-jaxrs:1.9.13          (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-hive_2.11:2.3.0             (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- net.java.dev.jets3t:jets3t:0.9.4                   (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro:1.7.7                         (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-exec:1.2.1.spark2      (depends on 1.9.2)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.parquet:parquet-hadoop:1.8.2            (depends on 1.9.11)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.sun.jersey:jersey-json:1.9                     (depends on 1.8.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.antlr:antlr-runtime:3.4 is selected over {3.3, 3.3}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-metastore:1.2.1.spark2 (depends on 3.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-exec:1.2.1.spark2      (depends on 3.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.antlr:ST4:4.0.4                                (depends on 3.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.codehaus.jackson:jackson-jaxrs:1.9.13 is selected over {1.8.3, 1.8.3, 1.8.3}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.sun.jersey:jersey-json:1.9                     (depends on 1.8.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* commons-lang:commons-lang:2.6 is selected over {2.4, 2.4, 2.4, 2.4, 2.4, 2.4, 2.4, 2.4}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-exec:1.2.1.spark2      (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-metastore:1.2.1.spark2 (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-client:2.6.5         (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-server-nodemanager:2.6.5 (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.orc:orc-core:1.4.1                      (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-api:2.6.5            (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-hdfs:2.6.5                (depends on 2.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- commons-configuration:commons-configuration:1.6    (depends on 2.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.codehaus.jackson:jackson-core-asl:1.9.13 is selected over {1.8.3, 1.9.11, 1.9.2, 1.8.3, 1.9.11, 1.9.2, 1.8.3, 1.9.11, 1.9.2}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- net.java.dev.jets3t:jets3t:0.9.4                   (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-ipc:1.7.7                     (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-mapred:1.7.7                  (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-hdfs:2.6.5                (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro:1.7.7                         (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.codehaus.jackson:jackson-xc:1.9.13             (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.codehaus.jackson:jackson-jaxrs:1.9.13          (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.codehaus.jackson:jackson-mapper-asl:1.9.13     (depends on 1.9.13)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.spark-project.hive:hive-exec:1.2.1.spark2      (depends on 1.9.2)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.parquet:parquet-hadoop:1.8.2            (depends on 1.9.11)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- com.sun.jersey:jersey-json:1.9                     (depends on 1.8.3)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.slf4j:slf4j-api:1.7.25 is selected over {1.7.7, 1.7.7, 1.7.7, 1.7.7, 1.6.4, 1.6.4, 1.6.4, 1.7.6, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.16, 1.6.1, 1.7.5, 1.7.16, 1.7.16, 1.7.16, 1.7.7, 1.7.7, 1.7.7, 1.7.7, 1.6.4, 1.6.4, 1.6.4, 1.7.6, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.16, 1.6.1, 1.7.5, 1.7.16, 1.7.16, 1.7.16, 1.7.7, 1.7.7, 1.7.7, 1.7.7, 1.6.4, 1.6.4, 1.6.4, 1.7.6, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.16, 1.6.1, 1.7.5, 1.7.16, 1.7.16, 1.7.16, 1.7.7, 1.7.7, 1.7.7, 1.7.7, 1.6.4, 1.6.4, 1.6.4, 1.7.6, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.16, 1.6.1, 1.7.5, 1.7.16, 1.7.16, 1.7.16, 1.7.7, 1.7.7, 1.7.7, 1.7.7, 1.6.4, 1.6.4, 1.6.4, 1.7.6, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.5, 1.7.16, 1.6.1, 1.7.5, 1.7.16, 1.7.16, 1.7.16}[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.arrow:arrow-memory:0.8.0                (depends on 1.7.25)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.arrow:arrow-vector:0.8.0                (depends on 1.7.25)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.slf4j:slf4j-log4j12:1.7.16                     (depends on 1.7.16)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.slf4j:jul-to-slf4j:1.7.16                      (depends on 1.7.16)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.slf4j:jcl-over-slf4j:1.7.16                    (depends on 1.7.16)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.scalanlp:breeze_2.11:0.13.2                    (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.zookeeper:zookeeper:3.4.6               (depends on 1.6.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 1.7.16)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.parquet:parquet-common:1.8.2            (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.orc:orc-core:1.4.1                      (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-server-nodemanager:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-yarn-common:2.6.5         (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-shuffle:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-core:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-common:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-mapreduce-client-app:2.6.5 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-auth:2.6.5                (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.directory.server:apacheds-kerberos-codec:2.0.0-M15 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.directory.server:apacheds-i18n:2.0.0-M15 (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.directory.api:api-util:1.0.0-M20        (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.directory.api:api-asn1-api:1.0.0-M20    (depends on 1.7.5)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.curator:curator-client:2.6.0            (depends on 1.7.6)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-mapred:1.7.7                  (depends on 1.6.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro-ipc:1.7.7                     (depends on 1.6.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.avro:avro:1.7.7                         (depends on 1.6.4)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- io.dropwizard.metrics:metrics-jvm:3.1.5            (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- io.dropwizard.metrics:metrics-json:3.1.5           (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- io.dropwizard.metrics:metrics-graphite:3.1.5       (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- io.dropwizard.metrics:metrics-core:3.1.5           (depends on 1.7.7)[0m
+[0m[[0m[0minfo[0m] [0m[0m	* org.apache.commons:commons-math3:3.4.1 is selected over 3.1.1[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-mllib_2.11:2.3.0            (depends on 3.4.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-mllib-local_2.11:2.3.0      (depends on 3.4.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.spark:spark-core_2.11:2.3.0             (depends on 3.4.1)[0m
+[0m[[0m[0minfo[0m] [0m[0m	    +- org.apache.hadoop:hadoop-common:2.6.5              (depends on 3.1.1)[0m

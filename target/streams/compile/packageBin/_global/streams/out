@@ -1,0 +1,17 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/admin/sbt-sample/target/scala-2.11/sparktwoexperiments_2.11-1.0.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gr[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes/gr[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gr/upatras[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes/gr/upatras[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gr/upatras/ceid[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes/gr/upatras/ceid[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gr/upatras/ceid/ddcdm[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes/gr/upatras/ceid/ddcdm[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gr/upatras/ceid/ddcdm/app.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes/gr/upatras/ceid/ddcdm/app.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gr/upatras/ceid/ddcdm/app$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/admin/sbt-sample/target/scala-2.11/classes/gr/upatras/ceid/ddcdm/app$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

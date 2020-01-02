@@ -1,0 +1,1 @@
+[0m[[0m[33mwarn[0m] [0m[0minsecure HTTP request is deprecated 'http://repository.apache.org/snapshots/'; switch to HTTPS or opt-in as ("apache-snapshots" at "http://repository.apache.org/snapshots/").withAllowInsecureProtocol(true)[0m
