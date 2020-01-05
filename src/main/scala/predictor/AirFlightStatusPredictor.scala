@@ -10,6 +10,10 @@ class AirFlightStatusPredictor{
 
     var spark: Spark = new Spark();
 
+      spark.test();
+
+
+    spark.exit();
   }
 
 }
