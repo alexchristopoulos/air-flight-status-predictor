@@ -1,4 +1,0 @@
-[0m[[0m[33mwarn[0m] [0m[0mF:\Development\scala\air-flight-status-predictor\src\main\scala\predictor\AirFlightStatusPredictor.scala:3:47: imported `config' is permanently hidden by definition of package config in package predictor[0m
-[0m[[0m[33mwarn[0m] [0m[0mimport gr.upatras.ceid.ddcdm.predictor.config.config;[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                              ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
