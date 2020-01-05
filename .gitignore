@@ -5,3 +5,5 @@
 .vscode/
 .idea/
 null/
+target/
+project/target/
