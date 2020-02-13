@@ -1,8 +1,8 @@
-package gr.upatras.ceid.ddcdm.predictor;
+package gr.upatras.ceid.ddcdm.predictor
 
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark;
 
-class AirFlightStatusPredictor{
+class AirFlightStatusPredictor {
 
   def AirFlightStatusPredictor(): Unit = {}
 
@@ -10,9 +10,7 @@ class AirFlightStatusPredictor{
 
     var spark: Spark = new Spark();
 
-      spark.test();
-
-
+    spark.test();
     spark.exit();
   }
 

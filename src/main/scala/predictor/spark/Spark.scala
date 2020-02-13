@@ -10,10 +10,10 @@ import predictor.spark.SparkClustering
 
 class Spark {
 
-  private var sparkConf:SparkConf = _
-  private var sparkContext:SparkContext = _
+  private var sparkConf: SparkConf = _
+  private var sparkContext: SparkContext = _
 
-  locally{
+  locally {
     this.sparkConf = new SparkConf()
       .setAppName(config.sparkConfSetAppName)
       .setMaster(config.sparkConfSetMaster)
