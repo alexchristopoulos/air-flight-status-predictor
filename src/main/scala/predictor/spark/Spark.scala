@@ -6,7 +6,6 @@ import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.util.MLUtils
-import predictor.spark.SparkClustering
 
 class Spark {
 
@@ -21,16 +20,13 @@ class Spark {
     this.sparkContext = new SparkContext(this.sparkConf)
   }
 
-  def test(): Unit = {
-
-    val kMeansClustering = new SparkClustering(this.sparkConf, this.sparkContext);
-
-    val tmp: KMeansModel = kMeansClustering.kMeansClustering();
-
-  }
 
   def exit(): Unit = {
     this.sparkContext.stop()
+  }
+
+  def getSparkContext(): SparkContext = {
+    return this.sparkContext
   }
 
 

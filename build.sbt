@@ -15,3 +15,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql" % sparkVersion,
   "org.apache.spark" %% "spark-mllib" % sparkVersion,
 )
+
+libraryDependencies += "org.jsoup" % "jsoup" % "1.8.3"

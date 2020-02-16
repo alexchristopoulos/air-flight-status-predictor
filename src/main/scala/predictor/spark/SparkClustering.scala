@@ -1,4 +1,4 @@
-package predictor.spark
+package gr.upatras.ceid.ddcdm.predictor.spark
 
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
@@ -6,7 +6,7 @@ import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD;
 
-class SparkClustering(sparkConf: SparkConf, sparkContext: SparkContext) {
+class SparkClustering(sparkContext: SparkContext) {
 
   def kMeansClustering(): KMeansModel = {
 
