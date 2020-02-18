@@ -7,7 +7,7 @@ import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.util.MLUtils
 
-class Spark {
+object Spark {
 
   private var sparkConf: SparkConf = _
   private var sparkContext: SparkContext = _
@@ -19,7 +19,6 @@ class Spark {
 
     this.sparkContext = new SparkContext(this.sparkConf)
   }
-
 
   def exit(): Unit = {
     this.sparkContext.stop()

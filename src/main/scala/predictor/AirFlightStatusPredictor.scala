@@ -2,21 +2,16 @@ package gr.upatras.ceid.ddcdm.predictor
 
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.spark.SparkClustering
-class AirFlightStatusPredictor {
 
-  def AirFlightStatusPredictor(): Unit = {}
+object AirFlightStatusPredictor {
 
   def run(): Unit = {
 
-    var spark: Spark = new Spark()
-
-    println("Worked!!!!!!!")
-
-    //val sparkClustering: SparkClustering = new SparkClustering(spark.getSparkContext())
-
+    Spark.getSparkContext()
+    //val sparkClustering: SparkClustering = new SparkClustering(Spark.getSparkContext())
     //sparkClustering.kMeansClustering()
-
     //spark.exit()
+    Spark.exit()
   }
 
 }

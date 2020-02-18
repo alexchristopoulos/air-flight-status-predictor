@@ -2,7 +2,15 @@ package gr.upatras.ceid.ddcdm.predictor.config;
 
 object config {
 
-  val sparkConfSetMaster = "spark://11.22.33.7:6066";
-  val sparkConfSetAppName = "AIR-FLIGHT-STATUS-PREDICTOR";
-  val sparkDatasetDir = "/home/admin/data";
+  val sparkConfSetMaster = "local[*]"
+  val sparkConfSetAppName = "AIR-FLIGHT-STATUS-PREDICTOR"
+  val sparkDatasetDir = "/home/admin/data"
+  val sparkDatasetAirportsSkytraxReviews = "dataAirportsSkytraxReviews.out"
+  val sparkDatasetAirportsAirlinesQualityReviews = "dataAirportsAirlinequality.out"
+  val sparkDatasetIataAirportCodesWiki = "iataAirportsCodesWiki.out"
+  val sparkDatasetTripadvisorAirlinesReviews = "tripadvisorreviews.out"
+  val sparkDatasetPredictionAirports = "airports.csv"
+  val sparkDatasetPredictionAirlines = "airlines.csv"
+  val sparkDatasetPredictionFlights = "flights.csv"
+
 }
