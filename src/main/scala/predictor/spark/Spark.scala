@@ -6,11 +6,14 @@ import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.util.MLUtils
+import org.apache.spark.sql._
+import org.apache.spark.sql.types.StructType
 
 object Spark {
 
   private var sparkConf: SparkConf = _
   private var sparkContext: SparkContext = _
+  private var sparkSession: SparkSession = _
 
   locally {
     this.sparkConf = new SparkConf()
@@ -18,6 +21,8 @@ object Spark {
       .setMaster(config.sparkConfSetMaster)
 
     this.sparkContext = new SparkContext(this.sparkConf)
+
+    this.sparkSession = new SparkSession(this.sparkContext)
   }
 
   def exit(): Unit = {
@@ -27,6 +32,14 @@ object Spark {
   def getSparkContext(): SparkContext = {
     return this.sparkContext
   }
+
+  def getSparkSession(): SparkSession = {
+
+
+    return this.sparkSession
+  }
+
+
 
 
 }
