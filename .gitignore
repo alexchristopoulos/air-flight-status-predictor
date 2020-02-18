@@ -8,3 +8,4 @@ null/
 target/
 project/
 data/
+!/project/assembly.sbt
