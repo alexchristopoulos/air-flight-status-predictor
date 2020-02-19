@@ -12,5 +12,6 @@ object config {
   val sparkDatasetPredictionAirports = "/airports.csv"
   val sparkDatasetPredictionAirlines = "/airlines.csv"
   val sparkDatasetPredictionFlights = "/flights.csv"
+  val sparkOutputDataset = "/home/admin/data/output/"
 
 }

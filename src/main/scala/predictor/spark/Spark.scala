@@ -7,25 +7,21 @@ import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.sql._
-import org.apache.spark.sql.types.StructType
 
 object Spark {
 
-  private var sparkConf: SparkConf = _
-  private var sparkContext: SparkContext = _
-  private var sparkSession: SparkSession = _
+  private val sparkConf: SparkConf = new SparkConf()
+    .setAppName(config.sparkConfSetAppName)
+    .setMaster(config.sparkConfSetMaster)
 
-  locally {
-    this.sparkConf = new SparkConf()
-      .setAppName(config.sparkConfSetAppName)
-      .setMaster(config.sparkConfSetMaster)
-
-    this.sparkContext = new SparkContext(this.sparkConf)
-
-    this.sparkSession = new SparkSession(this.sparkContext)
-  }
+  private val sparkContext: SparkContext = new SparkContext(this.sparkConf)
+  private val sparkSession = SparkSession
+    .builder()
+    .appName(config.sparkConfSetAppName + " ***SQL***")
+    .getOrCreate()
 
   def exit(): Unit = {
+    this.sparkSession.stop()
     this.sparkContext.stop()
   }
 
@@ -34,7 +30,6 @@ object Spark {
   }
 
   def getSparkSession(): SparkSession = {
-
 
     return this.sparkSession
   }
