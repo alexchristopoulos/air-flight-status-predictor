@@ -1,9 +1,10 @@
-package gr.upatras.ceid.ddcdm.predictor.preprocess
+package gr.upatras.ceid.ddcdm.predictor.datasets
 
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.sql.types._
 import org.apache.spark.sql._
+import gr.upatras.ceid.ddcdm.predictor
 import org.apache.spark.sql.functions
 import java.io._
 
@@ -14,35 +15,11 @@ object DatasetPreprocessing {
 
   def combineAirlinesWithTripadvisorReviews(): Unit = {
 
-    //load dataset and remove first line
-    val airlinesRdd = sc
-      .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirlines)
-      .mapPartitionsWithIndex {
-      (idx, iter) => if (idx == 0) iter.drop(1) else iter}
-      .map(line => Row.fromSeq(line.split(",").toSeq))
+    TripadvisorAirlinesReviewsDataset.load(this.sc, this.ss)
+    AirlinesDataset.load(this.sc, this.ss)
 
-    //load dataset and remove first line
-    val airlinesReviewsRdd = sc
-      .textFile(config.sparkDatasetDir + config.sparkDatasetTripadvisorAirlinesReviews)
-      .mapPartitionsWithIndex {
-      (idx, iter) => if (idx == 0) iter.drop(1) else iter}
-      .map(line => Row.fromSeq(line.split(",").toSeq))
-
-    val structAirlines = StructType(
-      StructField("iata1", StringType, false) ::
-        StructField("name1", StringType, false) :: Nil)
-
-    val structAirlinesReviews = StructType(
-      StructField("iata2", StringType, false) ::
-        StructField("name2", StringType, false) ::
-        StructField("rating", StringType, false) ::
-        StructField("numOfReviews", StringType, false) :: Nil)
-
-    val dfAirlines = this.ss.createDataFrame(airlinesRdd, structAirlines)
-    val dfAirlinesReviews = this.ss.createDataFrame(airlinesReviewsRdd, structAirlinesReviews)
-
-    dfAirlines.as("airlines")
-    dfAirlinesReviews.as("airlinesReviews")
+    val dfAirlinesReviews = TripadvisorAirlinesReviewsDataset.getAsDf()
+    val dfAirlines = AirlinesDataset.getAsDf()
 
     val res = dfAirlines.join(dfAirlinesReviews, functions.col("iata1") === functions.col("iata2"), "inner").rdd.collect()
 
