@@ -6,6 +6,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 
 object AirlinesDataset {
 
@@ -20,8 +21,8 @@ object AirlinesDataset {
 
     this.datasetRdd = sparkContext
       .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirlines)
-      .mapPartitionsWithIndex { (idx, iter) => if (idx == 0) iter.drop(1) else iter
-      }.map(line => Row.fromSeq(line.split(",").toSeq))
+      .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+      .map(FuncOperators.csvStringRowToRow)
 
     this.datasetDf = sparkSession.createDataFrame(this.datasetRdd, this.struct)
 

@@ -1,11 +1,11 @@
 package gr.upatras.ceid.ddcdm.predictor.datasets
 
 import gr.upatras.ceid.ddcdm.predictor.config.config
-import gr.upatras.ceid.ddcdm.predictor.preprocess.DatasetPreprocessing.sc
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 
 object TripadvisorAirlinesReviewsDataset {
 
@@ -22,8 +22,8 @@ object TripadvisorAirlinesReviewsDataset {
 
     this.datasetRdd = sparkContext
       .textFile(config.sparkDatasetDir + config.sparkDatasetTripadvisorAirlinesReviews)
-      .mapPartitionsWithIndex { (idx, iter) => if (idx == 0) iter.drop(1) else iter
-      }.map(line => Row.fromSeq(line.split(",").toSeq))
+      .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+      .map(FuncOperators.csvStringRowToRow)
 
     this.datasetDf = sparkSession.createDataFrame(this.datasetRdd, this.struct)
     this.datasetDf.as("airlinesReviews")
