@@ -13,8 +13,8 @@ object TripadvisorAirlinesReviewsDataset {
   private var datasetDf: DataFrame = _
 
   val struct = StructType(
-    StructField("iata2", StringType, false) ::
-      StructField("name2", StringType, false) ::
+    StructField("iata", StringType, false) ::
+      StructField("name", StringType, false) ::
       StructField("rating", StringType, false) ::
       StructField("numOfReviews", StringType, false) :: Nil)
 
@@ -27,6 +27,7 @@ object TripadvisorAirlinesReviewsDataset {
 
     this.datasetDf = sparkSession.createDataFrame(this.datasetRdd, this.struct)
     this.datasetDf.as("airlinesReviews")
+    this.datasetDf.createOrReplaceTempView("airlinesReviews")
 
   }
 

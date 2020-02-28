@@ -14,8 +14,8 @@ object AirlinesDataset {
   private var datasetDf: DataFrame = _
 
   private val struct = StructType(
-    StructField("iata1", StringType, false) ::
-      StructField("name1", StringType, false) :: Nil)
+    StructField("iata", StringType, false) ::
+      StructField("name", StringType, false) :: Nil)
 
   def load(sparkContext: SparkContext, sparkSession: SparkSession): Unit = {
 
@@ -25,8 +25,8 @@ object AirlinesDataset {
       .map(FuncOperators.csvStringRowToRow)
 
     this.datasetDf = sparkSession.createDataFrame(this.datasetRdd, this.struct)
-
     this.datasetDf.as("airlines")
+    this.datasetDf.createOrReplaceTempView("airlines")
   }
 
   def getAsDf(): DataFrame = {

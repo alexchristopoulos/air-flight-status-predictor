@@ -11,6 +11,8 @@ object AirFlightStatusPredictor {
     Spark.getSparkContext()
     try {
       DatasetPreprocessing.combineAirlinesWithTripadvisorReviews()
+    } catch {
+      case x:Exception => println(x.toString())
     }
 
     //val sparkClustering: SparkClustering = new SparkClustering(Spark.getSparkContext())
