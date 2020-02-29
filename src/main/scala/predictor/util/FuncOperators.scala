@@ -1,6 +1,7 @@
 package gr.upatras.ceid.ddcdm.predictor.util
 
 import org.apache.spark.sql.Row
+import org.apache.spark.rdd.RDD
 
 object FuncOperators {
 
@@ -14,6 +15,7 @@ object FuncOperators {
   def csvStringRowToRowTripAdvReviews: String => Row = (line: String) => {
 
     try {
+
       val tokens = line.split(",")
       var iata: String = ""
       var name: String = ""
@@ -47,4 +49,23 @@ object FuncOperators {
       }
     }
   }
+
+  //extract specified columns from an rdd[row] and create new RDD[Row] with only the columns specified in colNums list
+  def extractColumns(colNums: List[Int], rdd: RDD[Row]): RDD[Row] = {
+
+    rdd.map(row => {
+
+      var tmp: Row = Row.empty
+      var cnt = 0
+
+      colNums.foreach(index => {
+        tmp(cnt) = row(index)
+        cnt = cnt + 1
+      })
+
+      tmp
+    })
+  }
+
+
 }
