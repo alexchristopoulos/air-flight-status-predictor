@@ -12,10 +12,10 @@ object DatasetPreprocessing {
 
   def preprocess(): Unit = {
 
-    //combineAirlinesWithTripadvisorReviews()
+    this.combineAirlinesWithTripadvisorReviews()
   }
 
-  private def combineAirlinesWithTripadvisorReviews(): Unit = {
+  def combineAirlinesWithTripadvisorReviews(): Unit = {
 
     TripadvisorAirlinesReviewsDataset.load(this.sc, this.ss)
     AirlinesDataset.load(this.sc, this.ss)
