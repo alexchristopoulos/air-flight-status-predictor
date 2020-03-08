@@ -1,4 +1,4 @@
-package predictor.datasets
+package gr.upatras.ceid.ddcdm.predictor.datasets
 
 import org.apache.spark._
 import org.apache.spark.sql.DataFrame
@@ -13,50 +13,59 @@ object AirFlightsKaggleDataset {
   private var datasetDf: DataFrame = _
 
   private val struct = StructType(
-    StructField("YEAR", IntegerType, false) ::
-      StructField("MONTH", IntegerType, false) ::
-      StructField("DAY", IntegerType, false)::
-      StructField("DAY_OF_WEEK", IntegerType, false) ::
-      StructField("AIRLINE", StringType, false)::
-      StructField("FLIGHT_NUMBER", IntegerType, false) ::
-      StructField("TAIL_NUMBER", IntegerType, false)::
-      StructField("ORIGIN_AIRPORT", StringType, false) ::
-      StructField("DESTINATION_AIRPORT", StringType, false)::
-      StructField("SCHEDULED_DEPARTURE", StringType, false) ::
-      StructField("DEPARTURE_TIME", StringType, false)::
-      StructField("DEPARTURE_DELAY", StringType, false)::
-      StructField("TAXI_OUT", StringType, false) ::
-      StructField("WHEELS_OFF", StringType, false)::
-      StructField("SCHEDULED_TIME", StringType, false)::
-      StructField("ELAPSED_TIME", StringType, false) ::
-      StructField("AIR_TIME", StringType, false)::
-      StructField("DISTANCE", StringType, false)::
-      StructField("WHEELS_ON", StringType, false) ::
-      StructField("TAXI_IN", StringType, false)::
-      StructField("SCHEDULED_ARRIVAL", StringType, false) ::
-      StructField("ARRIVAL_TIME", StringType, false)::
-      StructField("ARRIVAL_DELAY", StringType, false)::
-      StructField("DIVERTED", StringType, false) ::
-      StructField("CANCELLED", StringType, false)::
-      StructField("CANCELLATION_REASON", StringType, false)::
-      StructField("AIR_SYSTEM_DELAY", StringType, false) ::
-      StructField("SECURITY_DELAY", StringType, false)::
-      StructField("AIRLINE_DELAY", StringType, false)::
-      StructField("LATE_AIRCRAFT_DELAY", StringType, false) ::
-      StructField("WEATHER_DELAY", StringType, false)::
+   // StructField("YEAR", StringType, true) ::
+      StructField("MONTH", IntegerType, true) ::
+      StructField("DAY", IntegerType, true)::
+      StructField("DAY_OF_WEEK", IntegerType, true) ::
+      StructField("AIRLINE", StringType, true)::
+  //    StructField("FLIGHT_NUMBER", StringType, true) ::
+  //    StructField("TAIL_NUMBER", StringType, true)::
+      StructField("ORIGIN_AIRPORT", StringType, true) ::
+      StructField("DESTINATION_AIRPORT", StringType, true)::
+   //   StructField("SCHEDULED_DEPARTURE", StringType, true) ::
+    //  StructField("DEPARTURE_TIME", StringType, true)::
+    //  StructField("DEPARTURE_DELAY", StringType, true)::
+    //  StructField("TAXI_OUT", StringType, true) ::
+    //  StructField("WHEELS_OFF", StringType, true)::
+    //  StructField("SCHEDULED_TIME", StringType, true)::
+    //  StructField("ELAPSED_TIME", StringType, true) ::
+    //  StructField("AIR_TIME", StringType, true)::
+      StructField("DISTANCE", IntegerType, true)::
+    //  StructField("WHEELS_ON", StringType, true) ::
+    //  StructField("TAXI_IN", StringType, true)::
+     // StructField("SCHEDULED_ARRIVAL", StringType, true) ::
+     // StructField("ARRIVAL_TIME", StringType, true)::
+      StructField("ARRIVAL_DELAY", IntegerType, true)::
+     // StructField("DIVERTED", StringType, true) ::
+      StructField("CANCELLED", IntegerType, true)::
+     /* StructField("CANCELLATION_REASON", StringType, true)::
+      StructField("AIR_SYSTEM_DELAY", StringType, true) ::
+      StructField("SECURITY_DELAY", StringType, true)::
+      StructField("AIRLINE_DELAY", StringType, true)::
+      StructField("LATE_AIRCRAFT_DELAY", StringType, true) ::
+      StructField("WEATHER_DELAY", StringType, true)::*/
       Nil)
 
   def load(sparkContext: SparkContext, sparkSession: SparkSession): Unit = {
 
-    this.datasetDf = sparkSession.createDataFrame(
-      sparkContext
-        .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirlines)
-        .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-        .map(FuncOperators.csvStringRowToRow),
-      this.struct)
+    println("***** LOADING DATASET " + config.sparkDatasetDir + config.sparkDatasetPredictionFlights + " *****")
 
-    this.datasetDf.as("airlines")
-    this.datasetDf.createOrReplaceTempView("airlines")
+    val t = sparkContext
+      .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionFlights)
+      .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+      .map(FuncOperators.specialOne)
+
+    this.datasetDf = sparkSession.createDataFrame(t, this.struct)
+
+    /*this.datasetDf = sparkSession.createDataFrame(
+      sparkContext
+        .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionFlights)
+        .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+        .map(FuncOperators.specialOne),
+      this.struct)*/
+
+    this.datasetDf.as("airlinesDataset")
+    this.datasetDf.createOrReplaceTempView("airlinesDataset")
   }
 
   def getAsDf(): DataFrame = {

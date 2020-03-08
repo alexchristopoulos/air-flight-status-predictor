@@ -5,6 +5,8 @@ import gr.upatras.ceid.ddcdm.predictor.config.config
 import gr.upatras.ceid.ddcdm.predictor.datasets._
 import java.io._
 
+import gr.upatras.ceid.ddcdm.predictor.datasets.AirFlightsKaggleDataset
+
 object DatasetPreprocessing {
 
   private val sc = Spark.getSparkContext()
@@ -12,7 +14,19 @@ object DatasetPreprocessing {
 
   def preprocess(): Unit = {
 
-    this.combineAirlinesWithTripadvisorReviews()
+    //this.combineAirlinesWithTripadvisorReviews()
+    this.preprocessFlights2015Dataset()
+  }
+
+  def preprocessFlights2015Dataset(): Unit = {
+
+    val start = System.nanoTime()
+    AirFlightsKaggleDataset.load(this.sc, this.ss)
+
+    //AirFlightsKaggleDataset.getAsDf().show(150)
+
+
+    println(System.nanoTime() - start)
   }
 
   def combineAirlinesWithTripadvisorReviews(): Unit = {
