@@ -12,7 +12,6 @@ object AirFlightStatusPredictor {
 
     Spark.getSparkContext()
     try {
-      DatasetPreprocessing.preprocess()
 
       println("***************************")
       println("RANDOM FOREST TEST")

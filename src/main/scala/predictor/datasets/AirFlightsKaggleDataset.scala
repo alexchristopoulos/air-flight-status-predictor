@@ -6,6 +6,7 @@ import org.apache.spark.sql._
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.sql.types._
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
+import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 
 //air flights 2015 dataset
 object AirFlightsKaggleDataset {
@@ -46,16 +47,19 @@ object AirFlightsKaggleDataset {
       StructField("WEATHER_DELAY", StringType, true)::*/
       Nil)
 
-  def load(sparkContext: SparkContext, sparkSession: SparkSession): Unit = {
+  def load(): Unit = {
 
     println("***** LOADING DATASET " + config.sparkDatasetDir + config.sparkDatasetPredictionFlights + " *****")
 
-    val t = sparkContext
+    val t = Spark
+      .getSparkContext()
       .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionFlights)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(FuncOperators.specialOne)
 
-    this.datasetDf = sparkSession.createDataFrame(t, this.struct)
+    this.datasetDf = Spark
+      .getSparkSession()
+      .createDataFrame(t, this.struct)
 
     /*this.datasetDf = sparkSession.createDataFrame(
       sparkContext

@@ -9,30 +9,18 @@ import gr.upatras.ceid.ddcdm.predictor.datasets.AirFlightsKaggleDataset
 
 object DatasetPreprocessing {
 
-  private val sc = Spark.getSparkContext()
   private val ss = Spark.getSparkSession()
 
   def preprocess(): Unit = {
 
-    //this.combineAirlinesWithTripadvisorReviews()
-    this.preprocessFlights2015Dataset()
+    this.combineAirlinesWithTripadvisorReviews()
   }
 
-  def preprocessFlights2015Dataset(): Unit = {
-
-    val start = System.nanoTime()
-    AirFlightsKaggleDataset.load(this.sc, this.ss)
-
-    //AirFlightsKaggleDataset.getAsDf().show(150)
-
-
-    println(System.nanoTime() - start)
-  }
 
   def combineAirlinesWithTripadvisorReviews(): Unit = {
 
-    TripadvisorAirlinesReviewsDataset.load(this.sc, this.ss)
-    AirlinesDataset.load(this.sc, this.ss)
+    TripadvisorAirlinesReviewsDataset.load()
+    AirlinesDataset.load()
 
     val bufferedWriter: BufferedWriter = new BufferedWriter(new FileWriter(config.sparkOutputDataset + "airlinesWithTripAdvisorReviews.out"))
 

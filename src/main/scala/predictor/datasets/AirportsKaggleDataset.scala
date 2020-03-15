@@ -9,21 +9,27 @@ import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 
-object AirlinesDataset {
+object AirportsKaggleDataset {
 
   private var datasetRdd: RDD[Row] = _
   private var datasetDf: DataFrame = _
-
+//ID,IATA_CODE,AIRPORT,CITY,STATE,COUNTRY,LATITUDE,LONGITUDE
   private val struct = StructType(
     StructField("id", StringType, false) ::
-    StructField("iata", StringType, false) ::
-      StructField("name", StringType, false) :: Nil)
+      StructField("iata", StringType, false) ::
+      StructField("airport", StringType, false) ::
+      StructField("city", StringType, false) ::
+      StructField("state", StringType, false) ::
+      StructField("country", StringType, false) ::
+      StructField("lat", StringType, false) ::
+      StructField("long", StringType, false) ::
+      Nil)
 
   def load(): Unit = {
 
     this.datasetRdd = Spark
       .getSparkContext()
-      .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirlines)
+      .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirports)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(FuncOperators.csvStringRowToRow)
 

@@ -6,6 +6,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
+import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 
 object TripadvisorAirlinesReviewsDataset {
 
@@ -18,14 +19,18 @@ object TripadvisorAirlinesReviewsDataset {
       StructField("rating", DoubleType , false) ::
       StructField("numOfReviews", IntegerType, false) :: Nil)
 
-  def load(sparkContext: SparkContext, sparkSession: SparkSession): Unit = {
+  def load(): Unit = {
 
-    this.datasetRdd = sparkContext
+    this.datasetRdd = Spark
+      .getSparkContext()
       .textFile(config.sparkDatasetDir + config.sparkDatasetTripadvisorAirlinesReviews)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(FuncOperators.csvStringRowToRowTripAdvReviews)
 
-    this.datasetDf = sparkSession.createDataFrame(this.datasetRdd, this.struct)
+    this.datasetDf = Spark
+      .getSparkSession()
+      .createDataFrame(this.datasetRdd, this.struct)
+
     this.datasetDf.as("airlinesReviews")
     this.datasetDf.createOrReplaceTempView("airlinesReviews")
 
