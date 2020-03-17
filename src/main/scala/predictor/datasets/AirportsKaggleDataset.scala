@@ -5,7 +5,7 @@ import org.apache.spark.sql.DataFrame
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import gr.upatras.ceid.ddcdm.predictor.config.config
-import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.apache.spark.sql.types.{StringType, StructField, StructType, IntegerType}
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 
@@ -15,14 +15,14 @@ object AirportsKaggleDataset {
   private var datasetDf: DataFrame = _
 //ID,IATA_CODE,AIRPORT,CITY,STATE,COUNTRY,LATITUDE,LONGITUDE
   private val struct = StructType(
-    StructField("id", StringType, false) ::
+    StructField("id", IntegerType, false) ::
       StructField("iata", StringType, false) ::
       StructField("airport", StringType, false) ::
       StructField("city", StringType, false) ::
       StructField("state", StringType, false) ::
       StructField("country", StringType, false) ::
-      StructField("lat", StringType, false) ::
-      StructField("long", StringType, false) ::
+     // StructField("lat", StringType, true) ::
+     // StructField("long", StringType, true) ::
       Nil)
 
   def load(): Unit = {
@@ -31,7 +31,14 @@ object AirportsKaggleDataset {
       .getSparkContext()
       .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirports)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-      .map(FuncOperators.csvStringRowToRow)
+      .map(line => FuncOperators.csvStringRowToRowType(line, Map(
+        0 -> "Int",
+        1 -> "String",
+        2 -> "String",
+        3 -> "String",
+        4 -> "String",
+        5 -> "String"
+      )))
 
     this.datasetDf = Spark
       .getSparkSession()

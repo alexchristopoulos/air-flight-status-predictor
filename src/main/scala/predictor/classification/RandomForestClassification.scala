@@ -18,7 +18,7 @@ object RandomForestClassification {
     val airlines = AirlinesDataset.getAsDf()
 
     airports.show(20)
-    airlines.show(20)
+    //airlines.show(20)
 
     return
     val splitDf = AirFlightsKaggleDataset.getAsDf().randomSplit(Array(0.65, 0.35))

@@ -12,24 +12,28 @@ object FuncOperators {
   def csvStringRowToRow: String => Row = (line: String) => Row.fromSeq(line.split(",").toSeq)
 
   //Used to convert a Array[String] with comma delimited columns to Row object given Types of variables for a given row
-  def csvStringRowToRowTypes(line: String, paramDef: Map[Int, String]) : Row = {
+  def csvStringRowToRowType: (String, Map[Int, String]) => Row = (line:String, paramDef: Map[Int, String]) => {
 
     var tmp =  new ListBuffer[Any]()
     val tokens = line.split(",")
     //val map: Map[Int, Int] = Map(1 -> 2, 2 -> 3)
+    println(">>>>>>>>>>>>>>>" + line.split(",").length)
+    println(">>>>>>>>>>>>" + line)
     paramDef.foreach((mapEntry) => {
 
       mapEntry._2 match {
-        case "String" => {
+        case "String" => {println("{{{{{{{{{{{{{ " + tokens(mapEntry._1))
           tmp += tokens(mapEntry._1).trim()
         }
         case "Int" => {
+          println("{{{{{{{{{{{{{ " + tokens(mapEntry._1))
           tmp += tokens(mapEntry._1).trim().toInt
         }
         case "Double" => {
           tmp += tokens(mapEntry._1).trim().toDouble
         }
       }
+
     })
     Row.fromSeq(tmp.toList.toSeq)
   }
