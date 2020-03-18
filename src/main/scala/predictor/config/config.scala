@@ -8,7 +8,7 @@ object config {
   val sparkDatasetAirportsSkytraxReviews = "/dataAirportsSkytraxReviews.out"
   val sparkDatasetAirportsAirlinesQualityReviews = "/dataAirportsAirlinequality.out"
   val sparkDatasetIataAirportCodesWiki = "/iataAirportsCodesWiki.out"
-  val sparkDatasetTripadvisorAirlinesReviews = "/tripadvisorreviews.out"
+  val sparkDatasetTripadvisorAirlinesReviews = "/tripadvisorreviews.data"
   val sparkDatasetPredictionAirports = "/airports.csv"
   val sparkDatasetPredictionAirlines = "/airlines.csv"
   val sparkDatasetPredictionFlights = "/subset.data"

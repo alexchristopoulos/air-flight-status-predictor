@@ -14,6 +14,7 @@ object TripadvisorAirlinesReviewsDataset {
   private var datasetDf: DataFrame = _
 
   val struct = StructType(
+    StructField("id", IntegerType, false) ::
     StructField("iata", StringType, false) ::
       StructField("name", StringType, false) ::
       StructField("rating", DoubleType , false) ::

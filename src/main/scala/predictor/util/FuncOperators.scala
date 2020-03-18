@@ -125,27 +125,31 @@ object FuncOperators {
     try {
 
       val tokens = line.split(",")
+      var id: Int = -1
       var iata: String = ""
       var name: String = ""
       var rating: Double = 0.0
       var numOfReviews: Int = 0
 
-      if (tokens.size == 4) {
+      println(line)
+      if (tokens.size == 5) {
 
-        iata = tokens(0)
-        name = tokens(1)
-        rating = tokens(2).trim().split(" ")(0).toDouble / 5.0
-        numOfReviews = tokens(3).replace(".", "").replace(",", "").toInt
+        id = tokens(0).replace("\"", "").toInt
+        iata = tokens(1)
+        name = tokens(2)
+        rating = tokens(3).trim().split(" ")(0).toDouble / 5.0
+        numOfReviews = tokens(4).replace(".", "").replace("\"","").replace(",", "").toInt
 
-        Row.fromSeq(Seq(iata, name, rating, numOfReviews))
+        Row.fromSeq(Seq(id, iata, name, rating, numOfReviews))
       } else {
 
-        iata = tokens(0)
-        name = tokens(1)
-        rating = tokens(3).trim().split(" ")(0).toDouble / 5.0
-        numOfReviews = tokens(4).replace(".", "").replace(",", "").toInt
+        id = tokens(0).replace("\"", "").toInt
+        iata = tokens(1)
+        name = tokens(2)
+        rating = tokens(4).trim().split(" ")(0).toDouble / 5.0
+        numOfReviews = tokens(5).replace(".", "").replace("\"","").replace(",", "").toInt
 
-        Row.fromSeq(Seq(iata, name, rating, numOfReviews))
+        Row.fromSeq(Seq(id, iata, name, rating, numOfReviews))
       }
 
     } catch {

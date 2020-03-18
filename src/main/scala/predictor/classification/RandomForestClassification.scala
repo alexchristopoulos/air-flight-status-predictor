@@ -3,6 +3,7 @@ package gr.upatras.ceid.ddcdm.predictor.classification
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirFlightsKaggleDataset
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirlinesDataset
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirportsKaggleDataset
+import gr.upatras.ceid.ddcdm.predictor.datasets.TripadvisorAirlinesReviewsDataset
 
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.{RandomForestClassificationModel, RandomForestClassifier}
@@ -14,11 +15,15 @@ object RandomForestClassification {
   def trainModel(): Unit = {
     AirportsKaggleDataset.load()
     AirlinesDataset.load()
+    TripadvisorAirlinesReviewsDataset.load()
+
     val airports = AirportsKaggleDataset.getAsDf()
     val airlines = AirlinesDataset.getAsDf()
+    val trp = TripadvisorAirlinesReviewsDataset.getAsDf()
 
     airports.show(20)
     //airlines.show(20)
+    trp.show(20)
 
     return
     val splitDf = AirFlightsKaggleDataset.getAsDf().randomSplit(Array(0.65, 0.35))
