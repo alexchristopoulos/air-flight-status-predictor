@@ -68,8 +68,8 @@ object AirFlightsKaggleDataset {
         .map(FuncOperators.specialOne),
       this.struct)*/
 
-    this.datasetDf.as("airlinesDataset")
-    this.datasetDf.createOrReplaceTempView("airlinesDataset")
+    this.datasetDf.as("flights")
+    this.datasetDf.createOrReplaceTempView("flights")
   }
 
   def getAsDf(): DataFrame = {

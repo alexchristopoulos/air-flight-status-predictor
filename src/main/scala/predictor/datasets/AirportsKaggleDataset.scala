@@ -44,8 +44,8 @@ object AirportsKaggleDataset {
       .getSparkSession()
       .createDataFrame(this.datasetRdd, this.struct)
 
-    this.datasetDf.as("airlines")
-    this.datasetDf.createOrReplaceTempView("airlines")
+    this.datasetDf.as("airports")
+    this.datasetDf.createOrReplaceTempView("airports")
   }
 
   def getAsDf(): DataFrame = {

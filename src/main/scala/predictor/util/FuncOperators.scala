@@ -14,28 +14,28 @@ object FuncOperators {
   //Used to convert a Array[String] with comma delimited columns to Row object given Types of variables for a given row
   def csvStringRowToRowType: (String, Map[Int, String]) => Row = (line:String, paramDef: Map[Int, String]) => {
 
-    var tmp =  new ListBuffer[Any]()
+    var tmp =  Map[Int, Any]()
     val tokens = line.split(",")
     //val map: Map[Int, Int] = Map(1 -> 2, 2 -> 3)
-    println(">>>>>>>>>>>>>>>" + line.split(",").length)
-    println(">>>>>>>>>>>>" + line)
-    paramDef.foreach((mapEntry) => {
 
+    paramDef.foreach((mapEntry) => {
       mapEntry._2 match {
-        case "String" => {println("{{{{{{{{{{{{{ " + tokens(mapEntry._1))
-          tmp += tokens(mapEntry._1).trim()
+        case "String" => {
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim()
         }
         case "Int" => {
-          println("{{{{{{{{{{{{{ " + tokens(mapEntry._1))
-          tmp += tokens(mapEntry._1).trim().toInt
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toInt
         }
         case "Double" => {
-          tmp += tokens(mapEntry._1).trim().toDouble
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
         }
       }
-
     })
-    Row.fromSeq(tmp.toList.toSeq)
+    tmp = scala.collection.immutable.ListMap(tmp.toSeq.sortBy(_._1):_*).toMap
+
+    tmp.foreach(x => println(x.toString()))
+    println(line)
+    Row.fromSeq(tmp.valuesIterator.toList.toSeq)
   }
 
   def specialOne: String => Row = (line: String) => {

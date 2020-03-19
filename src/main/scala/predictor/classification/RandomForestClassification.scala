@@ -3,7 +3,6 @@ package gr.upatras.ceid.ddcdm.predictor.classification
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirFlightsKaggleDataset
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirlinesDataset
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirportsKaggleDataset
-import gr.upatras.ceid.ddcdm.predictor.datasets.TripadvisorAirlinesReviewsDataset
 
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.{RandomForestClassificationModel, RandomForestClassifier}
@@ -13,17 +12,45 @@ import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorIndexer}
 object RandomForestClassification {
 
   def trainModel(): Unit = {
+
     AirportsKaggleDataset.load()
     AirlinesDataset.load()
-    TripadvisorAirlinesReviewsDataset.load()
+    AirFlightsKaggleDataset.load()
 
     val airports = AirportsKaggleDataset.getAsDf()
     val airlines = AirlinesDataset.getAsDf()
-    val trp = TripadvisorAirlinesReviewsDataset.getAsDf()
+    val flights = AirFlightsKaggleDataset.load()
 
-    airports.show(20)
-    //airlines.show(20)
-    trp.show(20)
+    val f = gr
+      .upatras
+      .ceid
+      .ddcdm
+      .predictor
+      .spark
+      .Spark
+      .getSparkSession()
+      .sql("SELECT f.DAY, f.DAY_OF_WEEK, l.id AS AIRLINE_ID, a1.id AS ORIGIN, a2.id AS DEST, f.ARRIVAL_DELAY, f.CANCELLED, f.DISTANCE  " +
+        "FROM flights AS f " +
+        "INNER JOIN airports AS a1 ON a1.iata=f.ORIGIN_AIRPORT " +
+        "INNER JOIN airports AS a2 ON a2.iata=f.DESTINATION_AIRPORT " +
+        "INNER JOIN airlines AS l ON l.iata=f.AIRLINE")
+
+
+    /*val f = gr
+      .upatras
+      .ceid
+      .ddcdm
+      .predictor
+      .spark
+      .Spark
+      .getSparkSession()
+      .sql("SELECT f.DAY, f.DAY_OF_WEEK, l.id AS AIRLINE_ID, f.ORIGIN_AIRPORT, f.DESTINATION_AIRPORT, f.ARRIVAL_DELAY, f.CANCELLED, f.DISTANCE " +
+        "FROM flights AS f " +
+        "INNER JOIN airlines AS l ON l.iata=f.AIRLINE")*/
+
+    //f.show(50)
+    airports.show(300)
+    //airports.show(50)
 
     return
     val splitDf = AirFlightsKaggleDataset.getAsDf().randomSplit(Array(0.65, 0.35))

@@ -25,12 +25,12 @@ object DatasetPreprocessing {
     val bufferedWriter: BufferedWriter = new BufferedWriter(new FileWriter(config.sparkOutputDataset + "airlinesWithTripAdvisorReviews.out"))
 
     this.ss
-      .sql("SELECT a.iata, a.name, ar.rating, ar.numOfReviews FROM airlines as a INNER JOIN  airlinesReviews AS ar ON a.iata=ar.iata")
+      .sql("SELECT ar.id, a.iata, a.name, ar.rating, ar.numOfReviews FROM airlines as a INNER JOIN  airlinesReviews AS ar ON a.iata=ar.iata")
       .rdd
       .collect()
       .foreach(row => {
 
-        bufferedWriter.write(row(0).toString() + "," + row(1).toString() + "," + row(2).toString() + "," + row(3).toString())
+        bufferedWriter.write(row(0).toString() + "," + row(1).toString() + "," + row(2).toString() + "," + row(3).toString() + "," + row(4).toString())
         bufferedWriter.newLine()
       })
 
