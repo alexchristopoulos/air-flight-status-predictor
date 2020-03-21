@@ -31,10 +31,14 @@ object FuncOperators {
         }
       }
     })
-    tmp = scala.collection.immutable.ListMap(tmp.toSeq.sortBy(_._1):_*).toMap
 
-    tmp.foreach(x => println(x.toString()))
-    println(line)
+    tmp = scala
+    .collection
+    .immutable
+    .ListMap(tmp.toSeq.sortBy(_._1):_*).toMap//asc sort by key
+
+    //tmp.foreach(x => println(x.toString()))
+    //println(line)
     Row.fromSeq(tmp.valuesIterator.toList.toSeq)
   }
 
