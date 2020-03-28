@@ -10,6 +10,8 @@ object AirFlightStatusPredictor {
 
   def run(): Unit = {
 
+    val startTime = System.nanoTime()
+
     Spark.getSparkContext()
     try {
 
@@ -30,6 +32,7 @@ object AirFlightStatusPredictor {
     //sparkClustering.kMeansClustering()
     //spark.exit()
     Spark.exit()
+    println("*** END AFTER " + ((System.nanoTime() - startTime).toFloat/60000000000f ).toString() + " MINUTES ****")
   }
 
 }
