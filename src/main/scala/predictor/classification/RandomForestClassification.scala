@@ -9,6 +9,7 @@ import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.ml.feature.{IndexToString, RFormula, StringIndexer, VectorIndexer}
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
+import org.apache.spark.mllib.evaluation.MulticlassMetrics
 
 object RandomForestClassification {
 
@@ -41,7 +42,7 @@ object RandomForestClassification {
     val splitCombined = delays
       .union(cancelations)
       .union(noDelays)
-      .randomSplit(Array(0.7, 0.3))
+      .randomSplit(Array(0.6, 0.4))
 
     val formula = new RFormula()
       .setFormula("CANCELLED ~ DAY + DAY_OF_WEEK + AIRLINE_ID + ORIGIN + DESTINATION + ARRIVAL_DELAY + DISTANCE")
@@ -51,6 +52,7 @@ object RandomForestClassification {
     val trainrf = formula
       .fit(splitCombined(0))
       .transform(splitCombined(0))
+      .cache()
 
     val testrf = formula
       .fit(splitCombined(1))
@@ -70,6 +72,15 @@ object RandomForestClassification {
 
     val accuracy = evaluator
       .evaluate(predictions)
+
+    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.rdd.map(row => ( row(12).toString().toDouble, row(9).toString().toDouble ))
+
+    val metrics = new MulticlassMetrics(rddEval)
+
+    println("LABEL  PRECISION   RECALL  F-MEASURE")
+    metrics.labels.foreach(label => {
+      println(label.toString() + "  " + metrics.precision(label).toString() + "  " + metrics.recall(label).toString() + "   " + metrics.fMeasure(label).toString())
+    })
 
     println(s"Test set accuracy = $accuracy")
 
