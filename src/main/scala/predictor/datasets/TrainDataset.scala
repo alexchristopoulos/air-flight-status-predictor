@@ -8,6 +8,8 @@ import org.apache.spark.sql.types.DoubleType
 import org.apache.spark.sql.types.StringType
 
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
+import gr.upatras.ceid.ddcdm.predictor.config.config
+import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 
 object TrainDataset {
 
@@ -41,6 +43,18 @@ object TrainDataset {
   def load(): Unit = {
 
     this.initStruct();
+
+    Spark
+      .getSparkSession()
+      .createDataFrame(
+      Spark
+        .getSparkContext()
+        .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
+        .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+        .map(line => FuncOperators.csvStringRowToRowType(line, this.getTypeMapping())),
+        this.struct
+      )
+      .createOrReplaceGlobalTempView("trainData")
   }
 
   def getDataFrame(): DataFrame = {
@@ -67,6 +81,18 @@ object TrainDataset {
     })
 
     this.struct = tmp
+  }
+
+  private def getTypeMapping(): Map[Int, String] = Unit {
+
+    var map: Map[Int, String] = Map()
+
+    this.selectedFeatures.foreach((entry) => {
+
+      map += (entry._2._1 -> entry._2._2)
+    })
+
+    return map
   }
 
 }
