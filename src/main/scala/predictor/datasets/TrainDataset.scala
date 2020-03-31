@@ -44,6 +44,8 @@ object TrainDataset {
 
     this.initStruct()
 
+    val typeMapping = this.getTypeMapping()
+
     this.df = Spark
       .getSparkSession()
       .createDataFrame(
@@ -51,7 +53,7 @@ object TrainDataset {
           .getSparkContext()
           .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
           .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-          .map(line => FuncOperators.csvStringRowToRowType(line, this.getTypeMapping())),
+          .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping)),
         this.struct
       )
 
