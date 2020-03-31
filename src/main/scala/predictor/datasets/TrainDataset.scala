@@ -21,12 +21,12 @@ object TrainDataset {
     "MONTH" -> Tuple2(1, "Int"),
     "DAY_OF_MONTH" -> Tuple2(2, "Int"),
     "DAY_OF_WEEK" -> Tuple2(3, "Int"),
-    "OP_CARRIER" -> Tuple2(4, "String"),//airline iata code
+    "OP_CARRIER" -> Tuple2(4, "String"), //airline iata code
     "TAIL_NUM" -> Tuple2(5, "String"),
-    "OP_CARRIER_FL_NUM" -> Tuple2(6, "Int"),//flight number for op carrier
-    "ORIGIN" -> Tuple2(7, "String"),//origin airpotr iata code
-    "DEST" -> Tuple2(8, "String"),//destination airpotr iata code
-    "DEP_DELAY_NEW" -> Tuple2(9, "Double"),//departure delay in minutes
+    "OP_CARRIER_FL_NUM" -> Tuple2(6, "Int"), //flight number for op carrier
+    "ORIGIN" -> Tuple2(7, "String"), //origin airpotr iata code
+    "DEST" -> Tuple2(8, "String"), //destination airpotr iata code
+    "DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
     "TAXI_OUT" -> Tuple2(10, "Double"),
     "WHEELS_OFF" -> Tuple2(11, "Int"),
     "WHEELS_ON" -> Tuple2(12, "Int"),
@@ -42,19 +42,21 @@ object TrainDataset {
 
   def load(): Unit = {
 
-    this.initStruct();
+    this.initStruct()
 
-    Spark
+    this.df = Spark
       .getSparkSession()
       .createDataFrame(
-      Spark
-        .getSparkContext()
-        .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
-        .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-        .map(line => FuncOperators.csvStringRowToRowType(line, this.getTypeMapping())),
+        Spark
+          .getSparkContext()
+          .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
+          .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+          .map(line => FuncOperators.csvStringRowToRowType(line, this.getTypeMapping())),
         this.struct
       )
-      .createOrReplaceGlobalTempView("trainData")
+
+    this.df.as("trainData")
+    this.df.createOrReplaceGlobalTempView("trainData")
   }
 
   def getDataFrame(): DataFrame = {
