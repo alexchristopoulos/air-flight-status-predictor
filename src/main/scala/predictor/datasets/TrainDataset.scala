@@ -22,8 +22,8 @@ object TrainDataset {
     "DAY_OF_MONTH" -> Tuple2(2, "Int"),
     "DAY_OF_WEEK" -> Tuple2(3, "Int"),
     "OP_CARRIER" -> Tuple2(4, "String"), //airline iata code
-    "TAIL_NUM" -> Tuple2(5, "String"),
-    "AIRLINE" -> Tuple2(6, "Int"), //flight number for op carrier
+    //"TAIL_NUM" -> Tuple2(5, "String"),
+    //"AIRLINE" -> Tuple2(6, "Int"), //flight number for op carrier
     "ORIGIN" -> Tuple2(7, "String"), //origin airpotr iata code
     "DESTINATION" -> Tuple2(8, "String"), //destination airpotr iata code
     "DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
@@ -32,7 +32,7 @@ object TrainDataset {
     "WHEELS_ON" -> Tuple2(12, "Int"),
     "TAXI_IN" -> Tuple2(13, "Double"),
     "ARR_DELAY_NEW" -> Tuple2(14, "Double"),
-    "CANCELLED" -> Tuple2(15, "Double"),
+    "CANCELLED" -> Tuple2(15, "Cat;Can;Double"),
     "CANCELLATION_CODE" -> Tuple2(16, "String"),
     "DIVERTED" -> Tuple2(17, "Double"),
     "AIR_TIME" -> Tuple2(18, "Double"),
@@ -46,19 +46,21 @@ object TrainDataset {
 
     val typeMapping = this.getTypeMapping()
 
+    val tmp = Spark
+      .getSparkContext()
+      .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
+      .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+      .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
+
     this.df = Spark
       .getSparkSession()
-      .createDataFrame(
-        Spark
-          .getSparkContext()
-          .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
-          .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-          .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping)),
-        this.struct
-      )
+      .createDataFrame(tmp ,this.struct)
 
-    this.df.as("trainData")
-    this.df.createOrReplaceGlobalTempView("trainData")
+
+    this.df.as("TRAIN_FLIGHTS_DATA")
+    this.df.createOrReplaceTempView("TRAIN_FLIGHTS_DATA")
+
+    this.df.show(50)
   }
 
   def getDataFrame(): DataFrame = {
@@ -68,9 +70,9 @@ object TrainDataset {
 
   def getClassificationInputCols(): String = {
     
-    val inputCols: String = ""
+    var inputCols: String = ""
 
-    return this.selectedFeatures.foreach(entry => {
+    this.selectedFeatures.foreach(entry => {
 
       if(
         entry._2._1 != 9 &&
@@ -84,17 +86,19 @@ object TrainDataset {
         entry._2._1 != 18 &&
         entry._2._1 != 19
         )//This data is available only after a flight is completed
+
         inputCols = inputCols + entry._1 + " "
+
     });
 
     return inputCols.trim();
   }
   
-    def getClassificationInputCols(): String = {
+    def getPredictionInputCols(): String = {
     
-    val inputCols: String = ""
+    var inputCols: String = ""
 
-    return this.selectedFeatures.foreach(entry => {
+    this.selectedFeatures.foreach(entry => {
 
       if(
         entry._2._1 != 9 &&
@@ -129,13 +133,16 @@ object TrainDataset {
         case "Double" => {
           tmp.add(StructField(entry._1, DoubleType, true))
         }
+        case "Cat;Can;Double" => {
+          tmp.add(StructField(entry._1, DoubleType, true))
+        }
       }
     })
 
     this.struct = tmp
   }
 
-  private def getTypeMapping(): Map[Int, String] = Unit {
+  private def getTypeMapping(): Map[Int, String] =  {
 
     var map: Map[Int, String] = Map()
 

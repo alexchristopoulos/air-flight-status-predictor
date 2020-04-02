@@ -21,13 +21,25 @@ object FuncOperators {
     paramDef.foreach((mapEntry) => {
       mapEntry._2 match {
         case "String" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).trim()
+          tmp += mapEntry._1 -> tokens(mapEntry._1).replace("\"","").trim()
         }
         case "Int" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toInt
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().replace("\"","").toInt
         }
         case "Double" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().replace("\"","").toDouble
+        }
+        case "Cat;Can;Double" => {
+
+          val value = tokens(mapEntry._1).trim().replace("\"","").toDouble
+
+          if(value == 1.0){//cancelled
+            tmp += mapEntry._1 -> 2.0
+          } else if (tokens(14).trim().replace("\"","").toDouble <= 0){//no delay
+            tmp += mapEntry._1 -> 0.0
+          } else {//delay
+            tmp += mapEntry._1 -> 1.0
+          }
         }
       }
     })

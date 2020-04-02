@@ -1,6 +1,6 @@
 package gr.upatras.ceid.ddcdm.predictor.classification
 
-import gr.upatras.ceid.ddcdm.predictor.datasets.AirFlightsKaggleDataset
+import gr.upatras.ceid.ddcdm.predictor.datasets.TrainDataset
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirlinesDataset
 import gr.upatras.ceid.ddcdm.predictor.datasets.AirportsKaggleDataset
 import org.apache.spark.ml.Pipeline
@@ -18,14 +18,14 @@ object RandomForestClassification {
 
     AirportsKaggleDataset.load()
     AirlinesDataset.load()
-    AirFlightsKaggleDataset.load()
+    TrainDataset.load()
 
     val splitDataset = sparkSession
-      .sql("SELECT f.DAY, f.DAY_OF_WEEK, l.id AS AIRLINE_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.ARRIVAL_DELAY, f.CANCELLED, f.DISTANCE " +
-        "FROM flights AS f " +
-        "INNER JOIN airlines AS l ON l.iata=f.AIRLINE " +
-        "INNER JOIN airports AS a1 ON f.ORIGIN_AIRPORT=a1.iata " +
-        "INNER JOIN airports AS a2 ON f.DESTINATION_AIRPORT=a2.iata")
+      .sql("SELECT f.YEAR, f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
+        "FROM TRAIN_FLIGHTS_DATA AS f " +
+        "INNER JOIN airlines AS l ON f.OP_CARRIER=l.iata " +
+        "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
+        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata")
         .createOrReplaceTempView("FLIGHTS_DATA")
 
     val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1")
@@ -36,13 +36,11 @@ object RandomForestClassification {
       .setInputCol("CANCELLED")
       .setOutputCol("label")
 
-    val featuresNames = Array("DAY", "DAY_OF_WEEK", "AIRLINE_ID", "ORIGIN", "DESTINATION", "ARRIVAL_DELAY", "DISTANCE")
-
     val vectorAssembler = new VectorAssembler()
-      .setInputCols(featuresNames)
+      .setInputCols(TrainDataset.getClassificationInputCols().split(" "))
       .setOutputCol("features")
 
-    var Array(pipelineTrainData, pipelineTestData) = delays
+    val Array(pipelineTrainData, pipelineTestData) = delays
       .union(cancelations)
       .union(noDelays)
       .randomSplit(Array(0.65, 0.35), 11L)
