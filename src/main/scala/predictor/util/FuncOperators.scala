@@ -165,23 +165,4 @@ object FuncOperators {
       }
     }
   }
-
-  //extract specified columns from an rdd[row] and create new RDD[Row] with only the columns specified in colNums list
-  /*def extractColumns(colNums: List[Int], rdd: RDD[Row]): RDD[Row] = {
-
-    rdd.map(row => {
-
-      var tmp: Row = Row.empty
-      var cnt = 0
-
-      colNums.foreach(index => {
-        tmp(cnt) = row(index)
-        cnt = cnt + 1
-      })
-
-      tmp
-    })
-  }*/
-
-
 }

@@ -23,9 +23,9 @@ object TrainDataset {
     "DAY_OF_WEEK" -> Tuple2(3, "Int"),
     "OP_CARRIER" -> Tuple2(4, "String"), //airline iata code
     "TAIL_NUM" -> Tuple2(5, "String"),
-    "OP_CARRIER_FL_NUM" -> Tuple2(6, "Int"), //flight number for op carrier
+    "AIRLINE" -> Tuple2(6, "Int"), //flight number for op carrier
     "ORIGIN" -> Tuple2(7, "String"), //origin airpotr iata code
-    "DEST" -> Tuple2(8, "String"), //destination airpotr iata code
+    "DESTINATION" -> Tuple2(8, "String"), //destination airpotr iata code
     "DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
     "TAXI_OUT" -> Tuple2(10, "Double"),
     "WHEELS_OFF" -> Tuple2(11, "Int"),
@@ -66,11 +66,59 @@ object TrainDataset {
     return this.df
   }
 
+  def getClassificationInputCols(): String = {
+    
+    val inputCols: String = ""
+
+    return this.selectedFeatures.foreach(entry => {
+
+      if(
+        entry._2._1 != 9 &&
+        entry._2._1 != 10 &&
+        entry._2._1 != 11 &&
+        entry._2._1 != 12 &&
+        entry._2._1 != 13 &&
+        entry._2._1 != 14 &&
+        entry._2._1 != 15 &&
+        entry._2._1 != 16 &&
+        entry._2._1 != 18 &&
+        entry._2._1 != 19
+        )//This data is available only after a flight is completed
+        inputCols = inputCols + entry._1 + " "
+    });
+
+    return inputCols.trim();
+  }
+  
+    def getClassificationInputCols(): String = {
+    
+    val inputCols: String = ""
+
+    return this.selectedFeatures.foreach(entry => {
+
+      if(
+        entry._2._1 != 9 &&
+        entry._2._1 != 10 &&
+        entry._2._1 != 11 &&
+        entry._2._1 != 12 &&
+        entry._2._1 != 13 &&
+        entry._2._1 != 14 &&
+        entry._2._1 != 15 &&
+        entry._2._1 != 16 &&
+        entry._2._1 != 18 &&
+        entry._2._1 != 19
+        )//This data is available only after a flight is completed
+        inputCols = inputCols + entry._1 + " "
+    });
+
+    return inputCols.trim();
+  }
+
   private def initStruct(): Unit = {
 
     val tmp = new StructType()
 
-    this.selectedFeatures.foreach((entry) => {
+    this.selectedFeatures.foreach(entry => {
       entry._2._2 match {
         case "Int" => {
           tmp.add(StructField(entry._1, IntegerType, true))
@@ -91,7 +139,7 @@ object TrainDataset {
 
     var map: Map[Int, String] = Map()
 
-    this.selectedFeatures.foreach((entry) => {
+    this.selectedFeatures.foreach(entry => {
 
       map += (entry._2._1 -> entry._2._2)
     })
