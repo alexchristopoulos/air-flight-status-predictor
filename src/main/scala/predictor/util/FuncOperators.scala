@@ -16,26 +16,37 @@ object FuncOperators {
 
     var tmp =  Map[Int, Any]()
     val tokens = line.split(",")
-    //val map: Map[Int, Int] = Map(1 -> 2, 2 -> 3)
 
     paramDef.foreach((mapEntry) => {
       mapEntry._2 match {
         case "String" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).replace("\"","").trim()
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim()
         }
         case "Int" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().replace("\"","").toInt
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toInt
         }
         case "Double" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().replace("\"","").toDouble
+          if(mapEntry._1 == 14) {
+
+            if(tokens(14).trim() == ""){
+              tmp += 14 -> 9999999.0
+            } else {
+              tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
+            }
+
+          } else {
+            tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
+          }
+
+
         }
         case "Cat;Can;Double" => {
 
-          val value = tokens(mapEntry._1).trim().replace("\"","").toDouble
+          val value = tokens(mapEntry._1).trim().toDouble
 
           if(value == 1.0){//cancelled
             tmp += mapEntry._1 -> 2.0
-          } else if (tokens(14).trim().replace("\"","").toDouble <= 0){//no delay
+          } else if (tokens(14).trim() != "0.0"){//no delay
             tmp += mapEntry._1 -> 0.0
           } else {//delay
             tmp += mapEntry._1 -> 1.0
@@ -49,8 +60,6 @@ object FuncOperators {
     .immutable
     .ListMap(tmp.toSeq.sortBy(_._1):_*).toMap//asc sort by key
 
-    //tmp.foreach(x => println(x.toString()))
-    //println(line)
     Row.fromSeq(tmp.valuesIterator.toList.toSeq)
   }
 

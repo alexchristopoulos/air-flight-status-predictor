@@ -21,22 +21,22 @@ object TrainDataset {
     "MONTH" -> Tuple2(1, "Int"),
     "DAY_OF_MONTH" -> Tuple2(2, "Int"),
     "DAY_OF_WEEK" -> Tuple2(3, "Int"),
-    "OP_CARRIER" -> Tuple2(4, "String"), //airline iata code
+    "OP_CARRIER_ID" -> Tuple2(4, "String"), //airline iata code
     //"TAIL_NUM" -> Tuple2(5, "String"),
     //"AIRLINE" -> Tuple2(6, "Int"), //flight number for op carrier
     "ORIGIN" -> Tuple2(7, "String"), //origin airpotr iata code
     "DESTINATION" -> Tuple2(8, "String"), //destination airpotr iata code
-    "DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
-    "TAXI_OUT" -> Tuple2(10, "Double"),
-    "WHEELS_OFF" -> Tuple2(11, "Int"),
-    "WHEELS_ON" -> Tuple2(12, "Int"),
-    "TAXI_IN" -> Tuple2(13, "Double"),
-    "ARR_DELAY_NEW" -> Tuple2(14, "Double"),
+    //"DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
+    //"TAXI_OUT" -> Tuple2(10, "Double"),
+    //"WHEELS_OFF" -> Tuple2(11, "Int"),
+    //"WHEELS_ON" -> Tuple2(12, "Int"),
+    //"TAXI_IN" -> Tuple2(13, "Double"),
+    //"ARR_DELAY_NEW" -> Tuple2(14, "Double"),
     "CANCELLED" -> Tuple2(15, "Cat;Can;Double"),
-    "CANCELLATION_CODE" -> Tuple2(16, "String"),
-    "DIVERTED" -> Tuple2(17, "Double"),
-    "AIR_TIME" -> Tuple2(18, "Double"),
-    "FLIGHTS" -> Tuple2(19, "Double"),
+    //"CANCELLATION_CODE" -> Tuple2(16, "String"),
+    //"DIVERTED" -> Tuple2(17, "Double"),
+    //"AIR_TIME" -> Tuple2(18, "Double"),
+    //"FLIGHTS" -> Tuple2(19, "Double"),
     "DISTANCE" -> Tuple2(20, "Double")
   )
 
@@ -46,21 +46,20 @@ object TrainDataset {
 
     val typeMapping = this.getTypeMapping()
 
-    val tmp = Spark
-      .getSparkContext()
-      .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
-      .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-      .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
-
     this.df = Spark
       .getSparkSession()
-      .createDataFrame(tmp ,this.struct)
+      .createDataFrame(
+        Spark
+          .getSparkContext()
+          .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
+          .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+          .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
+        , this.struct
+      )
 
-
-    this.df.as("TRAIN_FLIGHTS_DATA")
-    this.df.createOrReplaceTempView("TRAIN_FLIGHTS_DATA")
-
-    this.df.show(50)
+    this.df
+      .as("TRAIN_FLIGHTS_DATA")
+      .createOrReplaceTempView("TRAIN_FLIGHTS_DATA")
   }
 
   def getDataFrame(): DataFrame = {
@@ -69,23 +68,23 @@ object TrainDataset {
   }
 
   def getClassificationInputCols(): String = {
-    
+
     var inputCols: String = ""
 
     this.selectedFeatures.foreach(entry => {
 
-      if(
+      if (
         entry._2._1 != 9 &&
-        entry._2._1 != 10 &&
-        entry._2._1 != 11 &&
-        entry._2._1 != 12 &&
-        entry._2._1 != 13 &&
-        entry._2._1 != 14 &&
-        entry._2._1 != 15 &&
-        entry._2._1 != 16 &&
-        entry._2._1 != 18 &&
-        entry._2._1 != 19
-        )//This data is available only after a flight is completed
+          entry._2._1 != 10 &&
+          entry._2._1 != 11 &&
+          entry._2._1 != 12 &&
+          entry._2._1 != 13 &&
+          entry._2._1 != 14 &&
+          entry._2._1 != 15 &&
+          entry._2._1 != 16 &&
+          entry._2._1 != 18 &&
+          entry._2._1 != 19
+      ) //This data is available only after a flight is completed
 
         inputCols = inputCols + entry._1 + " "
 
@@ -93,25 +92,25 @@ object TrainDataset {
 
     return inputCols.trim();
   }
-  
-    def getPredictionInputCols(): String = {
-    
+
+  def getPredictionInputCols(): String = {
+
     var inputCols: String = ""
 
     this.selectedFeatures.foreach(entry => {
 
-      if(
+      if (
         entry._2._1 != 9 &&
-        entry._2._1 != 10 &&
-        entry._2._1 != 11 &&
-        entry._2._1 != 12 &&
-        entry._2._1 != 13 &&
-        entry._2._1 != 14 &&
-        entry._2._1 != 15 &&
-        entry._2._1 != 16 &&
-        entry._2._1 != 18 &&
-        entry._2._1 != 19
-        )//This data is available only after a flight is completed
+          entry._2._1 != 10 &&
+          entry._2._1 != 11 &&
+          entry._2._1 != 12 &&
+          entry._2._1 != 13 &&
+          entry._2._1 != 14 &&
+          entry._2._1 != 15 &&
+          entry._2._1 != 16 &&
+          entry._2._1 != 18 &&
+          entry._2._1 != 19
+      ) //This data is available only after a flight is completed
         inputCols = inputCols + entry._1 + " "
     });
 
@@ -120,29 +119,34 @@ object TrainDataset {
 
   private def initStruct(): Unit = {
 
-    val tmp = new StructType()
+    this.struct = StructType(
 
-    this.selectedFeatures.foreach(entry => {
-      entry._2._2 match {
-        case "Int" => {
-          tmp.add(StructField(entry._1, IntegerType, true))
-        }
-        case "String" => {
-          tmp.add(StructField(entry._1, StringType, true))
-        }
-        case "Double" => {
-          tmp.add(StructField(entry._1, DoubleType, true))
-        }
-        case "Cat;Can;Double" => {
-          tmp.add(StructField(entry._1, DoubleType, true))
-        }
-      }
-    })
-
-    this.struct = tmp
+      scala
+        .collection
+        .immutable
+        .ListMap(this.selectedFeatures.map(entry => {
+          entry._2._2 match {
+            case "Int" => {
+              entry._2._1 -> StructField(entry._1, IntegerType, false)
+            }
+            case "String" => {
+              entry._2._1 -> StructField(entry._1, StringType, false)
+            }
+            case "Double" => {
+              entry._2._1 -> StructField(entry._1, DoubleType, false)
+            }
+            case "Cat;Can;Double" => {
+              entry._2._1 -> StructField(entry._1, DoubleType, false)
+            }
+          }
+        })
+          .toSeq.sortBy(_._1): _*)
+        .valuesIterator
+        .toArray
+    )
   }
 
-  private def getTypeMapping(): Map[Int, String] =  {
+  private def getTypeMapping(): Map[Int, String] = {
 
     var map: Map[Int, String] = Map()
 

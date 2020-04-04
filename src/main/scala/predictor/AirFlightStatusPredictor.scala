@@ -24,7 +24,7 @@ object AirFlightStatusPredictor {
       case x:Exception => {
         println(x.toString())
 
-        x.printStackTrace()
+        //x.printStackTrace()
       }
     }
 

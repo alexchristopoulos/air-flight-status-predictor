@@ -23,7 +23,7 @@ object RandomForestClassification {
     val splitDataset = sparkSession
       .sql("SELECT f.YEAR, f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
         "FROM TRAIN_FLIGHTS_DATA AS f " +
-        "INNER JOIN airlines AS l ON f.OP_CARRIER=l.iata " +
+        "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
         "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata")
         .createOrReplaceTempView("FLIGHTS_DATA")
