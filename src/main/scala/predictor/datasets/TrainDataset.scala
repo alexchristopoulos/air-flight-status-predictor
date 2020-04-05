@@ -34,7 +34,7 @@ object TrainDataset {
     //"ARR_DELAY_NEW" -> Tuple2(14, "Double"),
     "CANCELLED" -> Tuple2(15, "Cat;Can;Double"),
     //"CANCELLATION_CODE" -> Tuple2(16, "String"),
-    //"DIVERTED" -> Tuple2(17, "Double"),
+    "DIVERTED" -> Tuple2(17, "Double"),
     //"AIR_TIME" -> Tuple2(18, "Double"),
     //"FLIGHTS" -> Tuple2(19, "Double"),
     "DISTANCE" -> Tuple2(20, "Double")
@@ -69,7 +69,7 @@ object TrainDataset {
 
   def getClassificationInputCols(): Array[String] = {
 
-    var inputCols: String = ""
+   /* var inputCols: String = ""
 
     this.selectedFeatures.foreach(entry => {
 
@@ -88,7 +88,7 @@ object TrainDataset {
 
         inputCols = inputCols + entry._1 + " "
 
-    });
+    });*/
 
     //return inputCols.trim();
     return Array("YEAR", "MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE")

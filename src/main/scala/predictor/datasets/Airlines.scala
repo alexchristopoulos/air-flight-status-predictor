@@ -9,7 +9,7 @@ import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructT
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 
-object AirlinesDataset {
+object Airlines {
 
   private var datasetRdd: RDD[Row] = _
   private var datasetDf: DataFrame = _
@@ -23,7 +23,7 @@ object AirlinesDataset {
 
     this.datasetRdd = Spark
       .getSparkContext()
-      .textFile(config.sparkDatasetDir + config.sparkDatasetPredictionAirlines)
+      .textFile(config.sparkDatasetDir + config.sparkAirlines)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(line => FuncOperators.csvStringRowToRowType(line, Map(
         0 -> "Int",

@@ -20,7 +20,7 @@ object DatasetPreprocessing {
   def combineAirlinesWithTripadvisorReviews(): Unit = {
 
     TripadvisorAirlinesReviewsDataset.load()
-    AirlinesDataset.load()
+    Airlines.load()
 
     val bufferedWriter: BufferedWriter = new BufferedWriter(new FileWriter(config.sparkOutputDataset + "airlinesWithTripAdvisorReviews.out"))
 

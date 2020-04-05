@@ -14,6 +14,10 @@ object config {
   val sparkDatasetPredictionFlights = "/kaggleflights.data"
   val sparkOutputDataset = "/home/admin/data/output/"
   val sparkAirFlightsKaggleDataset2015 = "/flights.csv"
-  val sparkTrainDataset = "/flights2019.csv"
 
+
+  val sparkAirlines = "/airlines.csv"
+  val sparkAirports = "/airports.csv"
+  val sparkTrainDataset = "/flights2019.csv"
+  val sparkTestDataset = "flights2019.csv"
 }

@@ -1,8 +1,8 @@
 package gr.upatras.ceid.ddcdm.predictor.classification
 
 import gr.upatras.ceid.ddcdm.predictor.datasets.TrainDataset
-import gr.upatras.ceid.ddcdm.predictor.datasets.AirlinesDataset
-import gr.upatras.ceid.ddcdm.predictor.datasets.AirportsKaggleDataset
+import gr.upatras.ceid.ddcdm.predictor.datasets.Airlines
+import gr.upatras.ceid.ddcdm.predictor.datasets.Airports
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.{ RandomForestClassifier }
 import org.apache.spark.ml.feature.{ RFormula, StringIndexer, VectorAssembler }
@@ -20,8 +20,8 @@ object RandomForestClassification {
 
   def trainModel(): Unit = {
 
-    AirportsKaggleDataset.load()
-    AirlinesDataset.load()
+    Airports.load()
+    Airlines.load()
     TrainDataset.load()
 
     val splitDataset = sparkSession
@@ -29,12 +29,9 @@ object RandomForestClassification {
         "FROM TRAIN_FLIGHTS_DATA AS f " +
         "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
-        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata")
+        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
+        "WHERE f.DIVERTED!=1.0")//ingnore diverted flights
       .createOrReplaceTempView("FLIGHTS_DATA")
-
-    sparkSession.sql("SELECT DISTINCT CANCELLED FROM TRAIN_FLIGHTS_DATA").collect().foreach(println)
-    sparkSession.sql("SELECT DISTINCT OP_CARRIER_ID FROM TRAIN_FLIGHTS_DATA").collect().foreach(println)
-return
 
     val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
     val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
@@ -74,10 +71,10 @@ return
     val accuracy = evaluator
       .evaluate(predictions)
 
-    model
+    /*model
       .write
       .overwrite()
-      .save("/home/admin/randomForestModel")
+      .save("/home/admin/randomForestModel")*/
 
     val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("label", "prediction").rdd.map(row => ( row(0).toString().toDouble, row(1).toString().toDouble ))
 
