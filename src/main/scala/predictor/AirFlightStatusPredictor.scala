@@ -12,7 +12,8 @@ object AirFlightStatusPredictor {
 
     val startTime = System.nanoTime()
 
-    Spark.getSparkContext()
+    Spark.getSparkContext().setLogLevel("ERROR")
+
     try {
 
       println("***************************")
@@ -24,7 +25,7 @@ object AirFlightStatusPredictor {
       case x:Exception => {
         println(x.toString())
 
-        //x.printStackTrace()
+        x.printStackTrace()
       }
     }
 

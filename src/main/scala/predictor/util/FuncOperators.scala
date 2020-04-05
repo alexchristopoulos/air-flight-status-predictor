@@ -20,7 +20,7 @@ object FuncOperators {
     paramDef.foreach((mapEntry) => {
       mapEntry._2 match {
         case "String" => {
-          tmp += mapEntry._1 -> tokens(mapEntry._1).trim()
+          tmp += mapEntry._1 -> tokens(mapEntry._1).trim().replace("\"","").replace("'", "")
         }
         case "Int" => {
           tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toInt

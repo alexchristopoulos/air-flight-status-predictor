@@ -14,6 +14,10 @@ object RandomForestClassification {
 
   private val sparkSession = Spark.getSparkSession()
 
+  def loadExistingModel(): Unit = {
+
+  }
+
   def trainModel(): Unit = {
 
     AirportsKaggleDataset.load()
@@ -26,18 +30,21 @@ object RandomForestClassification {
         "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
         "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata")
-        .createOrReplaceTempView("FLIGHTS_DATA")
+      .createOrReplaceTempView("FLIGHTS_DATA")
 
-    val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1")
-    val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2")
-    val noDelays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=0 ")
+
+
+    val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
+    val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
+    val noDelays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=0.0 ")
 
     val stringIndexer = new StringIndexer()
       .setInputCol("CANCELLED")
       .setOutputCol("label")
 
+
     val vectorAssembler = new VectorAssembler()
-      .setInputCols(TrainDataset.getClassificationInputCols().split(" "))
+      .setInputCols(TrainDataset.getClassificationInputCols())
       .setOutputCol("features")
 
     val Array(pipelineTrainData, pipelineTestData) = delays
@@ -65,7 +72,10 @@ object RandomForestClassification {
     val accuracy = evaluator
       .evaluate(predictions)
 
-    model.write.overwrite().save("/home/admin/randomForestModel")
+    model
+      .write
+      .overwrite()
+      .save("/home/admin/randomForestModel")
 
     val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.rdd.map(row => ( row(12).toString().toDouble, row(9).toString().toDouble ))
 
@@ -80,8 +90,14 @@ object RandomForestClassification {
     println(metrics.weightedPrecision + "   " + metrics.weightedRecall + "   " + metrics.weightedFMeasure + "\n")
 
     println(s"Test set accuracy = $accuracy")
+  }
 
+  def predict(viewName: String): Unit = {
+    
+    
+  }
 
+  def getMetrics(): Unit = {
 
   }
 

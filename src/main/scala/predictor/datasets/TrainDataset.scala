@@ -67,7 +67,7 @@ object TrainDataset {
     return this.df
   }
 
-  def getClassificationInputCols(): String = {
+  def getClassificationInputCols(): Array[String] = {
 
     var inputCols: String = ""
 
@@ -90,7 +90,8 @@ object TrainDataset {
 
     });
 
-    return inputCols.trim();
+    //return inputCols.trim();
+    return Array("YEAR", "MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE")
   }
 
   def getPredictionInputCols(): String = {
