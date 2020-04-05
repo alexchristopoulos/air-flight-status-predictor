@@ -9,6 +9,7 @@ import org.apache.spark.ml.feature.{ RFormula, StringIndexer, VectorAssembler }
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
+import java.io._
 
 object RandomForestClassification {
 
@@ -35,7 +36,7 @@ object RandomForestClassification {
 
     val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
     val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
-    val noDelays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=0.0 ")
+    val noDelays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + (cancelations.count() + delays.count()) )
 
     val stringIndexer = new StringIndexer()
       .setInputCol("CANCELLED")
@@ -55,13 +56,18 @@ object RandomForestClassification {
 
     val randomForestClassifier = new RandomForestClassifier()
         .setNumTrees(10)
+        .setLabelCol("label")
 
     val stages = Array(vectorAssembler, stringIndexer, randomForestClassifier)
     val pipeline = new Pipeline().setStages(stages)
 
     val model = pipeline.fit(pipelineTrainData)
 
+    println("Trained Model")
+
     val predictions = model.transform(pipelineTestData)
+
+    println("Testing model")
 
     val evaluator = new MulticlassClassificationEvaluator()
       .setLabelCol("label")
@@ -71,24 +77,40 @@ object RandomForestClassification {
     val accuracy = evaluator
       .evaluate(predictions)
 
+    println("CALCULATED ACCURACY")
+
     /*model
       .write
       .overwrite()
       .save("/home/admin/randomForestModel")*/
 
-    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("label", "prediction").rdd.map(row => ( row(0).toString().toDouble, row(1).toString().toDouble ))
+    //RDD[prediction, label]
+    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("label", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
 
     val metrics = new MulticlassMetrics(rddEval)
 
+    val bw = new BufferedWriter(new FileWriter("/home/admin/results.txt"))
+
+    bw.write("LABEL  PRECISION   RECALL  F-MEASURE")
+    bw.newLine()
     println("LABEL  PRECISION   RECALL  F-MEASURE")
     metrics.labels.foreach(label => {
+
+      bw.write(label.toString() + "  " + metrics.precision(label).toString() + "  " + metrics.recall(label).toString() + "   " + metrics.fMeasure(label).toString())
+      bw.newLine()
       println(label.toString() + "  " + metrics.precision(label).toString() + "  " + metrics.recall(label).toString() + "   " + metrics.fMeasure(label).toString())
     })
 
     println("\n\nWEIGHTED_PRECISION   WEIGHTED_RECALL   WEIGHTED_F1")
+    bw.write("\n\nWEIGHTED_PRECISION   WEIGHTED_RECALL   WEIGHTED_F1")
+    bw.newLine()
+    bw.write(metrics.weightedPrecision + "   " + metrics.weightedRecall + "   " + metrics.weightedFMeasure + "\n")
     println(metrics.weightedPrecision + "   " + metrics.weightedRecall + "   " + metrics.weightedFMeasure + "\n")
+    bw.newLine()
 
+    bw.write(s"Test set accuracy = $accuracy")
     println(s"Test set accuracy = $accuracy")
+    bw.close()
   }
 
   def predict(viewName: String): Unit = {
