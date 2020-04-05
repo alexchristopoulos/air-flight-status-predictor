@@ -10,10 +10,10 @@ object config {
   val sparkDatasetIataAirportCodesWiki = "/iataAirportsCodesWiki.out"
   val sparkDatasetTripadvisorAirlinesReviews = "/tripadvisorreviews.data"
   val sparkDatasetPredictionAirports = "/kaggleairports.data"
-  val sparkDatasetPredictionAirlines = "/kaggleairlines.data"
+  val sparkDatasetPredictionAirlines = "/airlines.csv"
   val sparkDatasetPredictionFlights = "/kaggleflights.data"
   val sparkOutputDataset = "/home/admin/data/output/"
   val sparkAirFlightsKaggleDataset2015 = "/flights.csv"
-  val sparkTrainDataset = "/2019_1.csv"
+  val sparkTrainDataset = "/flights2019.csv"
 
 }

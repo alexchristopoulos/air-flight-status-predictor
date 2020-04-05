@@ -32,7 +32,9 @@ object RandomForestClassification {
         "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata")
       .createOrReplaceTempView("FLIGHTS_DATA")
 
-
+    sparkSession.sql("SELECT DISTINCT CANCELLED FROM TRAIN_FLIGHTS_DATA").collect().foreach(println)
+    sparkSession.sql("SELECT DISTINCT OP_CARRIER_ID FROM TRAIN_FLIGHTS_DATA").collect().foreach(println)
+return
 
     val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
     val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
@@ -77,7 +79,7 @@ object RandomForestClassification {
       .overwrite()
       .save("/home/admin/randomForestModel")
 
-    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.rdd.map(row => ( row(12).toString().toDouble, row(9).toString().toDouble ))
+    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("label", "prediction").rdd.map(row => ( row(0).toString().toDouble, row(1).toString().toDouble ))
 
     val metrics = new MulticlassMetrics(rddEval)
 
