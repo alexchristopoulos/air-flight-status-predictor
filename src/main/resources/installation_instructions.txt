@@ -16,6 +16,7 @@ _______________________________________________START____________________________
 1) sudo yum install epel-release -y
 2) sudo yum update -y
 3) reboot
+4) yum install wget -y
 
 --------------------------------------------------------------------------------------------------------
 |*                                      STEP 2 INSTALL JAVA                                           *|
@@ -31,9 +32,29 @@ _______________________________________________START____________________________
 |*                                       STEP 3 INSTALL HANDOOP                                       *|
 --------------------------------------------------------------------------------------------------------
 
+cd
+useradd -m -d /home/hadoop -s /bin/bash hadoop
+passwd hadoop
+su - hadoop
+ssh-keygen
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+wget https://www-us.apache.org/dist/hadoop/common/stable/hadoop-3.2.1.tar.gz
+tar -zxvf hadoop-3.2.1.tar.gz 
+mv hadoop-3.2.1 hadoop
 
+sudo vi ~/.bashrc
+and put the below exports
 
-
+export JAVA_HOME=/usr/java/jdk1.8.0_241-amd64/jre
+export HADOOP_HOME=/root/hadoop/hadoop
+export HADOOP_INSTALL=$HADOOP_HOME
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export HADOOP_YARN_HOME=$HADOOP_HOME
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 
 
 --------------------------------------------------------------------------------------------------------
