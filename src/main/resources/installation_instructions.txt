@@ -1,0 +1,18 @@
+|******************************************************************************************************|
+|*                                                                                                    *|
+|*                          CENTOS 7 SPARK HANDOOP INSTALLATION COMMANDS                              *|
+|*                                                                                                    *|
+|******************************************************************************************************|
+
+|*                                                                                                    *|
+
+|*                                      STEP 1 INSTALL JAVA & SCALA                                   *|
+
+//JAVA INSTALL
+
+1) Download java 8 sdk from oracle (rpm file) and upload file to vm
+2) sudo yum local install <java-8-sdk-rpm-file>
+//check that java is succesfully installed
+3) java -version
+4) javac -version 
+
