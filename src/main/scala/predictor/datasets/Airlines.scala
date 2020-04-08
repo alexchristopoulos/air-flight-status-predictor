@@ -13,6 +13,7 @@ object Airlines {
 
   private var datasetRdd: RDD[Row] = _
   private var datasetDf: DataFrame = _
+  private var isLoaded: Boolean = false
 
   private val struct = StructType(
     StructField("id", IntegerType, false) ::
@@ -37,6 +38,8 @@ object Airlines {
 
     this.datasetDf.as("airlines")
     this.datasetDf.createOrReplaceTempView("airlines")
+
+    this.isLoaded = true
   }
 
   def getAsDf(): DataFrame = {
@@ -47,6 +50,10 @@ object Airlines {
   def getAsRdd(): RDD[Row] = {
 
     return this.datasetRdd
+  }
+
+  def isItLoaded(): Boolean = {
+    return this.isLoaded
   }
 
 }

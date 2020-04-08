@@ -13,6 +13,7 @@ object Airports {
 
   private var datasetRdd: RDD[Row] = _
   private var datasetDf: DataFrame = _
+  private var isLoaded: Boolean = false
 //ID,IATA_CODE,AIRPORT,CITY,STATE,COUNTRY,LATITUDE,LONGITUDE
   private val struct = StructType(
     StructField("id", IntegerType, false) ::
@@ -46,6 +47,7 @@ object Airports {
 
     this.datasetDf.as("airports")
     this.datasetDf.createOrReplaceTempView("airports")
+    this.isLoaded = true
   }
 
   def getAsDf(): DataFrame = {
@@ -56,6 +58,10 @@ object Airports {
   def getAsRdd(): RDD[Row] = {
 
     return this.datasetRdd
+  }
+
+  def isItLoaded(): Boolean = {
+    return this.isLoaded
   }
 
 }

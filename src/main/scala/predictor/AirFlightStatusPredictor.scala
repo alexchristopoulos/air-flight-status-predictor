@@ -19,7 +19,7 @@ object AirFlightStatusPredictor {
       println("***************************")
       println("RANDOM FOREST TEST")
 
-      RandomForestClassification.trainModel()
+      RandomForestClassification.trainModel(false, true)
 
     } catch {
       case x:Exception => {
