@@ -51,7 +51,7 @@ object TestDataset {
       .createDataFrame(
         Spark
           .getSparkContext()
-          .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
+          .textFile(config.sparkDatasetDir + config.sparkTestDataset)
           .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
           .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
         , this.struct

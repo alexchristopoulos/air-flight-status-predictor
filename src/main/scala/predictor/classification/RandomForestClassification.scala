@@ -32,13 +32,21 @@ object RandomForestClassification {
     if(trainAndTest){
 
       sparkSession
-        .sql("SELECT f.YEAR, f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
+        .sql("f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, CONCAT(f.DAY_OF_MONTH, " + "/" + ", F.MONTH) AS DATE_MONTH " +
           "FROM TRAIN_FLIGHTS_DATA AS f " +
           "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
           "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
           "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
           "WHERE f.DIVERTED!=1.0")//ingnore diverted flights
         .createOrReplaceTempView("FLIGHTS_DATA")
+
+      val countByDate = sparkSession.sql("SELECT DATE_MONTH, COUNT(*) AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS ff GROUP BY ff.DATE_MONTH")
+
+      countByDate.createOrReplaceTempView("FLIGHTS_PER_DATE")
+
+      countByDate.show(30)
+
+      return
 
       val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
       val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
@@ -152,28 +160,34 @@ object RandomForestClassification {
           .overwrite()
           .save("/home/admin/randomForestModel")
 
-      println("RANDOM FOREST MODEL TRAINED")
+      println("***RANDOM FOREST MODEL TRAINED AND SAVED***")
     }
 
   }
 
   def predict(viewName: String): Unit = {
 
-    if(!Airports.isItLoaded())
+    //if(!Airports.isItLoaded())
       Airports.load()
 
-    if(!Airlines.isItLoaded())
+   // if(!Airlines.isItLoaded())
       Airlines.load()
 
     this.loadExistingModel()
 
+    println("***RANDOM FOREST PREDICTION***")
+
+    //TestDataset.getDataFrame().show(200)
+
     val testData = sparkSession
       .sql("SELECT f.YEAR, f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
-        "FROM TRAIN_FLIGHTS_DATA AS f " +
+        "FROM TEST_FLIGHTS_DATA AS f " +
         "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
         "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
         "WHERE f.DIVERTED!=1.0")
+
+    //testData.show(200)
 
     val predictions = this.model.transform(testData)
 
