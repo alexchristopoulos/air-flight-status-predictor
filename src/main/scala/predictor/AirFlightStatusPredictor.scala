@@ -21,7 +21,7 @@ object AirFlightStatusPredictor {
 
       //RandomForestClassification.trainModel(false, true)
       TestDataset.load()
-      RandomForestClassification.predict("TEST_FLIGHTS_DATA")
+      RandomForestClassification.trainModel(false, true)
 
     } catch {
       case x:Exception => {

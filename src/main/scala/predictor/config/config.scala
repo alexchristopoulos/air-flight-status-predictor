@@ -18,6 +18,6 @@ object config {
 
   val sparkAirlines = "/airlines.csv"
   val sparkAirports = "/airports.csv"
-  val sparkTrainDataset = "/flights2017-2018.csv"
+  val sparkTrainDataset = "/test.csv"
   val sparkTestDataset = "/flights2019.csv"
 }

@@ -29,24 +29,26 @@ object RandomForestClassification {
     Airlines.load()
     TrainDataset.load()
 
+    sparkSession
+      .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
+        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
+        "FROM TRAIN_FLIGHTS_DATA AS f " +
+        "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
+        "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
+        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
+        "WHERE f.DIVERTED!=1.0")
+      .as("FLIGHTS_DATA")
+      .createOrReplaceTempView("FLIGHTS_DATA")
+
+
+    sparkSession.sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
+
+    sparkSession.sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS f " +
+      "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID")
+      .as("FLIGHTS_DATA")
+      .createOrReplaceTempView("FLIGHTS_DATA")
+
     if(trainAndTest){
-
-      sparkSession
-        .sql("f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, CONCAT(f.DAY_OF_MONTH, " + "/" + ", F.MONTH) AS DATE_MONTH " +
-          "FROM TRAIN_FLIGHTS_DATA AS f " +
-          "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
-          "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
-          "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
-          "WHERE f.DIVERTED!=1.0")//ingnore diverted flights
-        .createOrReplaceTempView("FLIGHTS_DATA")
-
-      val countByDate = sparkSession.sql("SELECT DATE_MONTH, COUNT(*) AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS ff GROUP BY ff.DATE_MONTH")
-
-      countByDate.createOrReplaceTempView("FLIGHTS_PER_DATE")
-
-      countByDate.show(30)
-
-      return
 
       val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
       val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
@@ -131,14 +133,7 @@ object RandomForestClassification {
 
     } else {
 
-
-      val trainDataset = sparkSession
-        .sql("SELECT f.YEAR, f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
-          "FROM TRAIN_FLIGHTS_DATA AS f " +
-          "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
-          "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
-          "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
-          "WHERE f.DIVERTED!=1.0")//ingnore diverted flights
+      val trainDataset = sparkSession.sql("SELECT * FROM FLIGHTS_DATA")
 
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())

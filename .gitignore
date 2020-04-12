@@ -9,3 +9,4 @@ target/
 project/
 data/
 !/project/assembly.sbt
+.project
