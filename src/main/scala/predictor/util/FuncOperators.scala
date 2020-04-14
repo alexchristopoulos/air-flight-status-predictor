@@ -45,14 +45,14 @@ object FuncOperators {
           val value = tokens(mapEntry._1).trim().toDouble
 
           if(value == 1.0){//cancelled
-            tmp += mapEntry._1 -> 2.0
+            tmp += mapEntry._1 -> 1.0//cancelled
           } else {
             if (tokens(14).trim() != ""  && (tokens(14).trim().toDouble <= 15.0)) {//no delay THIS IS THE COLUMN HOLDING THE ARRIVAL DELAY (IF 0 NO DELAY OTHERWISE DELAY) WHEN < 15 CONSIDERED AS A NON DELAYED FLIGHTS
               tmp += mapEntry._1 -> 0.0
             } else if ((tokens(14).trim() != ""  && (tokens(14).trim().toDouble >= 15.0))) {//delay
-              tmp += mapEntry._1 -> 1.0
+              tmp += mapEntry._1 -> 1.0//delay
             } else {
-              tmp += mapEntry._1 -> 2.0
+              tmp += mapEntry._1 -> 1.0//cancelled
             }
           }
         }

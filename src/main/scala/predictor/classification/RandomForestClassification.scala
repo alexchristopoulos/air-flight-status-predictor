@@ -40,7 +40,6 @@ object RandomForestClassification {
       .as("FLIGHTS_DATA")
       .createOrReplaceTempView("FLIGHTS_DATA")
 
-
     sparkSession.sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
 
     sparkSession.sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS f " +
