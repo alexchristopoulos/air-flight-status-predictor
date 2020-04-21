@@ -31,7 +31,7 @@ object TrainDataset {
     //"WHEELS_OFF" -> Tuple2(11, "Int"),
     //"WHEELS_ON" -> Tuple2(12, "Int"),
     //"TAXI_IN" -> Tuple2(13, "Double"),
-    //"ARR_DELAY_NEW" -> Tuple2(14, "Double"),
+    "ARR_DELAY_NEW" -> Tuple2(14, "Double"),
     "CANCELLED" -> Tuple2(15, "Cat;Can;Double"),
     //"CANCELLATION_CODE" -> Tuple2(16, "String"),
     "DIVERTED" -> Tuple2(17, "Double"),
@@ -91,7 +91,7 @@ object TrainDataset {
     });*/
 
     //return inputCols.trim();
-    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT")
+    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY")
   }
 
   def getPredictionInputCols(): String = {

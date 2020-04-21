@@ -31,7 +31,7 @@ object RandomForestClassification {
 
     sparkSession
       .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
-        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
+        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY " +
         "FROM TRAIN_FLIGHTS_DATA AS f " +
         "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
@@ -41,9 +41,11 @@ object RandomForestClassification {
       .createOrReplaceTempView("FLIGHTS_DATA")
 
     sparkSession.sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
+    sparkSession.sql("SELECT OP_CARRIER_ID, AVG(ARR_DELAY) AS AIRLINE_MEAN_DELAY FROM FLIGHTS_DATA AS ff GROUP BY ff.OP_CARRIER_ID").createOrReplaceTempView("MEAN_DELAY_AIRLINES")
 
-    sparkSession.sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS f " +
-      "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID")
+    sparkSession.sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, mf.AIRLINE_MEAN_DELAY FROM FLIGHTS_DATA AS f " +
+      "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
+      "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID")
       .as("FLIGHTS_DATA")
       .createOrReplaceTempView("FLIGHTS_DATA")
 
