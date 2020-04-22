@@ -1,0 +1,624 @@
+ID,IATA,Airline,RATING,NUM_OF_REVIEWS
+1,JP,Adria Airways [no longer operating],3 of 5 bubbles,675
+2,AN,Advanced Air,5 of 5 bubbles,3
+3,A3,AEGEAN,4 of 5 bubbles,11.314
+4,EI,Aer Lingus,3.5 of 5 bubbles,11.846
+5,M0,Aero Mongolia,3 of 5 bubbles,18
+6,SU,Aeroflot,3.5 of 5 bubbles,15.271
+7,yy,Aerogaviota,3 of 5 bubbles,28
+8,DA,Aerolinea de Antioquia,2.5 of 5 bubbles,14
+9,AR,Aerolineas Argentinas,4 of 5 bubbles,15.046
+10,VW,Aeromar,3 of 5 bubbles,378
+11,AM,Aeromexico,3.5 of 5 bubbles,10.167
+12,AW,Africa World Airlines,3.5 of 5 bubbles,35
+13,XU,African Express Airways,3.5 of 5 bubbles,17
+14,8U,Afriqiyah Airways,2.5 of 5 bubbles,10
+15,ZI,Aigle Azur [no longer operating],2.5 of 5 bubbles,747
+16,AH,Air Algerie,2.5 of 5 bubbles,468
+17,3S,Air Antilles,2 of 5 bubbles,196
+18,G9,Air Arabia,3 of 5 bubbles,1.913
+19,KC,Air Astana,4 of 5 bubbles,1.331
+20,UU,Air Austral,3.5 of 5 bubbles,1.439
+21,yy,Air Bagan,3 of 5 bubbles,8
+22,BT,Air Baltic,3.5 of 5 bubbles,15.306
+23,KF,Air Belgium,4.5 of 5 bubbles,13
+24,y2,air berlin [no longer operating],3 of 5 bubbles,4.148
+25,BP,Air Botswana,3 of 5 bubbles,118
+26,2J,Air Burkina,3 of 5 bubbles,25
+27,BX,Air Busan,4 of 5 bubbles,320
+28,SM,Air Cairo,3 of 5 bubbles,1.347
+29,AC,Air Canada,3 of 5 bubbles,26.281
+30,RV,Air Canada Rouge,3 of 5 bubbles,7.763
+31,TX,Air Caraibes,3.5 of 5 bubbles,2.514
+32,Y2,Air Century,3.5 of 5 bubbles,20
+33,9H,Air Changan,4 of 5 bubbles,1
+34,yy,Air Chathams,4.5 of 5 bubbles,95
+35,CA,Air China,3 of 5 bubbles,5.922
+36,3E,Air Choice One,3 of 5 bubbles,61
+37,XK,Air Corsica,4 of 5 bubbles,566
+38,yy,Air Costa (no longer operating),3 of 5 bubbles,37
+39,HF,Air Cote d Ivoire,3 of 5 bubbles,67
+40,HD,Air Do,4 of 5 bubbles,138
+41,EN,Air Dolomiti,4 of 5 bubbles,944
+42,UX,Air Europa,3 of 5 bubbles,10.101
+43,F4,Air Flamenco,3.5 of 5 bubbles,29
+44,AF,Air France,3.5 of 5 bubbles,31.851
+45,GL,Air Greenland,3.5 of 5 bubbles,148
+46,GT,Air Guilin,2.5 of 5 bubbles,3
+47,NY,Air Iceland Connect (**this is not Icelandair**),4 of 5 bubbles,200
+48,AI,Air India,3 of 5 bubbles,7.821
+49,IX,Air India Express,3 of 5 bubbles,391
+50,IG,Air Italy [no longer operating],3 of 5 bubbles,3.783
+51,AO,Air Juan,1.5 of 5 bubbles,135
+52,yy,AIR KBZ (Air Kanbawza),4 of 5 bubbles,376
+53,IK,Air Kiribati,3 of 5 bubbles,1
+54,JS,Air Koryo,3.5 of 5 bubbles,80
+55,yy,Air Kyrgyzstan,3 of 5 bubbles,6
+56,NX,Air Macau,3 of 5 bubbles,202
+57,MD,Air Madagascar,2.5 of 5 bubbles,385
+58,KM,Air Malta,3.5 of 5 bubbles,2.677
+59,ZM,Air Manas,3.5 of 5 bubbles,14
+60,MK,Air Mauritius,3.5 of 5 bubbles,2.337
+61,MV,Air Mediterranean,2.5 of 5 bubbles,210
+62,9U,Air Moldova,3 of 5 bubbles,328
+63,SW,Air Namibia,3 of 5 bubbles,753
+64,NZ,Air New Zealand,4.5 of 5 bubbles,13.406
+65,PX,Air Niugini,3.5 of 5 bubbles,203
+66,4N,Air North (Canada),4.5 of 5 bubbles,280
+67,YW,Air Nostrum,3.5 of 5 bubbles,466
+68,7P,Air Panama,3 of 5 bubbles,205
+69,P4,Air Peace,2.5 of 5 bubbles,42
+70,yy,Air Pegasus (no longer operating),3.5 of 5 bubbles,122
+71,GZ,Air Rarotonga,4.5 of 5 bubbles,55
+72,PJ,Air Saint Pierre,4.5 of 5 bubbles,8
+73,HC,Air Senegal,3 of 5 bubbles,74
+74,RS,Air Seoul,3.5 of 5 bubbles,199
+75,JU,Air Serbia,3 of 5 bubbles,1.726
+76,HM,Air Seychelles,3 of 5 bubbles,670
+77,VT,Air Tahiti,4 of 5 bubbles,322
+78,TN,Air Tahiti Nui,3.5 of 5 bubbles,1.584
+79,TS,Air Transat,3.5 of 5 bubbles,11.008
+80,NF,Air Vanuatu,4 of 5 bubbles,414
+81,VL,Air VIA [no longer operating],2 of 5 bubbles,85
+82,UM,Air Zimbabwe,2.5 of 5 bubbles,64
+83,AK,AirAsia - AirAsia Berhad (Malaysia),3.5 of 5 bubbles,3.422
+84,I5,AirAsia - AirAsia India,3 of 5 bubbles,965
+85,DJ,AirAsia - AirAsia Japan,3 of 5 bubbles,88
+86,D7,AirAsia - AirAsia X Berhad (Malaysia),3.5 of 5 bubbles,1.821
+87,QZ,AirAsia - Indonesia AirAsia,3.5 of 5 bubbles,2.498
+88,Z2,AirAsia - Philippines AirAsia,3 of 5 bubbles,937
+89,FD,AirAsia - Thai AirAsia,3.5 of 5 bubbles,5.873
+90,XJ,AirAsia - Thai AirAsia X,3.5 of 5 bubbles,213
+91,PA,Airblue,3 of 5 bubbles,62
+92,SB,Aircalin,3.5 of 5 bubbles,333
+93,P2,AirKenya Express,4 of 5 bubbles,20
+94,4Z,Airlink,4 of 5 bubbles,358
+95,TL,Airnorth (Australia),4 of 5 bubbles,220
+96,T6,AirSWIFT,3.5 of 5 bubbles,311
+97,AS,Alaska Airlines,4 of 5 bubbles,15.943
+98,J5,Alaska Seaplanes,4.5 of 5 bubbles,32
+99,AP,Alba Star,3 of 5 bubbles,867
+100,ZR,Alexandria Airlines,3.5 of 5 bubbles,2
+101,AZ,Alitalia,3 of 5 bubbles,19.715
+102,G4,Allegiant Air,3.5 of 5 bubbles,9.700
+103,QQ,Alliance Airlines,3.5 of 5 bubbles,76
+104,UJ,AlMasria Universal,2 of 5 bubbles,230
+105,6R,ALROSA,4 of 5 bubbles,13
+106,6I,Alsie Express,5 of 5 bubbles,27
+107,Z8,Amazonas,3.5 of 5 bubbles,245
+108,AA,American Airlines,3 of 5 bubbles,70.381
+109,NH,ANA (All Nippon Airways),4.5 of 5 bubbles,10.194
+110,yy,AnadoluJet,3.5 of 5 bubbles,527
+111,OY,Andes Lineas Aereas,2.5 of 5 bubbles,856
+112,2G,Angara Airlines,4 of 5 bubbles,13
+113,Q3,Anguilla Air Services,4.5 of 5 bubbles,101
+114,FG,Ariana Afghan Airlines,2.5 of 5 bubbles,5
+115,W3,Arik Air,2 of 5 bubbles,115
+116,IZ,Arkia Israel Airlines,3 of 5 bubbles,715
+117,AG,Aruba Airlines,2.5 of 5 bubbles,123
+118,yy,Aserca Airlines (no longer operating),3 of 5 bubbles,74
+119,HB,Asia Atlantic Airlines,3.5 of 5 bubbles,7
+120,OZ,Asiana Airlines,4 of 5 bubbles,3.544
+121,KP,ASKY Airlines,3 of 5 bubbles,78
+122,5O,ASL France,3 of 5 bubbles,561
+123,A2,Astra Airlines,3 of 5 bubbles,234
+124,yy,ATA Airlines (Iran),2.5 of 5 bubbles,50
+125,RC,Atlantic Airways,4.5 of 5 bubbles,216
+126,5Y,Atlas Air,3 of 5 bubbles,57
+127,yy,Atlas Atlantique [no longer operating],-1 of 5 bubbles,0
+128,KK,AtlasGlobal [no longer operating],3.5 of 5 bubbles,1.142
+129,GR,Aurigny,4 of 5 bubbles,355
+130,HZ,Aurora,4 of 5 bubbles,60
+131,AU,Austral Lineas Aereas,4 of 5 bubbles,209
+132,OS,Austrian Airlines,3.5 of 5 bubbles,8.042
+133,AV,Avianca,4 of 5 bubbles,18.535
+134,9V,Avior Airlines,2.5 of 5 bubbles,196
+135,J2,Azerbaijan Airlines,4 of 5 bubbles,576
+136,A4,Azimuth,3.5 of 5 bubbles,107
+137,AJ,Aztec Airways,4 of 5 bubbles,8
+138,AD,Azul,4.5 of 5 bubbles,15.976
+139,ZF,Azur Air,3.5 of 5 bubbles,1.717
+140,UP,Bahamasair,2.5 of 5 bubbles,511
+141,QH,Bamboo Airways,3.5 of 5 bubbles,139
+142,PG,Bangkok Airways,4 of 5 bubbles,4.562
+143,5B,Bassaka Air,4 of 5 bubbles,95
+144,ID,Batik Air,3.5 of 5 bubbles,1.122
+145,BD,Bayon Airlines,3 of 5 bubbles,37
+146,JV,Bearskin Airlines,3 of 5 bubbles,9
+147,JD,Beijing Capital Airlines,3 of 5 bubbles,91
+148,Z9,Bek Air,3 of 5 bubbles,28
+149,B2,Belavia Belarusian Airlines,4 of 5 bubbles,1.099
+150,8H,BH Air,2.5 of 5 bubbles,18
+151,B3,Bhutan Airlines,4.5 of 5 bubbles,146
+152,BG,Biman Bangladesh Airlines,3 of 5 bubbles,355
+153,NT,Binter,4 of 5 bubbles,909
+154,0B,Blue Air,3.5 of 5 bubbles,3.134
+155,SI,Blue Islands Air,3.5 of 5 bubbles,95
+156,BV,Blue Panorama Airlines,2.5 of 5 bubbles,3.849
+157,OB,Boliviana de Aviacion,3.5 of 5 bubbles,412
+158,yy,Borajet [no longer operating],3.5 of 5 bubbles,33
+159,4B,Boutique Air,2.5 of 5 bubbles,193
+160,DC,BRA (Braathens Regional Airways AB),3.5 of 5 bubbles,253
+161,BA,British Airways,3.5 of 5 bubbles,54.378
+162,SN,Brussels Airlines,3.5 of 5 bubbles,7.476
+163,U4,Buddha Air,3.5 of 5 bubbles,189
+164,FB,Bulgaria Air,3.5 of 5 bubbles,894
+165,yy,Buta Airways,3.5 of 5 bubbles,147
+166,VR,Cabo Verde Airlines,2.5 of 5 bubbles,627
+167,__,Calafia Airlines,3.5 of 5 bubbles,121
+168,MO,CalmAir International,3.5 of 5 bubbles,24
+169,K6,Cambodia Angkor Air,2.5 of 5 bubbles,908
+170,5T,Canadian North,4 of 5 bubbles,66
+171,PM,Canaryfly,3.5 of 5 bubbles,190
+172,9K,Cape Air,3.5 of 5 bubbles,289
+173,BW,Caribbean Airlines,3.5 of 5 bubbles,766
+174,IV,Caspian Airlines,3 of 5 bubbles,36
+175,KA,Cathay Dragon (Dragonair),4 of 5 bubbles,1.715
+176,CX,Cathay Pacific,4 of 5 bubbles,16.310
+177,KX,Cayman Airways,3.5 of 5 bubbles,339
+178,5J,Cebu Pacific Air,3 of 5 bubbles,3.593
+179,5Z,CemAir,3 of 5 bubbles,206
+180,9M,Central Mountain Air,3.5 of 5 bubbles,55
+181,GM,Chair Airlines,3.5 of 5 bubbles,80
+182,6Q,Cham Wings,4.5 of 5 bubbles,8
+183,EU,Chengdu Airlines,3.5 of 5 bubbles,11
+184,CI,China Airlines,4 of 5 bubbles,4.094
+185,MU,China Eastern Airlines,3 of 5 bubbles,5.035
+186,G5,China Express Airlines,4.5 of 5 bubbles,4
+187,CZ,China Southern Airlines,3.5 of 5 bubbles,4.913
+188,KN,China United Airlines,3 of 5 bubbles,29
+189,OQ,Chongqing Airlines,3 of 5 bubbles,8
+190,C7,Cinnamon Air,4.5 of 5 bubbles,26
+191,QG,Citilink,4 of 5 bubbles,1.072
+192,WX,CityJet,3.5 of 5 bubbles,418
+193,yy,Citywing [no longer operating],3.5 of 5 bubbles,11
+194,CC,CM Airlines,3.5 of 5 bubbles,32
+195,CO,Cobalt [no longer operating],3.5 of 5 bubbles,506
+196,GY,Colorful GuiZhou Airlines,-1 of 5 bubbles,0
+197,DE,Condor,3 of 5 bubbles,7.714
+198,LF,Contour Airlines,4 of 5 bubbles,37
+199,CM,Copa Airlines,4 of 5 bubbles,12.209
+200,__,Copenhagen AirTaxi,5 of 5 bubbles,1
+201,XC,Corendon Airlines,3 of 5 bubbles,2.053
+202,SS,Corsair,3 of 5 bubbles,1.908
+203,OU,Croatia Airlines,3.5 of 5 bubbles,1.054
+204,CU,Cubana de Aviacion,2.5 of 5 bubbles,912
+205,CY,Cyprus Airways,3.5 of 5 bubbles,41
+206,OK,Czech Airlines,3 of 5 bubbles,2.425
+207,D3,Daallo Airlines,4.5 of 5 bubbles,3
+208,yy,Dalian Airlines,4 of 5 bubbles,5
+209,DX,DAT Danish Air Transport,3.5 of 5 bubbles,382
+210,DL,Delta Air Lines,4 of 5 bubbles,58.296
+211,KG,Denver Air Connection,3.5 of 5 bubbles,15
+212,yy,Dniproavia [no longer operating - merged into Windrose Airlines],3 of 5 bubbles,20
+213,DZ,Donghai Airlines,3 of 5 bubbles,10
+214,KB,Druk Air,4 of 5 bubbles,318
+215,2D,Dynamic International Airways,1.5 of 5 bubbles,96
+216,H7,Eagle Air,4 of 5 bubbles,16
+217,ZE,Eastar Jet,3.5 of 5 bubbles,151
+218,T3,Eastern Airways,3 of 5 bubbles,186
+219,VE,EasyFly,3.5 of 5 bubbles,99
+220,U2,easyJet,3.5 of 5 bubbles,54.759
+221,WK,Edelweiss Air,4 of 5 bubbles,3.194
+222,MS,EGYPTAIR,3.5 of 5 bubbles,3.805
+223,LY,EL AL Israel Airlines,3.5 of 5 bubbles,4.424
+224,7Q,Elite Airways,3.5 of 5 bubbles,162
+225,EL,Ellinair,3.5 of 5 bubbles,901
+226,EK,Emirates,4 of 5 bubbles,61.259
+227,E4,Enter Air,3.5 of 5 bubbles,2.541
+228,yy,Equatorial Congo Airlines [no longer operating],2.5 of 5 bubbles,8
+229,B8,Eritrean Airlines,4 of 5 bubbles,2
+230,EG,Ernest [no longer operating],2 of 5 bubbles,429
+231,ET,Ethiopian Airlines,3.5 of 5 bubbles,5.472
+232,EY,Etihad Airways,3.5 of 5 bubbles,16.241
+233,yy,Etihad Regional [no longer operating],3.5 of 5 bubbles,66
+234,YU,Euro Atlantic,2.5 of 5 bubbles,139
+235,yy,European Coastal Airlines [no longer operating],2.5 of 5 bubbles,25
+236,EW,Eurowings,3 of 5 bubbles,9.522
+237,BR,EVA Air,4.5 of 5 bubbles,6.801
+238,E9,Evelop,3 of 5 bubbles,1.299
+239,FE,Far Eastern Air Transport [no longer operating],4.5 of 5 bubbles,15
+240,FN,fastjet,3 of 5 bubbles,263
+241,FJ,Fiji Airways,3.5 of 5 bubbles,2.474
+242,AY,Finnair,4 of 5 bubbles,7.502
+243,FY,firefly,3.5 of 5 bubbles,237
+244,7F,First Air,4 of 5 bubbles,52
+245,F8,Flair Airlines,2 of 5 bubbles,1.359
+246,8W,Fly Allways,3 of 5 bubbles,3
+247,IF,Fly Baghdad,1.5 of 5 bubbles,3
+248,FC,Fly Corporate,5 of 5 bubbles,48
+249,yy,Fly Tiwi,2 of 5 bubbles,1
+250,5H,Fly540,3 of 5 bubbles,149
+251,F3,Flyadeal,2.5 of 5 bubbles,89
+252,KC,FlyArystan,2.5 of 5 bubbles,34
+253,BE,Flybe [no longer operating],3.5 of 5 bubbles,8.145
+254,BM,flybmi [no longer operating],3 of 5 bubbles,374
+255,FO,Flybondi,3 of 5 bubbles,691
+256,6W,FLYBOSNIA,1 of 5 bubbles,2
+257,FZ,flydubai,3 of 5 bubbles,3.435
+258,FT,FlyEgypt,3 of 5 bubbles,433
+259,VP,Flyme,3.5 of 5 bubbles,31
+260,XY,Flynas,3 of 5 bubbles,412
+261,5F,FLYONE,1.5 of 5 bubbles,170
+262,FP,FlyPelican,4 of 5 bubbles,19
+263,FA,FlySafair,4 of 5 bubbles,929
+264,ND,FMIAir,4 of 5 bubbles,9
+265,BF,French bee,3 of 5 bubbles,1.467
+266,F9,Frontier Airlines,2.5 of 5 bubbles,15.317
+267,JH,Fuji Dream Airlines,4 of 5 bubbles,88
+268,FU,Fuzhou Airlines,3 of 5 bubbles,5
+269,GA,Garuda Indonesia,4 of 5 bubbles,7.978
+270,9D,Genghis Khan,-1 of 5 bubbles,0
+271,A9,Georgian Airways,3 of 5 bubbles,486
+272,ST,Germania Airlines [no longer operating],4 of 5 bubbles,2.548
+273,4U,Germanwings [Merged into Eurowings],3.5 of 5 bubbles,462
+274,__,GLO Airlines (no longer operating),5 of 5 bubbles,8
+275,G8,GoAir,3 of 5 bubbles,1.232
+276,G3,GOL Airlines,3.5 of 5 bubbles,16.972
+277,Y5,Golden Myanmar Airlines,4 of 5 bubbles,56
+278,CN,Grand China Air,4.5 of 5 bubbles,10
+279,DW,Great Dane,4.5 of 5 bubbles,6
+280,__,Groupe Transair,3.5 of 5 bubbles,11
+281,GF,Gulf Air,3.5 of 5 bubbles,1.435
+282,__,Gum Air,4 of 5 bubbles,2
+283,GX,GX Airlines,3 of 5 bubbles,5
+284,HU,Hainan Airlines,3.5 of 5 bubbles,1.396
+285,HA,Hawaiian Airlines,4 of 5 bubbles,7.543
+286,NS,Hebei Airlines,3.5 of 5 bubbles,11
+287,2L,Helvetic Airways,4 of 5 bubbles,262
+288,H9,Himalaya Airlines,2.5 of 5 bubbles,5
+289,UO,HK Express,3 of 5 bubbles,1.427
+290,HX,Hong Kong Airlines,3.5 of 5 bubbles,1.723
+291,A6,Hongtu Airlines,5 of 5 bubbles,1
+292,A5,HOP!,3.5 of 5 bubbles,1.494
+293,MR,Hunnu Air,4 of 5 bubbles,16
+294,II,IBC Airways,4 of 5 bubbles,1
+295,IB,Iberia,3 of 5 bubbles,19.686
+296,I2,Iberia Express,3.5 of 5 bubbles,3.166
+297,FW,IBEX,4 of 5 bubbles,18
+298,FI,Icelandair,3.5 of 5 bubbles,7.766
+299,6E,IndiGo,3.5 of 5 bubbles,7.772
+300,7I,InselAir,1.5 of 5 bubbles,281
+301,JY,interCaribbean,2 of 5 bubbles,116
+302,4O,Interjet,3.5 of 5 bubbles,6.726
+303,IO,IrAero,3.5 of 5 bubbles,33
+304,EP,Iran Aseman Airlines,3.5 of 5 bubbles,92
+305,IR,IranAir,3.5 of 5 bubbles,185
+306,IA,Iraqi Airways,3 of 5 bubbles,78
+307,yy,Island Air [no longer operating],3.5 of 5 bubbles,156
+308,6H,Israir,3 of 5 bubbles,394
+309,I8,Izhavia,3.5 of 5 bubbles,4
+310,JM,Jambojet,3.5 of 5 bubbles,191
+311,JL,Japan Airlines (JAL),4.5 of 5 bubbles,9.008
+312,J9,Jazeera Airways,2.5 of 5 bubbles,229
+313,QD,JC Cambodia,2.5 of 5 bubbles,74
+314,7C,Jeju Air,3.5 of 5 bubbles,858
+315,9W,Jet Airways [no longer operating],3.5 of 5 bubbles,12.123
+316,LS,Jet2.com,4.5 of 5 bubbles,31.065
+317,B6,JetBlue,4 of 5 bubbles,17.373
+318,W2,JetClass,-1 of 5 bubbles,0
+319,yy,JETGO,3 of 5 bubbles,104
+320,JA,JetSmart,3 of 5 bubbles,721
+321,JQ,Jetstar Airways - Australia & New Zealand,3 of 5 bubbles,12.340
+322,3K,Jetstar Asia Airways - Singapore,3 of 5 bubbles,1.890
+323,GK,Jetstar Japan,3 of 5 bubbles,1.089
+324,BL,Jetstar Pacific Airlines - Vietnam,2.5 of 5 bubbles,1.103
+325,WU,Jetways Airlines, Kenya [NOT Jet Airways of India],2 of 5 bubbles,5
+326,RY,Jiangxi Air,-1 of 5 bubbles,0
+327,LJ,Jin Air,4 of 5 bubbles,232
+328,R5,Jordan Aviation,2 of 5 bubbles,42
+329,JR,Joy Air,3 of 5 bubbles,2
+330,XE,JSX,4 of 5 bubbles,138
+331,3J,Jubba Airways,2.5 of 5 bubbles,12
+332,HO,Juneyao Airlines,3.5 of 5 bubbles,225
+333,yy,Kalstar Aviation,3.5 of 5 bubbles,20
+334,RQ,Kam Air,3 of 5 bubbles,20
+335,K8,Kan Airlines,3.5 of 5 bubbles,51
+336,KQ,Kenya Airways,3 of 5 bubbles,2.759
+337,Y9,Kish Air,3.5 of 5 bubbles,41
+338,KL,KLM Royal Dutch Airlines,4 of 5 bubbles,30.555
+339,KE,Korean Air,4.5 of 5 bubbles,5.181
+340,K9,KrasAvia,4 of 5 bubbles,1
+341,MN,Kulula,3.5 of 5 bubbles,1.157
+342,KY,Kunming Airlines,3.5 of 5 bubbles,5
+343,KU,Kuwait Airways,3 of 5 bubbles,1.305
+344,B0,La Compagnie,4 of 5 bubbles,465
+345,yy,La Costena,3 of 5 bubbles,15
+346,TM,LAM Mozambique,3 of 5 bubbles,125
+347,y1,LAN Airlines (now LATAM Airlines),4 of 5 bubbles,3.335
+348,LQ,Lanmei Airlines,3 of 5 bubbles,138
+349,QV,Lao Airlines,4 of 5 bubbles,445
+350,LK,Lao Skyway,4 of 5 bubbles,52
+351,QL,Laser Airlines,3.5 of 5 bubbles,136
+352,LA,LATAM Airlines,3.5 of 5 bubbles,39.452
+353,yy,Latin American Wings [no longer operating],2 of 5 bubbles,30
+354,OE,Laudamotion,2.5 of 5 bubbles,1.597
+355,W4,LCPeru,2.5 of 5 bubbles,307
+356,LV,LEVEL,3 of 5 bubbles,2.390
+357,LI,LIAT,2.5 of 5 bubbles,433
+358,LN,Libyan Airlines,3 of 5 bubbles,22
+359,JT,Lion Air,3 of 5 bubbles,2.073
+360,LM,Loganair,4 of 5 bubbles,378
+361,LT,Longjiang - LJ Air,2 of 5 bubbles,1
+362,GJ,Loong Air,4 of 5 bubbles,5
+363,LO,LOT Polish Airlines,3 of 5 bubbles,5.080
+364,8L,Lucky Air,3 of 5 bubbles,50
+365,LH,Lufthansa,4 of 5 bubbles,35.395
+366,LG,Luxair,4 of 5 bubbles,1.585
+367,__,Magnicharters,4.5 of 5 bubbles,366
+368,W5,Mahan Air,4 of 5 bubbles,536
+369,MH,Malaysia Airlines,3.5 of 5 bubbles,7.551
+370,Q2,Maldivian,3 of 5 bubbles,72
+371,OD,Malindo Air,3 of 5 bubbles,3.651
+372,AE,Mandarin Airlines,4 of 5 bubbles,80
+373,JE,Mango,3.5 of 5 bubbles,1.256
+374,7Y,Mann Yadanarpon Airlines,4 of 5 bubbles,108
+375,NR,Manta Air,4.5 of 5 bubbles,18
+376,L6,Mauritania Airlines,2.5 of 5 bubbles,6
+377,MY,Maya Island Air,4 of 5 bubbles,208
+378,7M,Mayair,3.5 of 5 bubbles,45
+379,OM,MIAT Mongolian Airlines,3.5 of 5 bubbles,211
+380,ME,Middle East Airlines,4 of 5 bubbles,781
+381,M4,Mistral Air,2.5 of 5 bubbles,303
+382,MW,Mokulele Airlines,4 of 5 bubbles,178
+383,QM,Monacair,4 of 5 bubbles,1
+384,yy,Monarch [no longer operating],4 of 5 bubbles,3.153
+385,YM,Montenegro Airlines,3 of 5 bubbles,334
+386,8M,Myanmar Airways International,4 of 5 bubbles,81
+387,UB,Myanmar National Airlines,4 of 5 bubbles,182
+388,MJ,MyWay Airlines,4.5 of 5 bubbles,6
+389,IN,Nam Air,3 of 5 bubbles,36
+390,yy,Nature Air (no longer operating),1 of 5 bubbles,27
+391,ON,Nauru Airlines,3.5 of 5 bubbles,50
+392,NO,NEOS,3.5 of 5 bubbles,4.570
+393,RA,Nepal Airlines,3.5 of 5 bubbles,243
+394,NA,Nesma Airlines Egypt,4 of 5 bubbles,5
+395,NE,Nesma Airlines Saudi Arabia,-1 of 5 bubbles,0
+396,E3,NewGen Airways,-1 of 5 bubbles,0
+397,yy,NewLeaf [no longer operating - merged into Flair Airlines],1.5 of 5 bubbles,106
+398,yy,Nextjet [no longer operating],3 of 5 bubbles,42
+399,yy,Niki [no longer operating],3 of 5 bubbles,708
+400,NP,Nile Air,3 of 5 bubbles,277
+401,DD,Nok Air,3.5 of 5 bubbles,1.367
+402,XW,NokScoot,3 of 5 bubbles,231
+403,yy,Nordica,3.5 of 5 bubbles,106
+404,Y7,Nordstar Airlines,3.5 of 5 bubbles,223
+405,N4,Nordwind Airlines,3 of 5 bubbles,1.261
+406,DY,Norwegian,3.5 of 5 bubbles,27.969
+407,BJ,Nouvel Air Tunise,2.5 of 5 bubbles,904
+408,VQ,NOVOAIR,4 of 5 bubbles,66
+409,BK,Okay Airways,3.5 of 5 bubbles,23
+410,OA,Olympic Air [NOT Olympus Airways],3.5 of 5 bubbles,939
+411,WY,Oman Air,3.5 of 5 bubbles,4.531
+412,8Q,Onur Air,2 of 5 bubbles,1.508
+413,yy,OpenSkies [no longer operating],3.5 of 5 bubbles,110
+414,6O,Orbest,3.5 of 5 bubbles,348
+415,OX,Orient Thai Airlines,4 of 5 bubbles,44
+416,8P,Pacific Coastal Airlines,3.5 of 5 bubbles,140
+417,PK,Pakistan International Airlines,2.5 of 5 bubbles,426
+418,PB,PAL Airlines (Canada),4 of 5 bubbles,21
+419,8Y,Pan Pacific,-1 of 5 bubbles,0
+420,P6,Pascan,4.5 of 5 bubbles,8
+421,2Z,Passaredo Linhas Aereas,3 of 5 bubbles,282
+422,yy,PAWA Dominicana [no longer operating],2.5 of 5 bubbles,122
+423,MM,Peach Aviation,3 of 5 bubbles,1.436
+424,EO,Pegas Fly,3 of 5 bubbles,223
+425,PC,Pegasus Airlines,3 of 5 bubbles,5.707
+426,__,Penobscot Island Air,5 of 5 bubbles,5
+427,PE,People's Airline,4.5 of 5 bubbles,35
+428,P9,Peruvian Airlines [no longer operating],2.5 of 5 bubbles,812
+429,PR,Philippine Airlines (PAL),3.5 of 5 bubbles,4.750
+430,PU,Plus Ultra Lineas Aereas,2.5 of 5 bubbles,497
+431,CG,PNG Air,3 of 5 bubbles,26
+432,DP,Pobeda,3 of 5 bubbles,3.238
+433,PD,Porter Airlines,3.5 of 5 bubbles,1.824
+434,PW,Precision Air,3 of 5 bubbles,504
+435,PF,Primera Air [no longer operating],3 of 5 bubbles,1.879
+436,P0,Proflight Zambia,4 of 5 bubbles,56
+437,QF,Qantas,4 of 5 bubbles,19.610
+438,QR,Qatar Airways,4 of 5 bubbles,30.352
+439,IQ,QAZAQ AIR,2.5 of 5 bubbles,14
+440,QB,Qeshm Airlines,3.5 of 5 bubbles,64
+441,QW,Qingdao Airlines,4 of 5 bubbles,6
+442,7H,Ravn Alaska,2.5 of 5 bubbles,66
+443,__,REALtonga,2.5 of 5 bubbles,27
+444,WZ,Red Wings,3.5 of 5 bubbles,527
+445,RX,Regent Airways,3.5 of 5 bubbles,129
+446,8N,Regional Air,3.5 of 5 bubbles,7
+447,ZL,Regional Express Airlines,4 of 5 bubbles,429
+448,FV,Rossiya Russian Airlines,3.5 of 5 bubbles,2.596
+449,AT,Royal Air Maroc,3 of 5 bubbles,4.544
+450,RW,Royal Air Philippines,-1 of 5 bubbles,0
+451,BI,Royal Brunei Airlines,4 of 5 bubbles,1.070
+452,RJ,Royal Jordanian,3.5 of 5 bubbles,2.068
+453,DR,Ruili Airlines,3.5 of 5 bubbles,4
+454,7R,RusLine,3 of 5 bubbles,146
+455,WB,RwandAir,3.5 of 5 bubbles,502
+456,FR,Ryanair,3 of 5 bubbles,77.397
+457,S7,S7 airlines,4 of 5 bubbles,4.118
+458,F2,Safarilink,4 of 5 bubbles,58
+459,4Q,Safi Airways,4 of 5 bubbles,8
+460,OV,SalamAir,2 of 5 bubbles,163
+461,OL,Samoa Airlines,3.5 of 5 bubbles,52
+462,__,San German Express,3.5 of 5 bubbles,10
+463,RZ,SANSA,3 of 5 bubbles,213
+464,yy,Saratov/Ivolga [no longer operating],3.5 of 5 bubbles,9
+465,SK,SAS,3.5 of 5 bubbles,9.664
+466,S4,SATA - Azores Airlines,3 of 5 bubbles,1.604
+467,9R,SATENA Colombia,3.5 of 5 bubbles,88
+468,SV,Saudia Airlines,3.5 of 5 bubbles,3.014
+469,6S,SaudiGulf Airlines,3.5 of 5 bubbles,34
+470,DV,SCAT Airlines,2.5 of 5 bubbles,146
+471,TR,Scoot,3 of 5 bubbles,4.970
+472,BB,Seaborne Airlines,2 of 5 bubbles,271
+473,ER,SereneAir,4 of 5 bubbles,38
+474,WV,Sevenair/AeroVIP,4.5 of 5 bubbles,8
+475,D2,Severstal Air Company,4 of 5 bubbles,26
+476,NL,Shaheen Air International,3.5 of 5 bubbles,33
+477,SC,Shandong Airlines,3.5 of 5 bubbles,116
+478,FM,Shanghai Airlines,3 of 5 bubbles,277
+479,SH,Sharp Airlines,4.5 of 5 bubbles,14
+480,ZH,Shenzhen Airlines,3.5 of 5 bubbles,293
+481,N9,Shree,5 of 5 bubbles,1
+482,3U,Sichuan Airlines,3.5 of 5 bubbles,351
+483,MI,SilkAir,3.5 of 5 bubbles,2.007
+484,3M,Silver Airways,2 of 5 bubbles,1.148
+485,K5,Silverstone Air,3.5 of 5 bubbles,77
+486,__,Simrik Airlines,2.5 of 5 bubbles,27
+487,SQ,Singapore Airlines,4.5 of 5 bubbles,24.986
+488,H2,Sky Airline,3 of 5 bubbles,1.953
+489,ZA,Sky Angkor Airlines,3 of 5 bubbles,6
+490,GQ,Sky Express Airline,2.5 of 5 bubbles,1.230
+491,__,Sky Shuttle,3.5 of 5 bubbles,3
+492,M8,Skyjet Airlines,2.5 of 5 bubbles,224
+493,BC,Skymark Airlines,4 of 5 bubbles,391
+494,PQ,SkyUp,3 of 5 bubbles,205
+495,LC,Skyway Airlines,3.5 of 5 bubbles,5
+496,SX,SkyWork Airlines [no longer operating],4 of 5 bubbles,130
+497,yy,Small Planet Airlines [no longer operating,3 of 5 bubbles,3.394
+498,5N,Smartavia,3 of 5 bubbles,364
+499,QS,SmartWings,3 of 5 bubbles,2.908
+500,6J,Solaseed Air,4 of 5 bubbles,174
+501,IE,Solomon Airlines,4 of 5 bubbles,50
+502,SZ,Somon Air,3 of 5 bubbles,28
+503,S0,Sosa (Aerolineas Sosa),1.5 of 5 bubbles,29
+504,S8,Sounds Air,4.5 of 5 bubbles,55
+505,SA,South African Airways,3.5 of 5 bubbles,4.843
+506,9X,Southern Airways Express,3.5 of 5 bubbles,125
+507,WN,Southwest Airlines,4.5 of 5 bubbles,43.318
+508,SG,SpiceJet,3.5 of 5 bubbles,4.073
+509,NK,Spirit Airlines,3 of 5 bubbles,20.009
+510,9C,Spring Airlines,3 of 5 bubbles,345
+511,IJ,Spring Airlines Japan,3 of 5 bubbles,151
+512,P8,SprintAir (Polish airline),2.5 of 5 bubbles,3
+513,UL,SriLankan Airlines,3.5 of 5 bubbles,3.310
+514,SJ,Sriwijaya Air,3 of 5 bubbles,723
+515,PV,St Barth Commuter,4.5 of 5 bubbles,13
+516,2I,Star Peru,2.5 of 5 bubbles,183
+517,yy,Starbow [no longer operating],3.5 of 5 bubbles,4
+518,7G,Starflyer,4.5 of 5 bubbles,248
+519,SD,Sudan Airways,3 of 5 bubbles,5
+520,yy,Sun Air Express,3.5 of 5 bubbles,218
+521,SY,Sun Country Airlines,3 of 5 bubbles,2.984
+522,DK,Sunclass Airlines,4 of 5 bubbles,1.212
+523,SR,Sundair,4 of 5 bubbles,116
+524,XQ,SunExpress,3 of 5 bubbles,2.188
+525,S6,Sunrise Airways,3 of 5 bubbles,21
+526,WG,Sunwing Airlines,3 of 5 bubbles,7.980
+527,Y8,Suparna Airlines,4.5 of 5 bubbles,2
+528,PY,Surinam Airways,3 of 5 bubbles,167
+529,LX,Swiss International Air Lines [SWISS],4 of 5 bubbles,13.687
+530,WO,Swoop,3 of 5 bubbles,1.295
+531,RB,SyrianAir,3.5 of 5 bubbles,6
+532,TW,T Way Airlines,3.5 of 5 bubbles,337
+533,DT,TAAG Angola Airlines,3 of 5 bubbles,550
+534,HH,Taban Air,3 of 5 bubbles,23
+535,5U,TAG,4 of 5 bubbles,28
+536,yy,Tailwind Airlines,3 of 5 bubbles,156
+537,7J,Tajik Air,3.5 of 5 bubbles,5
+538,JJ,TAM Airlines Brazil,4 of 5 bubbles,5.479
+539,EQ,TAME Vuela Ecuador,2.5 of 5 bubbles,527
+540,TP,TAP Air Portugal,3.5 of 5 bubbles,19.569
+541,YQ,TAR Aerolineas,3 of 5 bubbles,237
+542,RO,TAROM,3.5 of 5 bubbles,1.200
+543,TG,Thai Airways,4 of 5 bubbles,15.591
+544,SL,Thai Lion Air,2.5 of 5 bubbles,1.578
+545,WE,THAI Smile Airways,4.5 of 5 bubbles,5.571
+546,VZ,Thai Vietjet,3 of 5 bubbles,37
+547,MT,Thomas Cook Airlines (UK) [no longer operating],3.5 of 5 bubbles,14.477
+548,HQ,Thomas Cook Airlines Belgium [no longer operating],3.5 of 5 bubbles,169
+549,GS,Tianjin Airlines,3.5 of 5 bubbles,74
+550,3P,Tiara Air Aruba,2.5 of 5 bubbles,4
+551,TV,Tibet Airlines,3.5 of 5 bubbles,23
+552,TT,tigerair australia,3 of 5 bubbles,2.861
+553,__,Tigerair Singapore [no longer operating],3.5 of 5 bubbles,664
+554,IT,tigerair taiwan,3.5 of 5 bubbles,751
+555,TJ,Tradewind Aviation,4.5 of 5 bubbles,31
+556,Q8,Trans Air Congo (TAC),2 of 5 bubbles,3
+557,__,Trans Guyana,4 of 5 bubbles,4
+558,__,Trans Maldivian,4 of 5 bubbles,212
+559,HV,Transavia,3.5 of 5 bubbles,73.290
+560,8B,TransNusa,4 of 5 bubbles,10
+561,IL,Trigana Air Service,3.5 of 5 bubbles,51
+562,9N,Tropic Air Belize,4.5 of 5 bubbles,305
+563,TI,Tropic Ocean Airways,5 of 5 bubbles,2
+564,2T,Trujet,2.5 of 5 bubbles,131
+565,TZ,Tsaradia,3.5 of 5 bubbles,7
+566,OR,TUI Airlines Netherlands,3.5 of 5 bubbles,2.060
+567,BY,TUI Airways (United Kingdom),3.5 of 5 bubbles,17.936
+568,TB,TUI fly Belgium (formerly Jetairfly),3.5 of 5 bubbles,4.762
+569,X3,TUIfly (Germany),3 of 5 bubbles,3.122
+570,TU,Tunisair,2.5 of 5 bubbles,2.486
+571,TK,Turkish Airlines,4 of 5 bubbles,29.754
+572,T5,Turkmenistan Airlines,3 of 5 bubbles,216
+573,U8,Tus Air,2.5 of 5 bubbles,181
+574,T7,Twin Jet,3.5 of 5 bubbles,34
+575,PS,Ukraine International Airlines,2.5 of 5 bubbles,3.801
+576,B7,Uni Air,4.5 of 5 bubbles,89
+577,UA,United Airlines,3 of 5 bubbles,50.235
+578,U6,Ural Airlines,3 of 5 bubbles,2.877
+579,UQ,Urumqi Air,3.5 of 5 bubbles,5
+580,BS,US-Bangla Airlines,3.5 of 5 bubbles,121
+581,QU,Utair,3 of 5 bubbles,1.191
+582,HY,Uzbekistan Airways,3.5 of 5 bubbles,711
+583,JW,Vanilla Air [merged with Peach as of 27.10.2019],3.5 of 5 bubbles,826
+584,0V,VASCO,3 of 5 bubbles,20
+585,yy,Veca Airlines [no longer operating],4 of 5 bubbles,12
+586,VC,Via Airlines [no longer operating],1.5 of 5 bubbles,226
+587,V4,Vieques Air Link,4 of 5 bubbles,67
+588,VJ,VietJetAir,2.5 of 5 bubbles,4.126
+589,VN,Vietnam Airlines,4 of 5 bubbles,7.676
+590,yy,Vim Airlines [no longer operating],3 of 5 bubbles,160
+591,VX,Virgin America (now Alaska Airlines),4 of 5 bubbles,2.207
+592,VS,Virgin Atlantic Airways,4 of 5 bubbles,15.079
+593,VA,Virgin Australia,4 of 5 bubbles,11.408
+594,UK,Vistara,4.5 of 5 bubbles,2.617
+595,VB,Viva Aerobus,3 of 5 bubbles,3.006
+596,VH,Viva Air (Colombia),2 of 5 bubbles,1.759
+597,VV,Viva Air (Peru),1.5 of 5 bubbles,809
+598,yy,VLM Airlines [no longer operating],3 of 5 bubbles,9
+599,Y4,Volaris,3 of 5 bubbles,5.833
+600,V7,Volotea,3.5 of 5 bubbles,12.147
+601,VY,Vueling Airlines,2.5 of 5 bubbles,25.628
+602,EB,Wamos Air,2.5 of 5 bubbles,2.332
+603,yy,Wantaniya Airways [no longer operating],1 of 5 bubbles,18
+604,WT,Wasaya Airways,-1 of 5 bubbles,0
+605,PN,West Air,4 of 5 bubbles,98
+606,WS,WestJet,4 of 5 bubbles,15.353
+607,WF,Wideroe,4 of 5 bubbles,392
+608,WM,Winair,3 of 5 bubbles,152
+609,7W,Windrose Air,4 of 5 bubbles,192
+610,P5,Wingo,3 of 5 bubbles,478
+611,IW,Wings Air,2.5 of 5 bubbles,306
+612,W6,Wizz Air,3 of 5 bubbles,16.026
+613,WW,WOW air [no longer operating],3 of 5 bubbles,9.098
+614,MF,Xiamen Airlines,3.5 of 5 bubbles,639
+615,SE,XL Airways [no longer operating],2.5 of 5 bubbles,1.982
+616,XN,Xpressair,2.5 of 5 bubbles,3
+617,R3,Yakutia Air,3.5 of 5 bubbles,163
+618,YC,Yamal Airlines,3.5 of 5 bubbles,99
+619,YE,Yanair,2.5 of 5 bubbles,155
+620,IY,Yemenia,3 of 5 bubbles,4
+621,YT,Yeti Airlines,3.5 of 5 bubbles,221
+622,Z4,Zagros Airlines,3.5 of 5 bubbles,32
+623,AQ,9 Air,2.5 of 5 bubbles,11

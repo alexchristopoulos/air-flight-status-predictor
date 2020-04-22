@@ -24,7 +24,7 @@ object Airlines {
 
     this.datasetRdd = Spark
       .getSparkContext()
-      .textFile(config.sparkDatasetDir + config.sparkAirlines)
+      .textFile(config.sparkDataResources + config.sparkAirlines)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(line => FuncOperators.csvStringRowToRowType(line, Map(
         0 -> "Int",

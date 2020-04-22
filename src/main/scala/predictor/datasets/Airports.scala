@@ -30,7 +30,7 @@ object Airports {
 
     this.datasetRdd = Spark
       .getSparkContext()
-      .textFile(config.sparkDatasetDir + config.sparkAirports)
+      .textFile(config.sparkDataResources + config.sparkAirports)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(line => FuncOperators.csvStringRowToRowType(line, Map(
         0 -> "Int",

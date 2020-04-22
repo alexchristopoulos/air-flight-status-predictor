@@ -9,9 +9,9 @@ object tripAdvAirlineCarriersReviews {
 
   def extractReviews(): Unit ={
 
-    val file = new File("C:\\Users\\Αλέξανδρος\\Desktop\\data.out")
+    val file = new File("/home/admin/airlineReviews.csv")
     val bw = new BufferedWriter(new FileWriter(file))
-
+    var j = 1
     for (i <- 0 to numOfPages-1){
 
       val url:String = "https://www.tripadvisor.com/MetaPlacementAjax?placementName=airlines_lander_main&wrap=true&skipLocation=true&page=" + i.toString() + "&sort=alphabetical"
@@ -31,10 +31,10 @@ object tripAdvAirlineCarriersReviews {
           else
             numOfReviews = numOfReviews.trim().split(" ")(0).replace(",", ".")
 
-          bw.write(iata + "," + carrier + "," + rating + "," + numOfReviews)
+          bw.write(j.toString() + "," +iata + "," + carrier + "," + rating + "," + numOfReviews)
           bw.write("\n")
-
-      });
+          j = j + 1
+      })
 
       println("Page " + i.toString() + " out of " + numOfPages.toString())
     }
