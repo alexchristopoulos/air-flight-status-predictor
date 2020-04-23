@@ -31,16 +31,14 @@ object RandomForestClassification {
     TrainDataset.load()
     TripadvisorAirlinesReviewsDataset.load()
 
-    sparkSession.sql("SELECT * FROM airlines AS al LEFT JOIN airlineReviews AS ar ON ar.iata=al.iata").show(100)
-    return
-
     sparkSession
       .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
-        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY " +
+        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
         "FROM TRAIN_FLIGHTS_DATA AS f " +
         "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
         "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
+        "INNER JOIN airlineReviews AS ar ON f.OP_CARRIER_ID=ar.iata " +
         "WHERE f.DIVERTED!=1.0")
       .as("FLIGHTS_DATA")
       .createOrReplaceTempView("FLIGHTS_DATA")

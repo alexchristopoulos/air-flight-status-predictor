@@ -91,7 +91,7 @@ object TrainDataset {
     });*/
 
     //return inputCols.trim();
-    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY")
+    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY", "AIRLINE_RATING", "NUM_OF_AIRLINE_REVIEWS")
   }
 
   def getPredictionInputCols(): String = {
