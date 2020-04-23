@@ -1,6 +1,7 @@
 package gr.upatras.ceid.ddcdm.predictor.classification
 
-import gr.upatras.ceid.ddcdm.predictor.datasets.{Airlines, Airports, TestDataset, TrainDataset}
+import gr.upatras.ceid.ddcdm.predictor.datasets.{Airlines, Airports, TestDataset, TrainDataset, TripadvisorAirlinesReviewsDataset}
+
 import org.apache.spark.ml.{Pipeline, PipelineModel}
 import org.apache.spark.ml.classification.RandomForestClassifier
 import org.apache.spark.ml.feature.{RFormula, StringIndexer, VectorAssembler}
@@ -28,6 +29,10 @@ object RandomForestClassification {
     Airports.load()
     Airlines.load()
     TrainDataset.load()
+    TripadvisorAirlinesReviewsDataset.load()
+
+    sparkSession.sql("SELECT * FROM airlines AS al LEFT JOIN airlineReviews AS ar ON ar.iata=al.iata").show(100)
+    return
 
     sparkSession
       .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +

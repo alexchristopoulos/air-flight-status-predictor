@@ -24,7 +24,7 @@ object TripadvisorAirlinesReviewsDataset {
 
     this.datasetRdd = Spark
       .getSparkContext()
-      .textFile(config.sparkDataResources + config.sparkDatasetTripadvisorAirlinesReviews)
+      .textFile(config.sparkDataResources + config.sparkAirlineReviewsDataset)
       .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
       .map(FuncOperators.csvStringRowToRowTripAdvReviews)
 
@@ -33,7 +33,7 @@ object TripadvisorAirlinesReviewsDataset {
       .createDataFrame(this.datasetRdd, this.struct)
 
     this.datasetDf.as("airlinesReviews")
-    this.datasetDf.createOrReplaceTempView("airlinesReviews")
+    this.datasetDf.createOrReplaceTempView("airlineReviews")
 
   }
 

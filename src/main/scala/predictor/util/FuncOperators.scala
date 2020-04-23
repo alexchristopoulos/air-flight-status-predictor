@@ -160,7 +160,7 @@ object FuncOperators {
       var rating: Double = 0.0
       var numOfReviews: Int = 0
 
-      println(line)
+      //println(line)
       if (tokens.size == 5) {
 
         id = tokens(0).replace("\"", "").toInt
