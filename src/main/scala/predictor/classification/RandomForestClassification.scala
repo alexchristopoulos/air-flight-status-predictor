@@ -28,7 +28,6 @@ object RandomForestClassification {
 
     TrainDataset.load()
 
-    return
     if(trainAndTest){
 
       val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
@@ -108,7 +107,7 @@ object RandomForestClassification {
 
     } else {
 
-      val trainDataset = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA")
+      val trainDataset = TrainDataset.getDataFrame()
 
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())
