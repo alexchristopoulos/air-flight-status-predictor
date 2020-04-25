@@ -31,13 +31,14 @@ object RandomForestClassification {
     if(trainAndTest){
 
       val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
-      val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count())
+      val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + (1.00 * delays.count().toDouble).toInt.toString())
+
 
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())
         .setOutputCol("features")
 
-      val Array(noDelaysTrainSet, noDelaysTestSet) =   noDelays.randomSplit(Array(0.55, 0.45), 11L)
+      val Array(noDelaysTrainSet, noDelaysTestSet) =   noDelays.randomSplit(Array(0.65, 0.35), 11L)
       val Array(trainDelaysSet, testDelaysSet) =   delays.randomSplit(Array(0.65, 0.35), 11L)
 
       val pipelineTrainData = trainDelaysSet.union(noDelaysTrainSet)

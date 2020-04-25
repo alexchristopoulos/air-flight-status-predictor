@@ -5,6 +5,7 @@ import java.io.{BufferedWriter, File, FileWriter}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
+import org.apache.spark.sql.functions.col
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
@@ -43,25 +44,10 @@ object Airlines {
     this.isLoaded = true
   }
 
-  def getAsDf(): DataFrame = {
-
-    return this.datasetDf
-  }
-
-  def getAsRdd(): RDD[Row] = {
-
-    return this.datasetRdd
-  }
-
-  def isItLoaded(): Boolean = {
-
-    return this.isLoaded
-  }
-
-  def avgDelayResourcesExist(): Boolean = {
-
-    return new File(config.sparkDataResources + config.sparkAirlinesAVGDel).exists()
-  }
+  def getAsDf(): DataFrame = { return this.datasetDf }
+  def getAsRdd(): RDD[Row] = { return this.datasetRdd }
+  def isItLoaded(): Boolean = { return this.isLoaded  }
+  def avgDelayResourcesExist(): Boolean = { return new File(config.sparkDataResources + config.sparkAirlinesAVGDel).exists() }
 
   def saveAvgDelays(avgDelaysDf: DataFrame): Unit = {
 
@@ -69,7 +55,7 @@ object Airlines {
       .repartition(1)
       .write
       .format("csv")
-      .option("option", false)
+      .option("header", true)
       .option("sep", ",")
       .save(config.sparkDataResources + config.sparkAirlinesAVGDel)
   }
@@ -81,7 +67,16 @@ object Airlines {
     Spark
       .getSparkSession()
       .read
-      .csv(dir)
+      .format("csv")
+      .option("header", true)
+      .load(dir)
+      .withColumn("OP_CARRIER_ID", col("OP_CARRIER_ID").cast("Integer"))
+      .withColumn("AIRLINE_MEAN_DELAY", col("AIRLINE_MEAN_DELAY").cast("Double"))
+      .createOrReplaceTempView("MEAN_DELAY_AIRLINES")
+
+    Spark
+      .getSparkSession()
+      .sql("SELECT OP_CARRIER_ID, log(2, AIRLINE_MEAN_DELAY) AS AIRLINE_MEAN_DELAY FROM MEAN_DELAY_AIRLINES")
       .createOrReplaceTempView("MEAN_DELAY_AIRLINES")
   }
 
