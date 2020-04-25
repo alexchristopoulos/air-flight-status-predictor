@@ -1,6 +1,7 @@
 package gr.upatras.ceid.ddcdm.predictor.datasets
 
-import org.apache.spark._
+import java.io.{BufferedWriter, File, FileWriter}
+
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
@@ -17,7 +18,7 @@ object Airlines {
 
   private val struct = StructType(
     StructField("id", IntegerType, false) ::
-    StructField("iata", StringType, false) ::
+      StructField("iata", StringType, false) ::
       StructField("name", StringType, false) :: Nil)
 
   def load(): Unit = {
@@ -53,7 +54,35 @@ object Airlines {
   }
 
   def isItLoaded(): Boolean = {
+
     return this.isLoaded
+  }
+
+  def avgDelayResourcesExist(): Boolean = {
+
+    return new File(config.sparkDataResources + config.sparkAirlinesAVGDel).exists()
+  }
+
+  def saveAvgDelays(avgDelaysDf: DataFrame): Unit = {
+
+    avgDelaysDf
+      .repartition(1)
+      .write
+      .format("csv")
+      .option("option", false)
+      .option("sep", ",")
+      .save(config.sparkDataResources + config.sparkAirlinesAVGDel)
+  }
+
+  def loadAvgDelays(): Unit = {
+
+    val dir = config.sparkDataResources + config.sparkAirlinesAVGDel
+
+    Spark
+      .getSparkSession()
+      .read
+      .csv(dir)
+      .createOrReplaceTempView("MEAN_DELAY_AIRLINES")
   }
 
 }

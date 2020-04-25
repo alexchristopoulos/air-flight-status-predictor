@@ -26,41 +26,13 @@ object RandomForestClassification {
 
   def trainModel(trainAndTest: Boolean, saveModel: Boolean): Unit = {
 
-    Airports.load()
-    Airlines.load()
     TrainDataset.load()
-    TripadvisorAirlinesReviewsDataset.load()
 
-    sparkSession
-      .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
-        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
-        "FROM TRAIN_FLIGHTS_DATA AS f " +
-        "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
-        "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
-        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
-        "INNER JOIN airlineReviews AS ar ON f.OP_CARRIER_ID=ar.iata " +
-        "WHERE f.DIVERTED!=1.0")
-      .as("FLIGHTS_DATA")
-      .createOrReplaceTempView("FLIGHTS_DATA")
-
-    sparkSession.sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
-    sparkSession.sql("SELECT OP_CARRIER_ID, AVG(ARR_DELAY) AS AIRLINE_MEAN_DELAY FROM FLIGHTS_DATA AS ff GROUP BY ff.OP_CARRIER_ID").createOrReplaceTempView("MEAN_DELAY_AIRLINES")
-
-    sparkSession.sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, mf.AIRLINE_MEAN_DELAY FROM FLIGHTS_DATA AS f " +
-      "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
-      "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID")
-      .as("FLIGHTS_DATA")
-      .createOrReplaceTempView("FLIGHTS_DATA")
-
+    return
     if(trainAndTest){
 
-      val delays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=1.0")
-      val cancelations = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=2.0")
-      val noDelays = sparkSession.sql("SELECT * FROM FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + (delays.count() + cancelations.count()) )
-
-      val stringIndexer = new StringIndexer()
-        .setInputCol("CANCELLED")
-        .setOutputCol("label")
+      val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
+      val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count())
 
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())
@@ -68,10 +40,9 @@ object RandomForestClassification {
 
       val Array(noDelaysTrainSet, noDelaysTestSet) =   noDelays.randomSplit(Array(0.55, 0.45), 11L)
       val Array(trainDelaysSet, testDelaysSet) =   delays.randomSplit(Array(0.65, 0.35), 11L)
-      val Array(trainCancellationsSet, testCancellationsSet) =   cancelations.randomSplit(Array(0.8, 0.2), 11L)
 
-      val pipelineTrainData = trainDelaysSet.union(trainCancellationsSet).union(noDelaysTrainSet)
-      val pipelineTestData = testCancellationsSet.union(testDelaysSet).union(noDelaysTestSet)
+      val pipelineTrainData = trainDelaysSet.union(noDelaysTrainSet)
+      val pipelineTestData = testDelaysSet.union(noDelaysTestSet)
 
       pipelineTrainData.cache()
 
@@ -137,7 +108,7 @@ object RandomForestClassification {
 
     } else {
 
-      val trainDataset = sparkSession.sql("SELECT * FROM FLIGHTS_DATA")
+      val trainDataset = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA")
 
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())

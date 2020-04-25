@@ -6,7 +6,6 @@ import org.apache.spark.sql.types.StructField
 import org.apache.spark.sql.types.IntegerType
 import org.apache.spark.sql.types.DoubleType
 import org.apache.spark.sql.types.StringType
-
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
@@ -46,7 +45,7 @@ object TrainDataset {
 
     val typeMapping = this.getTypeMapping()
 
-    this.df = Spark
+    Spark
       .getSparkSession()
       .createDataFrame(
         Spark
@@ -54,8 +53,53 @@ object TrainDataset {
           .textFile(config.sparkDatasetDir + config.sparkTrainDataset)
           .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
           .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
-        , this.struct
-      )
+        , this.struct)
+      .as("TRAIN_FLIGHTS_DATA")
+      .createOrReplaceTempView("TRAIN_FLIGHTS_DATA")
+
+    Airports.load()
+    Airlines.load()
+    TripadvisorAirlinesReviewsDataset.load()
+
+    Spark
+      .getSparkSession()
+      .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
+        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
+        "FROM TRAIN_FLIGHTS_DATA AS f " +
+        "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
+        "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
+        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
+        "INNER JOIN airlineReviews AS ar ON f.OP_CARRIER_ID=ar.iata " +
+        "WHERE f.DIVERTED!=1.0")
+      .as("TRAIN_FLIGHTS_DATA")
+      .createOrReplaceTempView("TRAIN_FLIGHTS_DATA")
+
+    Spark
+      .getSparkSession()
+      .sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
+
+    if(Airlines.avgDelayResourcesExist() == false){
+
+      val avgDel = Spark
+        .getSparkSession()
+        .sql("SELECT OP_CARRIER_ID, AVG(ARR_DELAY) AS AIRLINE_MEAN_DELAY FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.OP_CARRIER_ID")
+
+      avgDel.createOrReplaceTempView("MEAN_DELAY_AIRLINES")
+
+      println("CREATED AND SAVING AVERAGE AIRLINE AVG DELAYS")
+      Airlines.saveAvgDelays(avgDel)
+
+    } else {
+
+      Airlines.loadAvgDelays()
+      println("LOADED AIRLINE AVG DELAYS")
+    }
+
+    this.df = Spark
+      .getSparkSession()
+      .sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, mf.AIRLINE_MEAN_DELAY FROM TRAIN_FLIGHTS_DATA AS f " +
+      "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
+      "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID")
 
     this.df
       .as("TRAIN_FLIGHTS_DATA")
