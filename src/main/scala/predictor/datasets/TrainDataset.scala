@@ -178,7 +178,7 @@ object TrainDataset {
               entry._2._1 -> StructField(entry._1, StringType, false)
             }
             case "Double" => {
-              entry._2._1 -> StructField(entry._1, DoubleType, false)
+              entry._2._1 -> StructField(entry._1, DoubleType, true)
             }
             case "Cat;Can;Double" => {
               entry._2._1 -> StructField(entry._1, DoubleType, false)

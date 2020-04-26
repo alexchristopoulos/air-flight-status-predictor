@@ -73,11 +73,6 @@ object Airlines {
       .withColumn("OP_CARRIER_ID", col("OP_CARRIER_ID").cast("Integer"))
       .withColumn("AIRLINE_MEAN_DELAY", col("AIRLINE_MEAN_DELAY").cast("Double"))
       .createOrReplaceTempView("MEAN_DELAY_AIRLINES")
-
-    Spark
-      .getSparkSession()
-      .sql("SELECT OP_CARRIER_ID, log(2, AIRLINE_MEAN_DELAY) AS AIRLINE_MEAN_DELAY FROM MEAN_DELAY_AIRLINES")
-      .createOrReplaceTempView("MEAN_DELAY_AIRLINES")
   }
 
 }

@@ -29,7 +29,7 @@ object FuncOperators {
           if(mapEntry._1 == 14) {
 
             if(tokens(14).trim() == ""){
-              tmp += 14 -> 9999999.0
+              tmp += 14 -> null
             } else {
               tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
             }
