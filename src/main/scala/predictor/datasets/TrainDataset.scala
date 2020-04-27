@@ -95,6 +95,21 @@ object TrainDataset {
       println("LOADED AIRLINE AVG DELAYS")
     }
 
+    if(Airports.avgDepDelayResourceExists() == false){
+
+      val originAvgDepDelay = Spark
+        .getSparkSession()
+        .sql("SELECT ORIGIN, AVG(DEP_DELAY) AS ORIGIN_AVG_DEP_DELAY FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.ORIGIN")
+
+      originAvgDepDelay.createOrReplaceTempView("ORIGN_AVG_DEPARTURE_DELAYS")
+      println("CREATED AND SAVING AVERAGE DEPARTURE DELAY PER ORIGIN DATA RESOURCE")
+      Airports.saveAvgDepDelays(originAvgDepDelay)
+
+    } else {
+
+      Airports.loadAvgDepDelays()
+    }
+
     this.df = Spark
       .getSparkSession()
       .sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, mf.AIRLINE_MEAN_DELAY FROM TRAIN_FLIGHTS_DATA AS f " +

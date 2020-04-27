@@ -23,4 +23,5 @@ object config {
   val sparkTestDataset = "/flights2019.csv"
   val sparkAirlineReviewsDataset = "/airlineReviews.csv"
   val sparkAirlinesAVGDel = "/airlinesAVGDelays.csv"
+  val sparkAirportsAvgDepDelay = "/airportsAVGDepDelay.csv"
 }

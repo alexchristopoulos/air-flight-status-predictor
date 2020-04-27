@@ -13,6 +13,7 @@ object Airports {
 
   private var datasetRdd: RDD[Row] = _
   private var datasetDf: DataFrame = _
+  private var airportsAvgDepDelayDf = _
   private var isLoaded: Boolean = false
 //ID,IATA_CODE,AIRPORT,CITY,STATE,COUNTRY,LATITUDE,LONGITUDE
   private val struct = StructType(
@@ -50,18 +51,36 @@ object Airports {
     this.isLoaded = true
   }
 
-  def getAsDf(): DataFrame = {
+  def getAsDf(): DataFrame = { return this.datasetDf }
+  def getAsRdd(): RDD[Row] = { return this.datasetRdd }
+  def isItLoaded(): Boolean = { return this.isLoaded }
 
-    return this.datasetDf
-  }
+def avgDepDelayResourceExists(): Boolean = { return new File(config.sparkDataResources + config.sparkAirportsAvgDepDelay).exists() }
 
-  def getAsRdd(): RDD[Row] = {
+def saveAvgDepDelays(avgDepDelaysDf: DataFrame): Unit = {
 
-    return this.datasetRdd
-  }
+  avgDepDelaysDf
+    .repartition(1)
+    .write
+    .format("csv")
+    .option("header", true)
+    .option("sep", ",")
+    .save(config.sparkDataResources + config.sparkAirportsAvgDepDelay)
+}
 
-  def isItLoaded(): Boolean = {
-    return this.isLoaded
-  }
+def loadAvgDepDelays(): Unit = {
+
+  val dir = config.sparkDataResources + config.sparkAirportsAvgDepDelay
+
+  Spark
+    .getSparkSession()
+    .read
+    .format("csv")
+    .option("header", true)
+    .load(dir)
+    .withColumn("ORIGIN", col("ORIGIN").cast("Integer"))
+    .withColumn("ORIGIN_AVG_DEP_DELAY", col("ORIGIN_AVG_DEP_DELAY").cast("Double"))
+    .createOrReplaceTempView("ORIGN_AVG_DEPARTURE_DELAYS")
+}
 
 }
