@@ -25,7 +25,7 @@ object TrainDataset {
     //"AIRLINE" -> Tuple2(6, "Int"), //flight number for op carrier
     "ORIGIN" -> Tuple2(7, "String"), //origin airpotr iata code
     "DESTINATION" -> Tuple2(8, "String"), //destination airpotr iata code
-    //"DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
+    "DEP_DELAY_NEW" -> Tuple2(9, "Double"), //departure delay in minutes
     //"TAXI_OUT" -> Tuple2(10, "Double"),
     //"WHEELS_OFF" -> Tuple2(11, "Int"),
     //"WHEELS_ON" -> Tuple2(12, "Int"),
@@ -64,7 +64,8 @@ object TrainDataset {
     Spark
       .getSparkSession()
       .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
-        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
+        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, " +
+        "f.ARR_DELAY_NEW AS ARR_DELAY, f.DEP_DELAY_NEW AS DEP_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
         "FROM TRAIN_FLIGHTS_DATA AS f " +
         "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
         "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
@@ -101,7 +102,7 @@ object TrainDataset {
         .getSparkSession()
         .sql("SELECT ORIGIN, AVG(DEP_DELAY) AS ORIGIN_AVG_DEP_DELAY FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.ORIGIN")
 
-      originAvgDepDelay.createOrReplaceTempView("ORIGN_AVG_DEPARTURE_DELAYS")
+      originAvgDepDelay.createOrReplaceTempView("ORIGIN_AVG_DEPARTURE_DELAYS")
       println("CREATED AND SAVING AVERAGE DEPARTURE DELAY PER ORIGIN DATA RESOURCE")
       Airports.saveAvgDepDelays(originAvgDepDelay)
 
@@ -112,9 +113,11 @@ object TrainDataset {
 
     this.df = Spark
       .getSparkSession()
-      .sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, mf.AIRLINE_MEAN_DELAY FROM TRAIN_FLIGHTS_DATA AS f " +
-      "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
-      "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID")
+      .sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, mf.AIRLINE_MEAN_DELAY, oad.ORIGIN_AVG_DEP_DELAY " +
+        "FROM TRAIN_FLIGHTS_DATA AS f " +
+        "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
+        "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID " +
+        "INNER JOIN ORIGIN_AVG_DEPARTURE_DELAYS AS oad ON f.ORIGIN=oad.ORIGIN")
 
     this.df
       .as("TRAIN_FLIGHTS_DATA")
@@ -150,7 +153,7 @@ object TrainDataset {
     });*/
 
     //return inputCols.trim();
-    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY", "AIRLINE_RATING", "NUM_OF_AIRLINE_REVIEWS")
+    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY", "AIRLINE_RATING", "NUM_OF_AIRLINE_REVIEWS", "ORIGIN_AVG_DEP_DELAY")
   }
 
   def getPredictionInputCols(): String = {

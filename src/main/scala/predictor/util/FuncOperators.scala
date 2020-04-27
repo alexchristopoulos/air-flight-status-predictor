@@ -34,6 +34,14 @@ object FuncOperators {
               tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
             }
 
+          } else if (mapEntry._1 == 9) {
+
+            if(tokens(9).trim() == ""){
+              tmp += 9 -> null
+            } else {
+              tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
+            }
+
           } else {
             tmp += mapEntry._1 -> tokens(mapEntry._1).trim().toDouble
           }

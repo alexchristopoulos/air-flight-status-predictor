@@ -1,8 +1,10 @@
 package gr.upatras.ceid.ddcdm.predictor.datasets
 
-import org.apache.spark._
+import java.io.File
+
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.functions.col
 import org.apache.spark.sql._
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import org.apache.spark.sql.types.{StringType, StructField, StructType, IntegerType}
@@ -13,7 +15,6 @@ object Airports {
 
   private var datasetRdd: RDD[Row] = _
   private var datasetDf: DataFrame = _
-  private var airportsAvgDepDelayDf = _
   private var isLoaded: Boolean = false
 //ID,IATA_CODE,AIRPORT,CITY,STATE,COUNTRY,LATITUDE,LONGITUDE
   private val struct = StructType(
@@ -80,7 +81,7 @@ def loadAvgDepDelays(): Unit = {
     .load(dir)
     .withColumn("ORIGIN", col("ORIGIN").cast("Integer"))
     .withColumn("ORIGIN_AVG_DEP_DELAY", col("ORIGIN_AVG_DEP_DELAY").cast("Double"))
-    .createOrReplaceTempView("ORIGN_AVG_DEPARTURE_DELAYS")
+    .createOrReplaceTempView("ORIGIN_AVG_DEPARTURE_DELAYS")
 }
 
 }

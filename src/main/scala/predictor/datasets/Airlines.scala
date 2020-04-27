@@ -1,6 +1,6 @@
 package gr.upatras.ceid.ddcdm.predictor.datasets
 
-import java.io.{BufferedWriter, File, FileWriter}
+import java.io.File
 
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.rdd.RDD
