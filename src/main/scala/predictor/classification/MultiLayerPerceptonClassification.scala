@@ -48,7 +48,7 @@ object MultiLayerPerceptonClassification {
 
       val multilayerPercepton = new MultilayerPerceptronClassifier()
         .setLabelCol("CANCELLED")
-        .setLayers(Array(4,5,6,6,5,4))
+        .setLayers(Array(10,8,6,5,4,3))
 
       val stages = Array(vectorAssembler, multilayerPercepton)
       val pipeline = new Pipeline().setStages(stages)
@@ -121,7 +121,7 @@ object MultiLayerPerceptonClassification {
 
       val multilayerPercepton = new MultilayerPerceptronClassifier()
         .setLabelCol("CANCELLED")
-        .setLayers(Array(4,5,6,6,5,4))
+        .setLayers(Array(10,8,6,5,4,3))
 
       val stages = Array(vectorAssembler, multilayerPercepton)
       val pipeline = new Pipeline().setStages(stages)

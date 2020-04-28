@@ -1,4 +1,4 @@
-package predictor.classification
+package gr.upatras.ceid.ddcdm.predictor.classification
 
 import java.io.{BufferedWriter, FileWriter}
 

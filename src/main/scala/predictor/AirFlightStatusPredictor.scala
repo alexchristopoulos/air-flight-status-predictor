@@ -1,11 +1,11 @@
 package gr.upatras.ceid.ddcdm.predictor
 
-import gr.upatras.ceid.ddcdm.predictor.classification.RandomForestClassification
+import gr.upatras.ceid.ddcdm.predictor.classification.{NaiveBayesClassification, RandomForestClassification}
 import gr.upatras.ceid.ddcdm.predictor.datasets.TestDataset
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.spark.SparkClustering
 import gr.upatras.ceid.ddcdm.predictor.preprocess.DatasetPreprocessing
-import predictor.classification.GradientBoostedTreeClassification
+import gr.upatras.ceid.ddcdm.predictor.classification.GradientBoostedTreeClassification
 
 object AirFlightStatusPredictor {
 
@@ -19,7 +19,7 @@ object AirFlightStatusPredictor {
 
       //RandomForestClassification.trainModel(false, true)
       //TestDataset.load()
-      GradientBoostedTreeClassification.trainModel(false, true)
+      NaiveBayesClassification.trainModel(false, true)
       //RandomForestClassification.predict("TEST_FLIGHTS_DATA")
     } catch {
       case x:Exception => {

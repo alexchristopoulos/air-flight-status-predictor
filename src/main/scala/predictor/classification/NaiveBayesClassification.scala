@@ -76,7 +76,7 @@ object NaiveBayesClassification {
         model
           .write
           .overwrite()
-          .save("/home/admin/gradientBoostedModelClassification")
+          .save("/home/admin/naiveBayesModel")
       }
 
       //RDD[prediction, label]
@@ -134,7 +134,7 @@ object NaiveBayesClassification {
         model
           .write
           .overwrite()
-          .save("/home/admin/gradientBoostedModelClassification")
+          .save("/home/admin/naiveBayesModel")
 
       println("**NAIVE BAYES MODEL TRAINED AND SAVED***")
     }
@@ -143,7 +143,7 @@ object NaiveBayesClassification {
   def predict(viewName: String): Unit = {
 
 
-    println("***NAIVE BAYES MODEL CLASSIFICATION***")
+    println("***NAIVE BAYES MODEL CLASSIFICATION PREDICTION***")
     this.loadExistingModel()
     println("MODEL LOADED")
 
