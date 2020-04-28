@@ -1,17 +1,16 @@
-package predictor.classification
+package gr.upatras.ceid.ddcdm.predictor.classification
 
 import java.io.{BufferedWriter, FileWriter}
 
 import gr.upatras.ceid.ddcdm.predictor.datasets.{TestDataset, TrainDataset}
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import org.apache.spark.ml.{Pipeline, PipelineModel}
-import org.apache.spark.ml.classification.{GBTClassificationModel, GBTClassifier}
+import org.apache.spark.ml.classification.NaiveBayes
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 
-object GradientBoostedTreeClassification {
-
+object NaiveBayesClassification {
 
   private val sparkSession = Spark.getSparkSession()
   private var model: PipelineModel = _
@@ -19,9 +18,9 @@ object GradientBoostedTreeClassification {
 
   def loadExistingModel(): Unit = {
 
-    println("Loading Random Forest Model")
+    println("Loading NAIVE BAYES MODEL")
     this.model = PipelineModel.load("/home/admin/gradientBoostedModelClassification")
-    println("RANDOM FOREST MODEL LOADED")
+    println("lOADING  NAIVE BAYES MODEL LOADED")
     this.isLoaded = true
   }
 
@@ -46,10 +45,10 @@ object GradientBoostedTreeClassification {
 
       pipelineTrainData.cache()
 
-      val gradientBoostedTree = new GBTClassifier()
+      val naiveBayes = new NaiveBayes()
         .setLabelCol("CANCELLED")
 
-      val stages = Array(vectorAssembler, gradientBoostedTree)
+      val stages = Array(vectorAssembler, naiveBayes)
       val pipeline = new Pipeline().setStages(stages)
 
       println("Training Model")
@@ -84,7 +83,7 @@ object GradientBoostedTreeClassification {
       val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("CANCELLED", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
 
       val metrics = new MulticlassMetrics(rddEval)
-      val bw = new BufferedWriter(new FileWriter("/home/admin/results.txt"))
+      val bw = new BufferedWriter(new FileWriter("/home/admin/naive_bayes_results.txt"))
 
       bw.write("LABEL  PRECISION   RECALL  F-MEASURE")
       bw.newLine()
@@ -118,17 +117,17 @@ object GradientBoostedTreeClassification {
         .setInputCols(TrainDataset.getClassificationInputCols())
         .setOutputCol("features")
 
-      val gradientBoostedTree = new GBTClassifier()
+      val naiveBayes = new NaiveBayes()
         .setLabelCol("CANCELLED")
 
-      val stages = Array(vectorAssembler, gradientBoostedTree)
+      val stages = Array(vectorAssembler, naiveBayes)
       val pipeline = new Pipeline().setStages(stages)
 
-      println("TRAINING MODEL")
+      println("TRAINING NAIVE BAYES MODEL")
 
       this.model = pipeline.fit(trainDataset)
 
-      println("SAVING MODEL")
+      println("SAVING NAIVE BAYES MODEL")
 
       if(saveModel)
 
@@ -137,14 +136,14 @@ object GradientBoostedTreeClassification {
           .overwrite()
           .save("/home/admin/gradientBoostedModelClassification")
 
-      println("**GRADIENT BOOSTED TREE TRAINED AND SAVED***")
+      println("**NAIVE BAYES MODEL TRAINED AND SAVED***")
     }
   }
 
   def predict(viewName: String): Unit = {
 
 
-    println("***GRADIENT BOOSTED TREE CLASSIFICATION***")
+    println("***NAIVE BAYES MODEL CLASSIFICATION***")
     this.loadExistingModel()
     println("MODEL LOADED")
 
@@ -164,7 +163,7 @@ object GradientBoostedTreeClassification {
     val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("CANCELLED", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
 
     val metrics = new MulticlassMetrics(rddEval)
-    val bw = new BufferedWriter(new FileWriter("/home/admin/results.txt"))
+    val bw = new BufferedWriter(new FileWriter("/home/admin/naive_bayes_results.txt"))
 
     bw.write("LABEL  PRECISION   RECALL  F-MEASURE")
     bw.newLine()
@@ -191,5 +190,6 @@ object GradientBoostedTreeClassification {
   def getMetrics(): Unit = {
 
   }
+
 
 }

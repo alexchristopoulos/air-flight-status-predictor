@@ -1,16 +1,16 @@
-package predictor.classification
+package gr.upatras.ceid.ddcdm.predictor.classification
 
 import java.io.{BufferedWriter, FileWriter}
 
 import gr.upatras.ceid.ddcdm.predictor.datasets.{TestDataset, TrainDataset}
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import org.apache.spark.ml.{Pipeline, PipelineModel}
-import org.apache.spark.ml.classification.{GBTClassificationModel, GBTClassifier}
+import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 
-object GradientBoostedTreeClassification {
+object MultiLayerPerceptonClassification {
 
 
   private val sparkSession = Spark.getSparkSession()
@@ -19,9 +19,9 @@ object GradientBoostedTreeClassification {
 
   def loadExistingModel(): Unit = {
 
-    println("Loading Random Forest Model")
+    println("Loading MULTI LAYER PERCEPTON Model")
     this.model = PipelineModel.load("/home/admin/gradientBoostedModelClassification")
-    println("RANDOM FOREST MODEL LOADED")
+    println("RMULTI LAYER PERCEPTON LOADED")
     this.isLoaded = true
   }
 
@@ -46,13 +46,14 @@ object GradientBoostedTreeClassification {
 
       pipelineTrainData.cache()
 
-      val gradientBoostedTree = new GBTClassifier()
+      val multilayerPercepton = new MultilayerPerceptronClassifier()
         .setLabelCol("CANCELLED")
+        .setLayers(Array(4,5,6,6,5,4))
 
-      val stages = Array(vectorAssembler, gradientBoostedTree)
+      val stages = Array(vectorAssembler, multilayerPercepton)
       val pipeline = new Pipeline().setStages(stages)
 
-      println("Training Model")
+      println("Training MULTI LAYER PERCEPTON Model")
 
       val model = pipeline.fit(pipelineTrainData)
 
@@ -60,7 +61,7 @@ object GradientBoostedTreeClassification {
 
       val predictions = model.transform(pipelineTestData)
 
-      println("Testing model")
+      println("Testing  MULTI LAYER PERCEPTON model")
 
       val evaluator = new MulticlassClassificationEvaluator()
         .setLabelCol("CANCELLED")
@@ -77,14 +78,14 @@ object GradientBoostedTreeClassification {
         model
           .write
           .overwrite()
-          .save("/home/admin/gradientBoostedModelClassification")
+          .save("/home/admin/multiLayerPerceptonModel")
       }
 
       //RDD[prediction, label]
       val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("CANCELLED", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
 
       val metrics = new MulticlassMetrics(rddEval)
-      val bw = new BufferedWriter(new FileWriter("/home/admin/results.txt"))
+      val bw = new BufferedWriter(new FileWriter("/home/admin/multiLayerPerceptonModelresults.txt"))
 
       bw.write("LABEL  PRECISION   RECALL  F-MEASURE")
       bw.newLine()
@@ -118,10 +119,11 @@ object GradientBoostedTreeClassification {
         .setInputCols(TrainDataset.getClassificationInputCols())
         .setOutputCol("features")
 
-      val gradientBoostedTree = new GBTClassifier()
+      val multilayerPercepton = new MultilayerPerceptronClassifier()
         .setLabelCol("CANCELLED")
+        .setLayers(Array(4,5,6,6,5,4))
 
-      val stages = Array(vectorAssembler, gradientBoostedTree)
+      val stages = Array(vectorAssembler, multilayerPercepton)
       val pipeline = new Pipeline().setStages(stages)
 
       println("TRAINING MODEL")
@@ -135,16 +137,16 @@ object GradientBoostedTreeClassification {
         model
           .write
           .overwrite()
-          .save("/home/admin/gradientBoostedModelClassification")
+          .save("/home/admin/multiLayerPerceptonModel")
 
-      println("**GRADIENT BOOSTED TREE TRAINED AND SAVED***")
+      println("**MULTI LAYER PERCEPTON TRAINED AND SAVED***")
     }
   }
 
   def predict(viewName: String): Unit = {
 
 
-    println("***GRADIENT BOOSTED TREE CLASSIFICATION***")
+    println("***MULTI LAYER PERCEPTON CLASSIFICATION***")
     this.loadExistingModel()
     println("MODEL LOADED")
 
@@ -164,7 +166,7 @@ object GradientBoostedTreeClassification {
     val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("CANCELLED", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
 
     val metrics = new MulticlassMetrics(rddEval)
-    val bw = new BufferedWriter(new FileWriter("/home/admin/results.txt"))
+    val bw = new BufferedWriter(new FileWriter("/home/admin/multiLayerPerceptonModelresults.txt"))
 
     bw.write("LABEL  PRECISION   RECALL  F-MEASURE")
     bw.newLine()
@@ -191,5 +193,4 @@ object GradientBoostedTreeClassification {
   def getMetrics(): Unit = {
 
   }
-
 }

@@ -33,7 +33,6 @@ object RandomForestClassification {
       val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
       val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + (1.00 * delays.count().toDouble).toInt.toString())
 
-
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())
         .setOutputCol("features")
@@ -52,6 +51,8 @@ object RandomForestClassification {
 
       val stages = Array(vectorAssembler, randomForestClassifier)
       val pipeline = new Pipeline().setStages(stages)
+
+      println("Training Model")
 
       val model = pipeline.fit(pipelineTrainData)
 
@@ -108,7 +109,10 @@ object RandomForestClassification {
 
     } else {
 
-      val trainDataset = TrainDataset.getDataFrame()
+      val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
+      val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toString())
+
+      val trainDataset = delays.union(noDelays)
 
       val vectorAssembler = new VectorAssembler()
         .setInputCols(TrainDataset.getClassificationInputCols())
@@ -121,7 +125,11 @@ object RandomForestClassification {
       val stages = Array(vectorAssembler, randomForestClassifier)
       val pipeline = new Pipeline().setStages(stages)
 
+      println("TRAINING MODEL")
+
       this.model = pipeline.fit(trainDataset)
+
+      println("SAVING MODEL")
 
       if(saveModel)
 
@@ -132,32 +140,17 @@ object RandomForestClassification {
 
       println("***RANDOM FOREST MODEL TRAINED AND SAVED***")
     }
-
   }
 
   def predict(viewName: String): Unit = {
 
-    //if(!Airports.isItLoaded())
-      Airports.load()
-
-   // if(!Airlines.isItLoaded())
-      Airlines.load()
-
-    this.loadExistingModel()
 
     println("***RANDOM FOREST PREDICTION***")
+    this.loadExistingModel()
+    println("MODEL LOADED")
 
-    //TestDataset.getDataFrame().show(200)
-
-    val testData = sparkSession
-      .sql("SELECT f.YEAR, f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE " +
-        "FROM TEST_FLIGHTS_DATA AS f " +
-        "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
-        "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
-        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
-        "WHERE f.DIVERTED!=1.0")
-
-    //testData.show(200)
+    TestDataset.load()
+    val testData = TestDataset.getDataFrame()
 
     val predictions = this.model.transform(testData)
 
@@ -166,8 +159,7 @@ object RandomForestClassification {
       .setPredictionCol("prediction")
       .setMetricName("accuracy")
 
-    val accuracy = evaluator
-      .evaluate(predictions)
+    val accuracy = evaluator.evaluate(predictions)
 
     //RDD[prediction, label]
     val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("CANCELLED", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))

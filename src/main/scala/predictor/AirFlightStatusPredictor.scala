@@ -5,6 +5,7 @@ import gr.upatras.ceid.ddcdm.predictor.datasets.TestDataset
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.spark.SparkClustering
 import gr.upatras.ceid.ddcdm.predictor.preprocess.DatasetPreprocessing
+import predictor.classification.GradientBoostedTreeClassification
 
 object AirFlightStatusPredictor {
 
@@ -16,17 +17,13 @@ object AirFlightStatusPredictor {
 
     try {
 
-      println("***************************")
-      println("RANDOM FOREST TEST")
-
       //RandomForestClassification.trainModel(false, true)
       //TestDataset.load()
-      RandomForestClassification.trainModel(true, false)
-
+      GradientBoostedTreeClassification.trainModel(false, true)
+      //RandomForestClassification.predict("TEST_FLIGHTS_DATA")
     } catch {
       case x:Exception => {
         println(x.toString())
-
         x.printStackTrace()
       }
     }
