@@ -16,6 +16,9 @@ object NaiveBayesClassification {
   private var model: PipelineModel = _
   private var isLoaded:Boolean = false
 
+  val naiveBayesClassifier = new NaiveBayes()
+    .setLabelCol("CANCELLED")
+
   def loadExistingModel(): Unit = {
 
     println("Loading NAIVE BAYES MODEL")

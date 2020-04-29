@@ -16,6 +16,10 @@ object RandomForestClassification {
   private var model: PipelineModel = _
   private var isLoaded:Boolean = false
 
+  val RFClassifier = new RandomForestClassifier()
+    .setNumTrees(10)
+    .setLabelCol("CANCELLED")
+
   def loadExistingModel(): Unit = {
 
     println("Loading Random Forest Model")
