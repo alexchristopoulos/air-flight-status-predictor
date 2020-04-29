@@ -15,6 +15,7 @@ object TestDataset {
 
   private var df: DataFrame = _
   private var struct: StructType = _
+  private var isLoaded: Boolean = false
 
   private val selectedFeatures: Map[String, Tuple2[Int, String]] = Map(
     "YEAR" -> Tuple2(0, "Int"),
@@ -42,73 +43,78 @@ object TestDataset {
 
   def load(): Unit = {
 
-    this.initStruct()
+    if(this.isLoaded == false) {
 
-    val typeMapping = this.getTypeMapping()
+      this.isLoaded = true
+      this.initStruct()
 
-    this.df = Spark
-      .getSparkSession()
-      .createDataFrame(
-        Spark
-          .getSparkContext()
-          .textFile(config.sparkDatasetDir + config.sparkTestDataset)
-          .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
-          .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
-        , this.struct
-      )
+      val typeMapping = this.getTypeMapping()
 
-    this.df
-      .as("TEST_FLIGHTS_DATA")
-      .createOrReplaceTempView("TEST_FLIGHTS_DATA")
+      this.df = Spark
+        .getSparkSession()
+        .createDataFrame(
+          Spark
+            .getSparkContext()
+            .textFile(config.sparkDatasetDir + config.sparkTestDataset)
+            .mapPartitionsWithIndex(FuncOperators.removeFirstLine)
+            .map(line => FuncOperators.csvStringRowToRowType(line, typeMapping))
+          , this.struct
+        )
 
-    if(!Airports.isItLoaded()){
+      this.df
+        .as("TEST_FLIGHTS_DATA")
+        .createOrReplaceTempView("TEST_FLIGHTS_DATA")
 
-      Airports.load()
+      if (!Airports.isItLoaded()) {
 
-      if(Airports.avgDepDelayResourceExists()){
-        Airports.loadAvgDepDelays()
+        Airports.load()
+
+        if (Airports.avgDepDelayResourceExists()) {
+          Airports.loadAvgDepDelays()
+        }
       }
-    }
 
-    if(!Airlines.isItLoaded()){
+      if (!Airlines.isItLoaded()) {
 
-      Airlines.load()
-      if(Airlines.avgDelayResourcesExist()){
-        Airlines.loadAvgDelays()
+        Airlines.load()
+        if (Airlines.avgDelayResourcesExist()) {
+          Airlines.loadAvgDelays()
+        }
       }
+
+      TripadvisorAirlinesReviewsDataset.load()
+
+      Spark
+        .getSparkSession()
+        .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
+          "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, " +
+          "f.ARR_DELAY_NEW AS ARR_DELAY, f.DEP_DELAY_NEW AS DEP_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
+          "FROM TEST_FLIGHTS_DATA AS f " +
+          "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
+          "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
+          "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
+          "INNER JOIN airlineReviews AS ar ON f.OP_CARRIER_ID=ar.iata " +
+          "WHERE f.DIVERTED!=1.0")
+        .as("TEST_FLIGHTS_DATA")
+        .createOrReplaceTempView("TEST_FLIGHTS_DATA")
+
+      Spark
+        .getSparkSession()
+        .sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM TEST_FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
+
+      this.df = Spark
+        .getSparkSession()
+        .sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, LOG(mf.AIRLINE_MEAN_DELAY,15) AS AIRLINE_MEAN_DELAY, LOG(oad.ORIGIN_AVG_DEP_DELAY,15) AS ORIGIN_AVG_DEP_DELAY " +
+          "FROM TEST_FLIGHTS_DATA AS f " +
+          "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
+          "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID " +
+          "INNER JOIN ORIGIN_AVG_DEPARTURE_DELAYS AS oad ON f.ORIGIN=oad.ORIGIN")
+
+      this.df
+        .as("TEST_FLIGHTS_DATA")
+        .createOrReplaceTempView("TEST_FLIGHTS_DATA")
+
     }
-
-    TripadvisorAirlinesReviewsDataset.load()
-
-    Spark
-      .getSparkSession()
-      .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
-        "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, " +
-        "f.ARR_DELAY_NEW AS ARR_DELAY, f.DEP_DELAY_NEW AS DEP_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
-        "FROM TEST_FLIGHTS_DATA AS f " +
-        "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
-        "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
-        "INNER JOIN airports AS a2 ON f.DESTINATION=a2.iata " +
-        "INNER JOIN airlineReviews AS ar ON f.OP_CARRIER_ID=ar.iata " +
-        "WHERE f.DIVERTED!=1.0")
-      .as("TEST_FLIGHTS_DATA")
-      .createOrReplaceTempView("TEST_FLIGHTS_DATA")
-
-    Spark
-      .getSparkSession()
-      .sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM TEST_FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
-
-    this.df = Spark
-      .getSparkSession()
-      .sql("SELECT f.*, cf.FLIGHTS_COUNT AS FLIGHTS_COUNT, LOG(mf.AIRLINE_MEAN_DELAY,15) AS AIRLINE_MEAN_DELAY, LOG(oad.ORIGIN_AVG_DEP_DELAY,15) AS ORIGIN_AVG_DEP_DELAY " +
-        "FROM TEST_FLIGHTS_DATA AS f " +
-        "INNER JOIN NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN AS cf ON f.DATE_ORIGIN_ID=cf.DATE_ORIGIN_ID " +
-        "INNER JOIN MEAN_DELAY_AIRLINES AS mf ON f.OP_CARRIER_ID=mf.OP_CARRIER_ID " +
-        "INNER JOIN ORIGIN_AVG_DEPARTURE_DELAYS AS oad ON f.ORIGIN=oad.ORIGIN")
-
-    this.df
-      .as("TEST_FLIGHTS_DATA")
-      .createOrReplaceTempView("TEST_FLIGHTS_DATA")
   }
 
   def getDataFrame(): DataFrame = {
