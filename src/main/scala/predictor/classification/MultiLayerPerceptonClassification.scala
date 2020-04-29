@@ -20,7 +20,7 @@ object MultiLayerPerceptonClassification {
   def loadExistingModel(): Unit = {
 
     println("Loading MULTI LAYER PERCEPTON Model")
-    this.model = PipelineModel.load("/home/admin/gradientBoostedModelClassification")
+    this.model = PipelineModel.load("/home/admin/multiLayerPerceptonModel")
     println("RMULTI LAYER PERCEPTON LOADED")
     this.isLoaded = true
   }
@@ -48,7 +48,11 @@ object MultiLayerPerceptonClassification {
 
       val multilayerPercepton = new MultilayerPerceptronClassifier()
         .setLabelCol("CANCELLED")
-        .setLayers(Array(10,8,6,5,4,3))
+        .setMaxIter(400)
+        .setTol(1E-6)
+        .setBlockSize(128)
+        .setSeed(12345L)
+        .setLayers(Array(12,10,8,4,2))
 
       val stages = Array(vectorAssembler, multilayerPercepton)
       val pipeline = new Pipeline().setStages(stages)
@@ -121,7 +125,9 @@ object MultiLayerPerceptonClassification {
 
       val multilayerPercepton = new MultilayerPerceptronClassifier()
         .setLabelCol("CANCELLED")
-        .setLayers(Array(10,8,6,5,4,3))
+        .setMaxIter(200)
+        .setSeed(12345L)
+        .setLayers(Array(12,10,8,4,2))
 
       val stages = Array(vectorAssembler, multilayerPercepton)
       val pipeline = new Pipeline().setStages(stages)

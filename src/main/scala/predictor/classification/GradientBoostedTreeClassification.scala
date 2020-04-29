@@ -52,7 +52,7 @@ object GradientBoostedTreeClassification {
       val stages = Array(vectorAssembler, gradientBoostedTree)
       val pipeline = new Pipeline().setStages(stages)
 
-      println("Training Model")
+      println("Training Gradient Boosted Tree Model")
 
       val model = pipeline.fit(pipelineTrainData)
 

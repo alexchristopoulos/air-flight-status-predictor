@@ -19,7 +19,7 @@ object NaiveBayesClassification {
   def loadExistingModel(): Unit = {
 
     println("Loading NAIVE BAYES MODEL")
-    this.model = PipelineModel.load("/home/admin/gradientBoostedModelClassification")
+    this.model = PipelineModel.load("/home/admin/naiveBayesModel")
     println("lOADING  NAIVE BAYES MODEL LOADED")
     this.isLoaded = true
   }
