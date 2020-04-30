@@ -96,6 +96,8 @@ object Classification {
 
       val trainDataset = delays.union(noDelays)
 
+      trainDataset.cache()
+
       val pipeline = new Pipeline().setStages(
         Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
           classifierCast

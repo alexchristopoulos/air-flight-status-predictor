@@ -17,16 +17,21 @@ object AirFlightStatusPredictor {
 
     try {
 
-      //RandomForestClassification.trainModel(false, true)
-      //TestDataset.load()
-      //NaiveBayesClassification.trainModel(false, true)
-      //MultiLayerPerceptonClassification.trainModel(false, true)
-      //GradientBoostedTreeClassification.trainModel(false, true)
-      Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
-      //NaiveBayesClassification.predict("TEST_FLIGHTS_DATA")
-      //RandomForestClassification.predict("TEST_FLIGHTS_DATA")
+      //train models
+      //Classification.trainAndOrTest(false, true, RandomForestClassification.RFClassifier)
+      //Classification.trainAndOrTest(false, true, GradientBoostedTreeClassification.gradientBoostedTree)
+      //Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
+      //Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
+
+      //test models
+      //Classification.classify(RandomForestClassification.RFClassifier)
+      //Classification.classify(GradientBoostedTreeClassification.gradientBoostedTree)
+      Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
+      //Classification.classify(NaiveBayesClassification.naiveBayesClassifier)
+
     } catch {
       case x:Exception => {
+
         println(x.toString())
         x.printStackTrace()
       }
