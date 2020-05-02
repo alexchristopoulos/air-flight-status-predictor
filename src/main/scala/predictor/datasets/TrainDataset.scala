@@ -136,28 +136,11 @@ object TrainDataset {
 
   def getClassificationInputCols(): Array[String] = {
 
-    /* var inputCols: String = ""
+    return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY", "AIRLINE_RATING", "NUM_OF_AIRLINE_REVIEWS", "ORIGIN_AVG_DEP_DELAY")
+  }
 
-     this.selectedFeatures.foreach(entry => {
+  def getRegressionInputCols(): Array[String] = {
 
-       if (
-         entry._2._1 != 9 &&
-           entry._2._1 != 10 &&
-           entry._2._1 != 11 &&
-           entry._2._1 != 12 &&
-           entry._2._1 != 13 &&
-           entry._2._1 != 14 &&
-           entry._2._1 != 15 &&
-           entry._2._1 != 16 &&
-           entry._2._1 != 18 &&
-           entry._2._1 != 19
-       ) //This data is available only after a flight is completed
-
-         inputCols = inputCols + entry._1 + " "
-
-     });*/
-
-    //return inputCols.trim();
     return Array("MONTH", "DAY_OF_MONTH", "DAY_OF_WEEK", "OP_CARRIER_ID", "ORIGIN", "DESTINATION", "DISTANCE", "FLIGHTS_COUNT", "AIRLINE_MEAN_DELAY", "AIRLINE_RATING", "NUM_OF_AIRLINE_REVIEWS", "ORIGIN_AVG_DEP_DELAY")
   }
 

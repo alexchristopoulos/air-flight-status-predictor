@@ -59,7 +59,7 @@ object Prediction {
       val pipelineTestData = testDelaysSet.union(noDelaysTestSet)
 
       val pipeline = new Pipeline().setStages(
-        Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
+        Array(MLUtils.getVectorAssember(TrainDataset.getRegressionInputCols(), "features"),
           predictorCast
         ))
 
@@ -84,7 +84,7 @@ object Prediction {
       trainDataset.cache()
 
       val pipeline = new Pipeline().setStages(
-        Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
+        Array(MLUtils.getVectorAssember(TrainDataset.getRegressionInputCols(), "features"),
           predictorCast
         ))
 

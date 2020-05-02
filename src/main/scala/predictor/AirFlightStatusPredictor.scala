@@ -4,6 +4,8 @@ import gr.upatras.ceid.ddcdm.predictor.classification.{GradientBoostedTreeClassi
 import gr.upatras.ceid.ddcdm.predictor.datasets.TestDataset
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.classification.Classification
+import gr.upatras.ceid.ddcdm.predictor.prediction.{IsotonicPrediction, RFPrediction, LinearRegressionPrediction}
+import gr.upatras.ceid.ddcdm.predictor.prediction.Prediction
 import gr.upatras.ceid.ddcdm.predictor.spark.SparkClustering
 import gr.upatras.ceid.ddcdm.predictor.preprocess.DatasetPreprocessing
 
@@ -17,17 +19,23 @@ object AirFlightStatusPredictor {
 
     try {
 
-      //train models
+      //    *** TRAIN MODELS ***
       //Classification.trainAndOrTest(false, true, RandomForestClassification.RFClassifier)
       //Classification.trainAndOrTest(false, true, GradientBoostedTreeClassification.gradientBoostedTree)
       //Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
       //Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
+      //Prediction.trainAndOrTest(false, true, LinearRegressionPrediction.linearRegression)
+      //Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
+      //Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
 
-      //test models
+      //    *** TEST MODELS ***
       //Classification.classify(RandomForestClassification.RFClassifier)
       //Classification.classify(GradientBoostedTreeClassification.gradientBoostedTree)
-      Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
+      //Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
       //Classification.classify(NaiveBayesClassification.naiveBayesClassifier)
+      //Prediction.predict(LinearRegressionPrediction.linearRegression)
+      //Prediction.predict(IsotonicPrediction.isotonicRegression)
+      //Prediction.predict(RFPrediction.rfRegression)
 
     } catch {
       case x:Exception => {
