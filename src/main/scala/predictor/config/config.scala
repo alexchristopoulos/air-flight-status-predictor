@@ -21,21 +21,28 @@ object config {
   val sparkAirlinesAVGDel = "/airlinesAVGDelays.csv"
   val sparkAirportsAvgDepDelay = "/airportsAVGDepDelay.csv"
 
- //MODEL DIR NAMES
+ //MODEL DIR NAMES CLASSIFICATION
   val rfModelFolder = "/randomForestModel"
   val gbtcModelFolder = "/gbtcModel"
   val multilayerPerceptonFolder = "/multiLayerPerceptonModel"
   val naiveBayesFolder = "/naiveBayesModel"
 
-  //MODEL FILENAMES RESUTLS
+  //MODEL FILENAMES RESUTLS CLASSIFICATION
   val rfModelResults = "/randomForestResults.txt"
-  val gbtcModelResults = "/gbtcResults.txt"
+  val gbtcModelResults = "/gbtcClassificationResults.txt"
   val multilayerPerceptonResults = "/multiLayerPerceptonResults.txt"
   val naiveBayesResults = "/naiveBayesResults.txt"
 
 
+  //MODEL DIR NAMES REGRESSION
+  val rfRegressionModelFolder = "/randomForestRegressionModel"
+  val isotonicRegressorFolder = "/isotonicRegressionModel"
+  val linearRegressorFolder = "/linearRegressionModel"
 
-
+  //MODEL FILENAMES RESUTLS REGRESSION
+  val rfRegressionModelResults = "/randomForestRegressionResults.txt"
+  val isotonicRegressorResults = "/isotonicRegressionResults.txt"
+  val linearRegressorResults = "/linearRegressorResults.txt"
 
 
 

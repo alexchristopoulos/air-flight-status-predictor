@@ -56,12 +56,13 @@ object Classification {
     }
 
     println(s"${classifierName} LOADING TRAIN DATASET")
+
     TrainDataset.load()
 
-    if(trainAndTest){  /* TRAIN AND TEST MODEL */
+    val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
+    val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toInt.toString())
 
-      val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
-      val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + (1.00 * delays.count().toDouble).toInt.toString())
+    if(trainAndTest){  /* TRAIN AND TEST MODEL */
 
       val Array(noDelaysTrainSet, noDelaysTestSet) =   noDelays.randomSplit(Array(0.65, 0.35), 11L)
       val Array(trainDelaysSet, testDelaysSet) =   delays.randomSplit(Array(0.65, 0.35), 11L)
@@ -90,9 +91,6 @@ object Classification {
       this.outputResultsMetrics(predictions, classifierName, resultsDir)
 
     } else {    /* TRAIN ONLY MODEL */
-
-      val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
-      val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toString())
 
       val trainDataset = delays.union(noDelays)
 
