@@ -52,16 +52,11 @@ object Prediction {
 
     TrainDataset.load()
 
-    val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
-    val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toInt.toString())
+    val flights = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA")
 
     if(trainAndTest){  /* TRAIN AND TEST MODEL */
 
-      val Array(noDelaysTrainSet, noDelaysTestSet) =   noDelays.randomSplit(Array(0.65, 0.35), 11L)
-      val Array(trainDelaysSet, testDelaysSet) =   delays.randomSplit(Array(0.65, 0.35), 11L)
-
-      val pipelineTrainData = trainDelaysSet.union(noDelaysTrainSet)
-      val pipelineTestData = testDelaysSet.union(noDelaysTestSet)
+      val Array(pipelineTrainData, pipelineTestData) =   flights.randomSplit(Array(0.65, 0.35), 11L)
 
       val pipeline = new Pipeline().setStages(
         Array(MLUtils.getVectorAssember(TrainDataset.getRegressionInputCols(), "features"),
@@ -86,7 +81,7 @@ object Prediction {
 
     } else {    /* TRAIN ONLY MODEL */
 
-      val trainDataset = delays.union(noDelays)
+      val trainDataset = flights
 
       trainDataset.cache()
 
