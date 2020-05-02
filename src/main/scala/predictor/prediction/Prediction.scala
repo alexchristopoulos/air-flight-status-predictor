@@ -1,10 +1,15 @@
 package gr.upatras.ceid.ddcdm.predictor.prediction
 
+import java.io.{BufferedWriter, FileWriter}
+
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import gr.upatras.ceid.ddcdm.predictor.datasets.{TestDataset, TrainDataset}
 import gr.upatras.ceid.ddcdm.predictor.util.MLUtils
 import org.apache.spark.ml.{Pipeline, PipelineModel, PipelineStage}
-import org.apache.spark.ml.regression.{LinearRegression, IsotonicRegression, RandomForestRegressor}
+import org.apache.spark.ml.regression.{IsotonicRegression, LinearRegression, RandomForestRegressor}
+import org.apache.spark.ml.evaluation.RegressionEvaluator
+import org.apache.spark.sql.DataFrame
+
 
 object Prediction {
 
@@ -77,6 +82,8 @@ object Prediction {
 
       val predictions = model.transform(pipelineTestData)
 
+      this.outputResultsMetrics(predictions, predictorName, resultsDir)
+
     } else {    /* TRAIN ONLY MODEL */
 
       val trainDataset = delays.union(noDelays)
@@ -143,6 +150,30 @@ object Prediction {
 
     val testData = TestDataset.getDataFrame()
     val predictions = model.transform(testData)
+
+    this.outputResultsMetrics(predictions, predictorName, resultsDir)
+  }
+
+
+
+  //EVALUATION FUNCTION THAT WRITES THE RESULTS
+  private val outputResultsMetrics = (predictions: DataFrame, regressorName: String, resultsDir: String) => {
+
+    println(s"${regressorName} CALCULATING METRICS")
+
+    val evaluator = new RegressionEvaluator()
+      .setLabelCol("label")
+      .setPredictionCol("prediction")
+      .setMetricName("rmse")
+
+    val rmse = evaluator.evaluate(predictions)
+    println(s"${regressorName} CALCULATED ACCURACY")
+    val bw = new BufferedWriter(new FileWriter(resultsDir))
+    bw.write(s"${regressorName} RMSE = ${rmse.toString()}")
+    bw.newLine()
+    bw.write("*****************************************")
+    println(s"${regressorName} RMSE = ${rmse.toString()}")
+    bw.close()
 
   }
 }
