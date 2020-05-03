@@ -26,8 +26,8 @@ object AirFlightStatusPredictor {
       //Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
       //Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
       //Prediction.trainAndOrTest(false, true, LinearRegressionPrediction.linearRegression)
-      Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
-      //Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
+      //Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
+     // Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
 
       //    *** TEST MODELS ***
       //Classification.classify(RandomForestClassification.RFClassifier)
@@ -35,8 +35,8 @@ object AirFlightStatusPredictor {
       //Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
       //Classification.classify(NaiveBayesClassification.naiveBayesClassifier)
       //Prediction.predict(LinearRegressionPrediction.linearRegression)
-      //Prediction.predict(IsotonicPrediction.isotonicRegression)
-      //Prediction.predict(RFPrediction.rfRegression)
+      Prediction.predict(IsotonicPrediction.isotonicRegression)
+      Prediction.predict(RFPrediction.rfRegression)
 
     } catch {
       case x:Exception => {

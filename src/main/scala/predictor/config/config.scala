@@ -11,7 +11,7 @@ object config {
   val sparkOutputDir = "/home/admin"
 
   //DATASETS
-  val sparkTrainDataset = "/flights2017-2018.csv"
+  val sparkTrainDataset = "/flights2018.csv"
   val sparkTestDataset = "/flights2019.csv"
 
   //RESOURCE FILES
