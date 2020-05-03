@@ -18,6 +18,8 @@ object Spark {
   private val sparkSession = SparkSession
     .builder()
     .appName(config.sparkConfSetAppName + " ***SQL***")
+    .config("spark.network.timeout", "10000001")
+    .config("spark.executor.heartbeatInterval", "10000000")
     .getOrCreate()
 
   def exit(): Unit = {
