@@ -2,18 +2,19 @@ package gr.upatras.ceid.ddcdm.predictor.classification
 
 import java.io.{BufferedWriter, FileWriter}
 
-import org.apache.spark.ml.PipelineStage
+import org.apache.spark.ml.{Pipeline, PipelineModel, PipelineStage, Transformer}
 import org.apache.spark.ml.classification.{GBTClassifier, MultilayerPerceptronClassifier, NaiveBayes, RandomForestClassifier}
-import org.apache.spark.ml.{ Pipeline, PipelineModel }
 import gr.upatras.ceid.ddcdm.predictor.datasets.{TestDataset, TrainDataset}
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import gr.upatras.ceid.ddcdm.predictor.util.MLUtils
+import org.apache.spark.ml.feature.PCA
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
-import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.{DataFrame, Dataset}
 
 object Classification {
 
   private val sparkSession = gr.upatras.ceid.ddcdm.predictor.spark.Spark.getSparkSession()
+  private var dimReductionMethod: PipelineStage = null
 
   val trainAndOrTest = (trainAndTest: Boolean, saveModel: Boolean, classifier: PipelineStage) => {
 
@@ -71,8 +72,9 @@ object Classification {
       val pipelineTestData = testDelaysSet.union(noDelaysTestSet)
 
       val pipeline = new Pipeline().setStages(
-        Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
-        classifierCast
+        Array(
+          MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
+          classifierCast
         ))
 
       println(s"${classifierName} TRAINING MODEL")
@@ -167,6 +169,10 @@ object Classification {
     this.outputResultsMetrics(predictions, classifierName, resultsDir)
   }
 
+  val setDimensionalityReductionMethod = (method: PipelineStage) => {
+    this.dimReductionMethod = method
+  }
+
   //EVALUATION FUNCTION THAT WRITES THE RESULTS
   private val outputResultsMetrics = (predictions: DataFrame, classifierName: String, resultsDir: String) => {
 
@@ -205,6 +211,21 @@ object Classification {
     println(s"Test set accuracy = $accuracy")
     bw.close()
 
+  }
+
+  //DUMENSIONALITY REDUCTION
+  private val reduceDimenionsDf: DataFrame => DataFrame = (dataset: DataFrame) => {
+
+    if (dimReductionMethod == null)
+      dataset
+    else if (dimReductionMethod.isInstanceOf[PCA])
+
+      dimReductionMethod
+        .asInstanceOf[PCA]
+        .fit(dataset)
+        .transform(dataset)
+    else
+      dataset
   }
 
 }

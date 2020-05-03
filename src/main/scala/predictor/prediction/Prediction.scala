@@ -5,15 +5,16 @@ import java.io.{BufferedWriter, FileWriter}
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import gr.upatras.ceid.ddcdm.predictor.datasets.{TestDataset, TrainDataset}
 import gr.upatras.ceid.ddcdm.predictor.util.MLUtils
-import org.apache.spark.ml.{Pipeline, PipelineModel, PipelineStage}
+import org.apache.spark.ml.{Pipeline, PipelineModel, PipelineStage, Transformer}
 import org.apache.spark.ml.regression.{IsotonicRegression, LinearRegression, RandomForestRegressor}
 import org.apache.spark.ml.evaluation.RegressionEvaluator
+import org.apache.spark.ml.feature.PCA
 import org.apache.spark.sql.DataFrame
-
 
 object Prediction {
 
   private val sparkSession = gr.upatras.ceid.ddcdm.predictor.spark.Spark.getSparkSession()
+  private var dimReductionMethod: PipelineStage = null
 
   val trainAndOrTest = (trainAndTest: Boolean, saveModel: Boolean, predictor: PipelineStage) => {
 
@@ -22,21 +23,21 @@ object Prediction {
     var resultsDir: String = config.sparkOutputDir
     var modelDir: String = config.sparkOutputDir
 
-    if(predictor.isInstanceOf[LinearRegression]){
+    if (predictor.isInstanceOf[LinearRegression]) {
 
       predictorName = "***LINEAR REGRESSION***"
       predictorCast = predictor.asInstanceOf[LinearRegression]
       resultsDir = resultsDir + config.linearRegressorResults
       modelDir = modelDir + config.linearRegressorFolder
 
-    } else if(predictor.isInstanceOf[IsotonicRegression]) {
+    } else if (predictor.isInstanceOf[IsotonicRegression]) {
 
       predictorName = "***ISOTONIC REGRESSION***"
       predictorCast = predictor.asInstanceOf[IsotonicRegression]
       resultsDir = resultsDir + config.isotonicRegressorResults
       modelDir = modelDir + config.isotonicRegressorFolder
 
-    } else if(predictor.isInstanceOf[RandomForestRegressor]) {
+    } else if (predictor.isInstanceOf[RandomForestRegressor]) {
 
       predictorName = "***RANDOM FOREST REGRESSION***"
       predictorCast = predictor.asInstanceOf[RandomForestRegressor]
@@ -52,11 +53,12 @@ object Prediction {
 
     TrainDataset.load()
 
-    val flights = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA")
+    val flights = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE ARR_DELAY IS NOT NULL")
 
-    if(trainAndTest){  /* TRAIN AND TEST MODEL */
+    if (trainAndTest) {
+      /* TRAIN AND TEST MODEL */
 
-      val Array(pipelineTrainData, pipelineTestData) =   flights.randomSplit(Array(0.65, 0.35), 11L)
+      val Array(pipelineTrainData, pipelineTestData) = flights.randomSplit(Array(0.65, 0.35), 11L)
 
       val pipeline = new Pipeline().setStages(
         Array(MLUtils.getVectorAssember(TrainDataset.getRegressionInputCols(), "features"),
@@ -66,7 +68,7 @@ object Prediction {
       println(s"${predictorName} TRAINING MODEL")
       val model = pipeline.fit(pipelineTrainData)
 
-      if(saveModel) {
+      if (saveModel) {
 
         model.write.overwrite().save(modelDir)
         println(s"${predictorName} SAVED MODEL")
@@ -79,7 +81,8 @@ object Prediction {
 
       this.outputResultsMetrics(predictions, predictorName, resultsDir)
 
-    } else {    /* TRAIN ONLY MODEL */
+    } else {
+      /* TRAIN ONLY MODEL */
 
       val trainDataset = flights
 
@@ -93,7 +96,7 @@ object Prediction {
       println(s"${predictorName} TRAINING MODEL")
       val model = pipeline.fit(trainDataset)
 
-      if(saveModel) {
+      if (saveModel) {
 
         model.write.overwrite().save(modelDir)
         println(s"${predictorName} SAVED MODEL")
@@ -111,21 +114,21 @@ object Prediction {
     var resultsDir: String = config.sparkOutputDir
     var modelDir: String = config.sparkOutputDir
 
-    if(predictor.isInstanceOf[LinearRegression]){
+    if (predictor.isInstanceOf[LinearRegression]) {
 
       predictorName = "***LINEAR REGRESSION***"
       predictorCast = predictor.asInstanceOf[LinearRegression]
       resultsDir = resultsDir + config.linearRegressorResults
       modelDir = modelDir + config.linearRegressorFolder
 
-    } else if(predictor.isInstanceOf[IsotonicRegression]) {
+    } else if (predictor.isInstanceOf[IsotonicRegression]) {
 
       predictorName = "***ISOTONIC REGRESSION***"
       predictorCast = predictor.asInstanceOf[IsotonicRegression]
       resultsDir = resultsDir + config.isotonicRegressorResults
       modelDir = modelDir + config.isotonicRegressorFolder
 
-    } else if(predictor.isInstanceOf[RandomForestRegressor]) {
+    } else if (predictor.isInstanceOf[RandomForestRegressor]) {
 
       predictorName = "***RANDOM FOREST REGRESSION***"
       predictorCast = predictor.asInstanceOf[RandomForestRegressor]
@@ -143,13 +146,15 @@ object Prediction {
     println(s"${predictorName} LOADING TEST DATASET")
     TestDataset.load()
 
-    val testData = TestDataset.getDataFrame()
+    val testData = sparkSession.sql("SELECT tf.*, tf.ARR_DELAY AS label FROM TEST_FLIGHTS_DATA AS tf WHERE ARR_DELAY IS NOT NULL")
     val predictions = model.transform(testData)
 
     this.outputResultsMetrics(predictions, predictorName, resultsDir)
   }
 
-
+  val setDimensionalityReductionMethod = (method: PipelineStage) => {
+    this.dimReductionMethod = method
+  }
 
   //EVALUATION FUNCTION THAT WRITES THE RESULTS
   private val outputResultsMetrics = (predictions: DataFrame, regressorName: String, resultsDir: String) => {
@@ -170,5 +175,20 @@ object Prediction {
     println(s"${regressorName} RMSE = ${rmse.toString()}")
     bw.close()
 
+  }
+
+  //DUMENSIONALITY REDUCTION
+  private val reduceDimenionsDf: DataFrame => DataFrame = (dataset: DataFrame) => {
+
+    if (dimReductionMethod == null)
+      dataset
+    else if (dimReductionMethod.isInstanceOf[PCA])
+
+      dimReductionMethod
+        .asInstanceOf[PCA]
+        .fit(dataset)
+        .transform(dataset)
+    else
+      dataset
   }
 }

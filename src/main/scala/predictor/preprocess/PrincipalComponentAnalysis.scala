@@ -5,11 +5,11 @@ import org.apache.spark.ml.feature.PCA
 object PrincipalComponentAnalysis {
 
 
-  def getPca(): PCA = {
+  def getPca(inputCol: String, K: Int, outputCol: String): PCA = {
 
      new PCA()
-      .setInputCol("features")
-      .setK(5)
-      .setOutputCol("features")
+      .setInputCol(inputCol)
+      .setK(K)
+      .setOutputCol(outputCol)
   }
 }

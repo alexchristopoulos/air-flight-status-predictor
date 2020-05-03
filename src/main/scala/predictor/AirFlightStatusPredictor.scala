@@ -3,6 +3,7 @@ package gr.upatras.ceid.ddcdm.predictor
 import gr.upatras.ceid.ddcdm.predictor.classification.{GradientBoostedTreeClassification, MultiLayerPerceptonClassification, NaiveBayesClassification, RandomForestClassification}
 import gr.upatras.ceid.ddcdm.predictor.datasets.TestDataset
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
+import gr.upatras.ceid.ddcdm.predictor.preprocess.PrincipalComponentAnalysis
 import gr.upatras.ceid.ddcdm.predictor.classification.Classification
 import gr.upatras.ceid.ddcdm.predictor.prediction.{IsotonicPrediction, RFPrediction, LinearRegressionPrediction}
 import gr.upatras.ceid.ddcdm.predictor.prediction.Prediction
@@ -25,7 +26,7 @@ object AirFlightStatusPredictor {
       //Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
       //Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
       //Prediction.trainAndOrTest(false, true, LinearRegressionPrediction.linearRegression)
-      //Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
+      Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
       //Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
 
       //    *** TEST MODELS ***
