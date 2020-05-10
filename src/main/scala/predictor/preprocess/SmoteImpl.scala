@@ -1,6 +1,7 @@
 package gr.upatras.ceid.ddcdm.predictor.preprocess
 
 import org.apache.spark.ml.feature.BucketedRandomProjectionLSH
+import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
 
@@ -11,8 +12,9 @@ object SmoteImpl{
                       feature:String,
                       reqrows:Int,
                       BucketLength:Int,
-                      NumHashTables:Int):org.apache.spark.sql.DataFrame = {
-    val b1 = dataFinal.withColumn("index", row_number().over(Window.partitionBy("label").orderBy("label")))
+                      NumHashTables:Int,
+                      labelCol: String):org.apache.spark.sql.DataFrame = {
+    val b1 = dataFinal.withColumn("index", row_number().over(Window.partitionBy(labelCol).orderBy(labelCol)))
     val brp = new BucketedRandomProjectionLSH().setBucketLength(BucketLength).setNumHashTables(NumHashTables).setInputCol(feature).setOutputCol("values")
     val model = brp.fit(b1)
     val transformedA = model.transform(b1)
@@ -48,10 +50,26 @@ object SmoteImpl{
     val rowCount = frame.count
     val reqrows = (rowCount * (percentOver/100)).toInt
     val md = udf(smoteCalc _)
-    val b1 = KNNCalculation(frame, feature, reqrows, BucketLength, NumHashTables)
+    val b1 = KNNCalculation(frame, feature, reqrows, BucketLength, NumHashTables, label)
     val b2 = b1.withColumn("ndtata", md(col("k1"), col("k2"))).select("ndtata")
     val b3 = b2.withColumn("AllFeatures", explode(col("ndtata"))).select("AllFeatures").dropDuplicates
     val b4 = b3.withColumn(label, lit(minorityclass).cast(frame.schema(1).dataType))
-    return inputFrame.union(b4).dropDuplicates
+    return mergeMinorityDf(b4, inputFrame).dropDuplicates
+  }
+
+  private def mergeMinorityDf(minorDf: DataFrame, originalDf: DataFrame): DataFrame = {
+
+    val cols1 = minorDf.columns.toSet
+    val cols2 = originalDf.columns.toSet
+    val total = cols1 ++ cols2 // union
+
+    minorDf.select(expr(cols1, total):_*).union(originalDf.select(expr(cols2, total):_*))
+  }
+
+  private def expr(myCols: Set[String], allCols: Set[String]) = {
+    allCols.toList.map(x => x match {
+      case x if myCols.contains(x) => col(x)
+      case _ => lit(null).as(x)
+    })
   }
 }
