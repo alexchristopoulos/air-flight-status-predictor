@@ -11,7 +11,8 @@ object config {
   val sparkOutputDir = "/home/admin"
 
   //DATASETS
-  val sparkTrainDataset = "/flights2018.csv"
+  val sparkTrainDataset = "/2017-2019flights.csv"
+  //val sparkTrainDataset = "/flights2017-2018.csv"
   val sparkTestDataset = "/flights2019.csv"
 
   //RESOURCE FILES
@@ -24,12 +25,14 @@ object config {
  //MODEL DIR NAMES CLASSIFICATION
   val rfModelFolder = "/randomForestModel"
   val gbtcModelFolder = "/gbtcModel"
+  val LinearSVCModel = "/lsvcModel"
   val multilayerPerceptonFolder = "/multiLayerPerceptonModel"
   val naiveBayesFolder = "/naiveBayesModel"
 
   //MODEL FILENAMES RESUTLS CLASSIFICATION
   val rfModelResults = "/randomForestResults.txt"
   val gbtcModelResults = "/gbtcClassificationResults.txt"
+  val LinearSVCResults = "/lsvcRsults.txt"
   val multilayerPerceptonResults = "/multiLayerPerceptonResults.txt"
   val naiveBayesResults = "/naiveBayesResults.txt"
 

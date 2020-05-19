@@ -13,7 +13,11 @@ import java.io._
 object RandomForestClassification {
 
   val RFClassifier = new RandomForestClassifier()
-    .setNumTrees(10)
+    .setNumTrees(65)
     .setLabelCol("CANCELLED")
-
+    .setSubsamplingRate(0.9)
+    .setMaxDepth(14)
+    .setMinInstancesPerNode(3)
+    //.setMaxBins(48)
+    //.setMinInstancesPerNode(5)
 }

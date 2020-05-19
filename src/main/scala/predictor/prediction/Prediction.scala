@@ -58,7 +58,7 @@ object Prediction {
     if (trainAndTest) {
       /* TRAIN AND TEST MODEL */
 
-      val Array(pipelineTrainData, pipelineTestData) = flights.randomSplit(Array(0.65, 0.35), 11L)
+      val Array(pipelineTrainData, pipelineTestData) = flights.randomSplit(Array(0.7, 0.3), 11L)
 
       val pipeline = new Pipeline().setStages(
         Array(MLUtils.getVectorAssember(TrainDataset.getRegressionInputCols(), "features"),

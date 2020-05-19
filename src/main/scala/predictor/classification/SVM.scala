@@ -6,5 +6,6 @@ object SVM {
 
   val linearSupportVectorMachine = new LinearSVC()
     .setLabelCol("CANCELLED")
+    .setMaxIter(20)
 
 }

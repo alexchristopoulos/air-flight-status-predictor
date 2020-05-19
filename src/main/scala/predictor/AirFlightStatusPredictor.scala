@@ -1,6 +1,6 @@
 package gr.upatras.ceid.ddcdm.predictor
 
-import gr.upatras.ceid.ddcdm.predictor.classification.{GradientBoostedTreeClassification, MultiLayerPerceptonClassification, NaiveBayesClassification, RandomForestClassification}
+import gr.upatras.ceid.ddcdm.predictor.classification.{GradientBoostedTreeClassification, MultiLayerPerceptonClassification, NaiveBayesClassification, RandomForestClassification, SVM}
 import gr.upatras.ceid.ddcdm.predictor.datasets.TestDataset
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.preprocess.PrincipalComponentAnalysis
@@ -9,6 +9,7 @@ import gr.upatras.ceid.ddcdm.predictor.prediction.{IsotonicPrediction, RFPredict
 import gr.upatras.ceid.ddcdm.predictor.prediction.Prediction
 import gr.upatras.ceid.ddcdm.predictor.spark.SparkClustering
 import gr.upatras.ceid.ddcdm.predictor.preprocess.DatasetPreprocessing
+import gr.upatras.ceid.ddcdm.predictor.preprocess.PCAReduction
 
 object AirFlightStatusPredictor {
 
@@ -20,15 +21,31 @@ object AirFlightStatusPredictor {
 
     try {
 
-      //    *** TRAIN MODELS ***
+      // *** PCA Reduction ***
+      PCAReduction.reduceTrainDataset()
+
+      //   *** TRAIN AND TEST ***
+      //Classification.trainAndOrTest(true, true, RandomForestClassification.RFClassifier)
+      //Classification.trainAndOrTest(true, true, SVM.linearSupportVectorMachine)
+      //Classification.trainAndOrTest(true, true, GradientBoostedTreeClassification.gradientBoostedTree)
+      //Classification.trainAndOrTest(true, true, MultiLayerPerceptonClassification.multilayerPercepton)
+      //Classification.trainAndOrTest(true, true, NaiveBayesClassification.naiveBayesClassifier)
+      //Prediction.trainAndOrTest(true, true, LinearRegressionPrediction.linearRegression)
+      //Prediction.trainAndOrTest(true, true, IsotonicPrediction.isotonicRegression)
+      // Prediction.trainAndOrTest(true, true, RFPrediction.rfRegression)
+
+
+      //    *** TRAIN ONLY  ***
       //Classification.trainAndOrTest(false, true, RandomForestClassification.RFClassifier)
       //Classification.trainAndOrTest(false, true, GradientBoostedTreeClassification.gradientBoostedTree)
-      Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
+      //Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
       //Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
       //Prediction.trainAndOrTest(false, true, LinearRegressionPrediction.linearRegression)
       //Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
      // Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
-      //    *** TEST MODELS ***
+
+
+      //    *** TEST ONLY  ***
       //Classification.classify(RandomForestClassification.RFClassifier)
       //Classification.classify(GradientBoostedTreeClassification.gradientBoostedTree)
       //Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
