@@ -162,7 +162,7 @@ object Prediction {
     println(s"${regressorName} CALCULATING METRICS")
 
     val evaluator = new RegressionEvaluator()
-      .setLabelCol("label")
+      .setLabelCol("ARR_DELAY")
       .setPredictionCol("prediction")
       .setMetricName("rmse")
 
