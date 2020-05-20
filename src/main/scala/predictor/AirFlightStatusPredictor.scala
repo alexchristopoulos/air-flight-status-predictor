@@ -22,7 +22,9 @@ object AirFlightStatusPredictor {
     try {
 
       // *** PCA Reduction ***
-      PCAReduction.reduceTrainDataset()
+      //PCAReduction.reduceTrainDataset()
+
+      //Classification.withPCA = true
 
       //   *** TRAIN AND TEST ***
       //Classification.trainAndOrTest(true, true, RandomForestClassification.RFClassifier)
@@ -32,7 +34,7 @@ object AirFlightStatusPredictor {
       //Classification.trainAndOrTest(true, true, NaiveBayesClassification.naiveBayesClassifier)
       //Prediction.trainAndOrTest(true, true, LinearRegressionPrediction.linearRegression)
       //Prediction.trainAndOrTest(true, true, IsotonicPrediction.isotonicRegression)
-      // Prediction.trainAndOrTest(true, true, RFPrediction.rfRegression)
+      Prediction.trainAndOrTest(true, true, RFPrediction.rfRegression)
 
 
       //    *** TRAIN ONLY  ***

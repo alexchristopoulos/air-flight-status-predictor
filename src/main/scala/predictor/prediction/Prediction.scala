@@ -167,7 +167,7 @@ object Prediction {
       .setMetricName("rmse")
 
     val rmse = evaluator.evaluate(predictions)
-    println(s"${regressorName} CALCULATED ACCURACY")
+    println(s"${regressorName} CALCULATED RMSE")
     val bw = new BufferedWriter(new FileWriter(resultsDir))
     bw.write(s"${regressorName} RMSE = ${rmse.toString()}")
     bw.newLine()

@@ -16,7 +16,8 @@ object RandomForestClassification {
     .setNumTrees(65)
     .setLabelCol("CANCELLED")
     .setSubsamplingRate(0.9)
-    .setMaxDepth(14)
+    .setMaxDepth(12)//12 for full dataset
+    //.setMaxBins(10)
     .setMinInstancesPerNode(3)
     //.setMaxBins(48)
     //.setMinInstancesPerNode(5)
