@@ -157,7 +157,9 @@ object Prediction {
   }
 
   //EVALUATION FUNCTION THAT WRITES THE RESULTS
-  private val outputResultsMetrics = (predictions: DataFrame, regressorName: String, resultsDir: String) => {
+  private val outputResultsMetrics = (predictions: DataFrame,
+	regressorName: String,
+	resultsDir: String) => {
 
     println(s"${regressorName} CALCULATING METRICS")
 

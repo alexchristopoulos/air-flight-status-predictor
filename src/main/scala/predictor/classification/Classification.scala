@@ -61,7 +61,12 @@ object Classification {
     TrainDataset.load()
 
     val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
-    val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toInt.toString())
+	val delaysCount = delays.count()
+	var noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0")
+	val nodelaysCount = noDelays.count()
+	noDelays = noDelays.randomSplit(Array(delaysCount/nodelaysCount(), 1 - delaysCount/nodelaysCount ))(0)
+	
+    //val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toInt.toString())
 
     if(trainAndTest){  /* TRAIN AND TEST MODEL */
 
@@ -173,9 +178,11 @@ object Classification {
     this.dimReductionMethod = method
   }
 
-  //EVALUATION FUNCTION THAT WRITES THE RESULTS
-  private val outputResultsMetrics = (predictions: DataFrame, classifierName: String, resultsDir: String) => {
 
+  private val outputResultsMetrics = (predictions: DataFrame,
+		classifierName: String,
+		resultsDir: String) => {
+		
     println(s"${classifierName} CALCULATING METRICS")
 
     val evaluator = MLUtils.getClassificationMultiClassEvaluator()
@@ -184,7 +191,9 @@ object Classification {
     println(s"${classifierName} CALCULATED ACCURACY")
 
     //RDD[prediction, label]
-    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions.select("CANCELLED", "prediction").rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
+    val rddEval: org.apache.spark.rdd.RDD[(Double, Double)] = predictions
+		.select("CANCELLED", "prediction")
+		.rdd.map(row => ( row(1).toString().toDouble, row(0).toString().toDouble ))
 
     val metrics = new MulticlassMetrics(rddEval)
     val bw = new BufferedWriter(new FileWriter(resultsDir))
@@ -195,9 +204,19 @@ object Classification {
 
     metrics.labels.foreach(label => {
 
-      bw.write(label.toString() + "  " + metrics.precision(label).toString() + "  " + metrics.recall(label).toString() + "   " + metrics.fMeasure(label).toString())
+      bw.write(label.toString() + 
+		  "  " + metrics.precision(label).toString() + 
+		  "  " + metrics.recall(label).toString() + 
+		  "   " + metrics.fMeasure(label).toString()
+	  )
+	  
       bw.newLine()
-      println(label.toString() + "  " + metrics.precision(label).toString() + "  " + metrics.recall(label).toString() + "   " + metrics.fMeasure(label).toString())
+	  
+      println(label.toString() + 
+		"  " + metrics.precision(label).toString() + 
+		"  " + metrics.recall(label).toString() + 
+		"   " + metrics.fMeasure(label).toString()
+	  )
     })
 
     println("\n\nWEIGHTED_PRECISION   WEIGHTED_RECALL   WEIGHTED_F1")

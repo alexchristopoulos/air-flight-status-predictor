@@ -21,20 +21,18 @@ object AirFlightStatusPredictor {
     try {
 
       //    *** TRAIN MODELS ***
-      //Classification.trainAndOrTest(false, true, RandomForestClassification.RFClassifier)
-      //Classification.trainAndOrTest(false, true, GradientBoostedTreeClassification.gradientBoostedTree)
-      //Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
-      //Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
-      //Prediction.trainAndOrTest(false, true, LinearRegressionPrediction.linearRegression)
-      //Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
-     // Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
+      Classification.trainAndOrTest(false, true, RandomForestClassification.RFClassifier)
+      Classification.trainAndOrTest(false, true, MultiLayerPerceptonClassification.multilayerPercepton)
+      Classification.trainAndOrTest(false, true, NaiveBayesClassification.naiveBayesClassifier)
+      Prediction.trainAndOrTest(false, true, LinearRegressionPrediction.linearRegression)
+      Prediction.trainAndOrTest(false, true, IsotonicPrediction.isotonicRegression)
+      Prediction.trainAndOrTest(false, true, RFPrediction.rfRegression)
 
       //    *** TEST MODELS ***
-      //Classification.classify(RandomForestClassification.RFClassifier)
-      //Classification.classify(GradientBoostedTreeClassification.gradientBoostedTree)
-      //Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
-      //Classification.classify(NaiveBayesClassification.naiveBayesClassifier)
-      //Prediction.predict(LinearRegressionPrediction.linearRegression)
+      Classification.classify(RandomForestClassification.RFClassifier)
+      Classification.classify(MultiLayerPerceptonClassification.multilayerPercepton)
+      Classification.classify(NaiveBayesClassification.naiveBayesClassifier)
+      Prediction.predict(LinearRegressionPrediction.linearRegression)
       Prediction.predict(IsotonicPrediction.isotonicRegression)
       Prediction.predict(RFPrediction.rfRegression)
 

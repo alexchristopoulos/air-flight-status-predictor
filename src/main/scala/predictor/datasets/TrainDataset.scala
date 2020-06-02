@@ -68,8 +68,9 @@ object TrainDataset {
       Spark
         .getSparkSession()
         .sql("SELECT CONCAT(f.DAY_OF_MONTH, '-', f.MONTH, '-', f.YEAR, '/' ,a1.id, '-', a1.iata) AS DATE_ORIGIN_ID, " +
-          "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION, f.CANCELLED, f.DISTANCE, " +
-          "f.ARR_DELAY_NEW AS ARR_DELAY, f.DEP_DELAY_NEW AS DEP_DELAY, ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
+          "f.MONTH, f.DAY_OF_MONTH, f.DAY_OF_WEEK, l.id AS OP_CARRIER_ID, a1.id AS ORIGIN, a2.id AS DESTINATION," + 
+		  " f.CANCELLED, f.DISTANCE, f.ARR_DELAY_NEW AS ARR_DELAY, f.DEP_DELAY_NEW AS DEP_DELAY," + 
+		  " ar.rating as AIRLINE_RATING, ar.numOfReviews as NUM_OF_AIRLINE_REVIEWS " +
           "FROM TRAIN_FLIGHTS_DATA AS f " +
           "INNER JOIN airlines AS l ON f.OP_CARRIER_ID=l.iata " +
           "INNER JOIN airports AS a1 ON f.ORIGIN=a1.iata " +
@@ -81,13 +82,16 @@ object TrainDataset {
 
       Spark
         .getSparkSession()
-        .sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID").createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
+        .sql("SELECT DATE_ORIGIN_ID, COUNT(*) AS FLIGHTS_COUNT " + 
+		"FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.DATE_ORIGIN_ID")
+		.createOrReplaceTempView("NUM_OF_FLIGHTS_PER_DATE_PER_ORIGIN")
 
       if (Airlines.avgDelayResourcesExist() == false) {
 
         val avgDel = Spark
           .getSparkSession()
-          .sql("SELECT OP_CARRIER_ID, AVG(ARR_DELAY) AS AIRLINE_MEAN_DELAY FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.OP_CARRIER_ID")
+          .sql("SELECT OP_CARRIER_ID, AVG(ARR_DELAY) AS AIRLINE_MEAN_DELAY " + 
+		  " FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.OP_CARRIER_ID")
 
         avgDel.createOrReplaceTempView("MEAN_DELAY_AIRLINES")
 
@@ -104,9 +108,12 @@ object TrainDataset {
 
         val originAvgDepDelay = Spark
           .getSparkSession()
-          .sql("SELECT ORIGIN, AVG(DEP_DELAY) AS ORIGIN_AVG_DEP_DELAY FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.ORIGIN")
+          .sql("SELECT ORIGIN, AVG(DEP_DELAY) AS ORIGIN_AVG_DEP_DELAY " + 
+		  " FROM TRAIN_FLIGHTS_DATA AS ff GROUP BY ff.ORIGIN")
 
         originAvgDepDelay.createOrReplaceTempView("ORIGIN_AVG_DEPARTURE_DELAYS")
+		
+		
         println("CREATED AND SAVING AVERAGE DEPARTURE DELAY PER ORIGIN DATA RESOURCE")
         Airports.saveAvgDepDelays(originAvgDepDelay)
 

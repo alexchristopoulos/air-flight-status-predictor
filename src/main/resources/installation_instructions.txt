@@ -8,6 +8,7 @@
 _______________________________________________START____________________________________________________
 
 
+
 --------------------------------------------------------------------------------------------------------
 |*                                      STEP 1 INSTALL EPEL & UPDATE                                  *|
 --------------------------------------------------------------------------------------------------------
@@ -39,15 +40,15 @@ su - hadoop
 ssh-keygen
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
-wget https://www-us.apache.org/dist/hadoop/common/stable/hadoop-3.2.1.tar.gz
+wget https://www-us.apache.org/dist/hadoop/common/stable/hadoop-3.2.1.tar.gz ## change version according to the current stable release
 tar -zxvf hadoop-3.2.1.tar.gz 
 mv hadoop-3.2.1 hadoop
 
 sudo vi ~/.bashrc
 and put the below exports
 
-export JAVA_HOME=/usr/java/jdk1.8.0_241-amd64/jre
-export HADOOP_HOME=/root/hadoop/hadoop
+export JAVA_HOME=/usr/java/jdk1.8.0_241-amd64/jre ## change accordingly
+export HADOOP_HOME=/root/hadoop/hadoop ## change accordingly
 export HADOOP_INSTALL=$HADOOP_HOME
 export HADOOP_MAPRED_HOME=$HADOOP_HOME
 export HADOOP_COMMON_HOME=$HADOOP_HOME

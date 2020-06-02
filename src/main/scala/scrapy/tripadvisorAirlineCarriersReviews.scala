@@ -14,7 +14,8 @@ object tripAdvAirlineCarriersReviews {
     var j = 1
     for (i <- 0 to numOfPages-1){
 
-      val url:String = "https://www.tripadvisor.com/MetaPlacementAjax?placementName=airlines_lander_main&wrap=true&skipLocation=true&page=" + i.toString() + "&sort=alphabetical"
+      val url:String = "https://www.tripadvisor.com/MetaPlacementAjax?placementName=airlines_lander_main&wrap=true" + 
+      "&skipLocation=true&page=" + i.toString() + "&sort=alphabetical"
 
       Jsoup.connect(url)
         .get()
