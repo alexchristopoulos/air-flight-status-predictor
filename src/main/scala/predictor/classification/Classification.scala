@@ -3,7 +3,7 @@ package gr.upatras.ceid.ddcdm.predictor.classification
 import java.io.{BufferedWriter, FileWriter}
 
 import org.apache.spark.ml.{Pipeline, PipelineModel, PipelineStage, Transformer}
-import org.apache.spark.ml.classification.{GBTClassifier, MultilayerPerceptronClassifier, NaiveBayes, RandomForestClassifier}
+import org.apache.spark.ml.classification.{GBTClassifier, MultilayerPerceptronClassifier, NaiveBayes, RandomForestClassifier, LinearSVC}
 import gr.upatras.ceid.ddcdm.predictor.datasets.{TestDataset, TrainDataset}
 import gr.upatras.ceid.ddcdm.predictor.config.config
 import gr.upatras.ceid.ddcdm.predictor.util.MLUtils
@@ -15,6 +15,7 @@ object Classification {
 
   private val sparkSession = gr.upatras.ceid.ddcdm.predictor.spark.Spark.getSparkSession()
   private var dimReductionMethod: PipelineStage = null
+  var withPCA: Boolean = false
 
   val trainAndOrTest = (trainAndTest: Boolean, saveModel: Boolean, classifier: PipelineStage) => {
 
@@ -23,33 +24,47 @@ object Classification {
     var resultsDir: String = config.sparkOutputDir
     var modelDir: String = config.sparkOutputDir
 
-    if(classifier.isInstanceOf[RandomForestClassifier]){
+    println(s"WITH PCA: ${this.withPCA}")
+
+    if (classifier.isInstanceOf[RandomForestClassifier]) {
 
       classifierName = "***RANDOM FOREST CLASSIFIER***"
       classifierCast = classifier.asInstanceOf[RandomForestClassifier]
       resultsDir = resultsDir + config.rfModelResults
       modelDir = modelDir + config.rfModelFolder
 
-    } else if(classifier.isInstanceOf[NaiveBayes]) {
+      println(s"Num trees: ${classifierCast.getParam("numTrees").toString()}")
+      println(s"Max depth: ${classifierCast.getParam("maxDepth").toString()}")
+      println(s"Num trees: ${classifierCast.getParam("numTrees").toString()}")
+      println(s"Num trees: ${classifierCast.getParam("minInstancesPerNode").toString()}")
+
+    } else if (classifier.isInstanceOf[NaiveBayes]) {
 
       classifierName = "***NAIVE BAYES***"
       classifierCast = classifier.asInstanceOf[NaiveBayes]
       resultsDir = resultsDir + config.naiveBayesResults
       modelDir = modelDir + config.naiveBayesFolder
 
-    } else if(classifier.isInstanceOf[GBTClassifier]) {
+    } else if (classifier.isInstanceOf[GBTClassifier]) {
 
       classifierName = "***GRADIENT BOOSTED TREE CLASSIFIER***"
       classifierCast = classifier.asInstanceOf[GBTClassifier]
       resultsDir = resultsDir + config.gbtcModelResults
       modelDir = modelDir + config.gbtcModelFolder
 
-    } else if(classifier.isInstanceOf[MultilayerPerceptronClassifier]) {
+    } else if (classifier.isInstanceOf[MultilayerPerceptronClassifier]) {
 
       classifierName = "***MULTILAYER PERCEPTON***"
       classifierCast = classifier.asInstanceOf[MultilayerPerceptronClassifier]
       resultsDir = resultsDir + config.multilayerPerceptonResults
       modelDir = modelDir + config.multilayerPerceptonFolder
+
+    } else if (classifier.isInstanceOf[LinearSVC]) {
+
+      classifierName = "***Linear SVC***"
+      classifierCast = classifier.asInstanceOf[LinearSVC]
+      resultsDir = resultsDir + config.LinearSVCResults
+      modelDir = modelDir + config.LinearSVCModel
 
     } else {
 
@@ -58,34 +73,44 @@ object Classification {
 
     println(s"${classifierName} LOADING TRAIN DATASET")
 
-    TrainDataset.load()
+    if (withPCA)
+      TrainDataset.loadPCADataset()
+    else
+      TrainDataset.load()
 
     val delays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=1.0")
-	val delaysCount = delays.count()
-	var noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0")
-	val nodelaysCount = noDelays.count()
-	noDelays = noDelays.randomSplit(Array(delaysCount/nodelaysCount(), 1 - delaysCount/nodelaysCount ))(0)
-	
-    //val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + delays.count().toInt.toString())
+    val noDelays = sparkSession.sql("SELECT * FROM TRAIN_FLIGHTS_DATA WHERE CANCELLED=0.0 LIMIT " + (1.0 * delays.count().toDouble).toInt.toString())
 
-    if(trainAndTest){  /* TRAIN AND TEST MODEL */
+    if (trainAndTest) {
+      /* TRAIN AND TEST MODEL */
 
-      val Array(noDelaysTrainSet, noDelaysTestSet) =   noDelays.randomSplit(Array(0.65, 0.35), 11L)
-      val Array(trainDelaysSet, testDelaysSet) =   delays.randomSplit(Array(0.65, 0.35), 11L)
+      println(s"${classifierName} {(> TRAINING MODEL AND TEST <)} ")
+
+      val Array(noDelaysTrainSet, noDelaysTestSet) = noDelays.randomSplit(Array(0.7, 0.3), 7464681154782325311L)
+      val Array(trainDelaysSet, testDelaysSet) = delays.randomSplit(Array(0.7, 0.3), 978951451735623534L)
 
       val pipelineTrainData = trainDelaysSet.union(noDelaysTrainSet)
       val pipelineTestData = testDelaysSet.union(noDelaysTestSet)
 
-      val pipeline = new Pipeline().setStages(
-        Array(
-          MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
-          classifierCast
-        ))
+
+      var pipeline: Pipeline = null
+
+      if (withPCA)
+        pipeline = new Pipeline().setStages(
+          Array(MLUtils.getVectorAssember(TrainDataset.getInputColsPCA(), "features"),
+            classifierCast
+          ))
+      else
+        pipeline = new Pipeline().setStages(
+          Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
+            classifierCast
+          ))
+
 
       println(s"${classifierName} TRAINING MODEL")
       val model = pipeline.fit(pipelineTrainData)
 
-      if(saveModel) {
+      if (saveModel) {
 
         model.write.overwrite().save(modelDir)
         println(s"${classifierName} SAVED MODEL")
@@ -97,21 +122,33 @@ object Classification {
       val predictions = model.transform(pipelineTestData)
       this.outputResultsMetrics(predictions, classifierName, resultsDir)
 
-    } else {    /* TRAIN ONLY MODEL */
+    } else {
+      /* TRAIN ONLY MODEL */
+
+      println(s"TRAIN AND SAVE MODEL ${classifierName}")
 
       val trainDataset = delays.union(noDelays)
 
       trainDataset.cache()
 
-      val pipeline = new Pipeline().setStages(
-        Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
-          classifierCast
-        ))
+      var pipeline: Pipeline = null
+
+      if (withPCA)
+        pipeline = new Pipeline().setStages(
+          Array(MLUtils.getVectorAssember(TrainDataset.getInputColsPCA(), "features"),
+            classifierCast
+          ))
+      else
+        pipeline = new Pipeline().setStages(
+          Array(MLUtils.getVectorAssember(TrainDataset.getClassificationInputCols(), "features"),
+            classifierCast
+          ))
+
 
       println(s"${classifierName} TRAINING MODEL")
       val model = pipeline.fit(trainDataset)
 
-      if(saveModel) {
+      if (saveModel) {
 
         model.write.overwrite().save(modelDir)
         println(s"${classifierName} SAVED MODEL")
@@ -129,33 +166,41 @@ object Classification {
     var resultsDir: String = config.sparkOutputDir
     var modelDir: String = config.sparkOutputDir
 
-    if(classifier.isInstanceOf[RandomForestClassifier]){
+    if (classifier.isInstanceOf[RandomForestClassifier]) {
 
       classifierName = "***RANDOM FOREST CLASSIFIER***"
       classifierCast = classifier.asInstanceOf[RandomForestClassifier]
       resultsDir = resultsDir + config.rfModelResults
       modelDir = modelDir + config.rfModelFolder
 
-    } else if(classifier.isInstanceOf[NaiveBayes]) {
+
+    } else if (classifier.isInstanceOf[NaiveBayes]) {
 
       classifierName = "***NAIVE BAYES***"
       classifierCast = classifier.asInstanceOf[NaiveBayes]
       resultsDir = resultsDir + config.naiveBayesResults
       modelDir = modelDir + config.naiveBayesFolder
 
-    } else if(classifier.isInstanceOf[GBTClassifier]) {
+    } else if (classifier.isInstanceOf[GBTClassifier]) {
 
       classifierName = "***GRADIENT BOOSTED TREE CLASSIFIER***"
       classifierCast = classifier.asInstanceOf[GBTClassifier]
       resultsDir = resultsDir + config.gbtcModelResults
       modelDir = modelDir + config.gbtcModelFolder
 
-    } else if(classifier.isInstanceOf[MultilayerPerceptronClassifier]) {
+    } else if (classifier.isInstanceOf[MultilayerPerceptronClassifier]) {
 
       classifierName = "***MULTILAYER PERCEPTON***"
       classifierCast = classifier.asInstanceOf[MultilayerPerceptronClassifier]
       resultsDir = resultsDir + config.multilayerPerceptonResults
       modelDir = modelDir + config.multilayerPerceptonFolder
+
+    } else if (classifier.isInstanceOf[LinearSVC]) {
+
+      classifierName = "***Linear SVC***"
+      classifierCast = classifier.asInstanceOf[LinearSVC]
+      resultsDir = resultsDir + config.LinearSVCResults
+      modelDir = modelDir + config.LinearSVCModel
 
     } else {
 

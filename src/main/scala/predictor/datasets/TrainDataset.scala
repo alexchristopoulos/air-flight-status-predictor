@@ -175,6 +175,25 @@ object TrainDataset {
     return inputCols.trim();
   }
 
+  def loadPCADataset(): Unit = {
+
+    this.df = Spark
+      .getSparkSession()
+      .read
+      .option("inferSchema","true")
+      .option("header", "false")
+      .format("csv")
+      .load("/home/admin/data/flightsPCA6.csv")
+      .toDF("CANCELLED", "ARR_DELAY", "f1", "f2", "f3", "f4", "f5", "f6")
+
+    this.df.createOrReplaceTempView("TRAIN_FLIGHTS_DATA")
+  }
+
+  def getInputColsPCA(): Array[String] = {
+
+    return Array("f1", "f2", "f3", "f4", "f5", "f6")
+  }
+
   private def initStruct(): Unit = {
 
     this.struct = StructType(

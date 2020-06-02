@@ -6,8 +6,8 @@ object MultiLayerPerceptonClassification {
 
   val multilayerPercepton: MultilayerPerceptronClassifier = new MultilayerPerceptronClassifier()
     .setLabelCol("CANCELLED")
-    .setMaxIter(200)
-    .setTol(1E-5)
-    .setLayers(Array(12,8,5,2))
-
+    .setMaxIter(280)
+    .setTol(1E-7)
+    //.setLayers(Array(6,14,14,14,2))
+    .setLayers(Array(12,20,10,6,2))
 }

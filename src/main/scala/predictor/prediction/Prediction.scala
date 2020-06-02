@@ -58,7 +58,7 @@ object Prediction {
     if (trainAndTest) {
       /* TRAIN AND TEST MODEL */
 
-      val Array(pipelineTrainData, pipelineTestData) = flights.randomSplit(Array(0.65, 0.35), 11L)
+      val Array(pipelineTrainData, pipelineTestData) = flights.randomSplit(Array(0.7, 0.3), 11L)
 
       val pipeline = new Pipeline().setStages(
         Array(MLUtils.getVectorAssember(TrainDataset.getRegressionInputCols(), "features"),
@@ -164,12 +164,12 @@ object Prediction {
     println(s"${regressorName} CALCULATING METRICS")
 
     val evaluator = new RegressionEvaluator()
-      .setLabelCol("label")
+      .setLabelCol("ARR_DELAY")
       .setPredictionCol("prediction")
       .setMetricName("rmse")
 
     val rmse = evaluator.evaluate(predictions)
-    println(s"${regressorName} CALCULATED ACCURACY")
+    println(s"${regressorName} CALCULATED RMSE")
     val bw = new BufferedWriter(new FileWriter(resultsDir))
     bw.write(s"${regressorName} RMSE = ${rmse.toString()}")
     bw.newLine()

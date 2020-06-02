@@ -1,6 +1,6 @@
 package gr.upatras.ceid.ddcdm.predictor
 
-import gr.upatras.ceid.ddcdm.predictor.classification.{GradientBoostedTreeClassification, MultiLayerPerceptonClassification, NaiveBayesClassification, RandomForestClassification}
+import gr.upatras.ceid.ddcdm.predictor.classification.{GradientBoostedTreeClassification, MultiLayerPerceptonClassification, NaiveBayesClassification, RandomForestClassification, SVM}
 import gr.upatras.ceid.ddcdm.predictor.datasets.TestDataset
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.preprocess.PrincipalComponentAnalysis
@@ -9,6 +9,7 @@ import gr.upatras.ceid.ddcdm.predictor.prediction.{IsotonicPrediction, RFPredict
 import gr.upatras.ceid.ddcdm.predictor.prediction.Prediction
 import gr.upatras.ceid.ddcdm.predictor.spark.SparkClustering
 import gr.upatras.ceid.ddcdm.predictor.preprocess.DatasetPreprocessing
+import gr.upatras.ceid.ddcdm.predictor.preprocess.PCAReduction
 
 object AirFlightStatusPredictor {
 

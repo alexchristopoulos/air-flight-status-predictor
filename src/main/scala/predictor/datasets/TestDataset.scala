@@ -6,9 +6,9 @@ import org.apache.spark.sql.types.StructField
 import org.apache.spark.sql.types.IntegerType
 import org.apache.spark.sql.types.DoubleType
 import org.apache.spark.sql.types.StringType
-
 import gr.upatras.ceid.ddcdm.predictor.spark.Spark
 import gr.upatras.ceid.ddcdm.predictor.config.config
+import gr.upatras.ceid.ddcdm.predictor.preprocess.SMOTE
 import gr.upatras.ceid.ddcdm.predictor.util.FuncOperators
 
 object TestDataset {
